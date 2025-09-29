@@ -165,7 +165,7 @@ def load_config(file_path):
 
 def show_skeleton(file_path):
     if file_path == "NONE":
-        ontology_file = "/home/diana-teixeira/Desktop/AGAS/ontos/typeC/C1/ontos_final/greek_deities_ontology_complete.tt"
+        ontology_file = "/home/diana-teixeira/Desktop/AGAS/ontos/typeC/C1/ontos_final/greek_deities_ontology_complete.tt ==> CHANGE ME"
         agas_name = "My Ontology"
         make_pretty = "['hasImage', 'hasStory']"
         username = "username"
@@ -267,11 +267,11 @@ ONTOLOGY_SOURCE = 'https://natura.di.uminho.pt/~jj/Diana/cwr.owl' #URL/LINK of w
 USERNAME = '{username}'
 USER_EMAIL = '{user_email}'
 USER_GITHUB = 'github/example'
-USER_SOCIALS = {
+USER_SOCIALS = {{
   'LinkedIn': 'example@linkIn',
   'Instagram': 'example@insta',
   'Portfolio': 'personal@website.com'
-}
+}}
 
 AGAS_PAGES = 'PAGES' #If you want it in blog format or normal pages -> 'BLOG'/'PAGES'
 AGAS_BACKGROUNG = 'NONE' #If you want to put a personal background on the app, mostly common on blogs, but can be used in the normal pages too
