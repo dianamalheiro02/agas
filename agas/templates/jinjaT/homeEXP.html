@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<!--link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22256%22 height=%22256%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2250%22 fill=%22%230058ff%22></rect><path fill=%22%23fff%22 d=%22M72.15 21.33L72.15 21.33Q74.49 22.50 74.90 25.02Q75.30 27.54 73.59 29.61L73.59 29.61Q72.42 31.23 70.58 31.41Q68.73 31.59 66.84 30.69L66.84 30.69Q64.68 29.70 62.30 29.16Q59.91 28.62 57.30 28.62L57.30 28.62Q52.44 28.62 48.62 30.15Q44.79 31.68 42.09 34.52Q39.39 37.35 38.00 41.22Q36.60 45.09 36.60 49.77L36.60 49.77Q36.60 55.26 38.18 59.31Q39.75 63.36 42.54 66.06Q45.33 68.76 49.11 70.07Q52.89 71.37 57.30 71.37L57.30 71.37Q59.73 71.37 62.16 70.92Q64.59 70.47 66.84 69.30L66.84 69.30Q68.73 68.40 70.58 68.67Q72.42 68.94 73.68 70.56L73.68 70.56Q75.48 72.81 74.99 75.20Q74.49 77.58 72.24 78.66L72.24 78.66Q69.90 79.83 67.43 80.60Q64.95 81.36 62.43 81.77Q59.91 82.17 57.30 82.17L57.30 82.17Q50.82 82.17 45.02 80.10Q39.21 78.03 34.67 73.98Q30.12 69.93 27.51 63.86Q24.90 57.78 24.90 49.77L24.90 49.77Q24.90 42.84 27.29 36.99Q29.67 31.14 34.04 26.87Q38.40 22.59 44.34 20.21Q50.28 17.82 57.30 17.82L57.30 17.82Q61.26 17.82 65.04 18.72Q68.82 19.62 72.15 21.33Z%22></path></svg>" /-->
+<link rel="icon" type="image/png" href="static/images/logo2.png">
+<meta charset="UTF-8">
+<meta http-equiv=“Pragma” content=”no-cache”>
+<meta http-equiv=“Expires” content=”-1″>
+<meta http-equiv=“CACHE-CONTROL” content=”NO-CACHE”>
+
+<script>
+    if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+    }
+</script>
+
+
+<!-- CSS Stylesheets -->
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
+
+<title>AGAS</title>
+</head>
+
+<body>
+    <div class="topnav">
+        <a href="/AGAS" class="logo-link">
+            <img src="{{ url_for('static', filename='images/logo2.png') }}" alt="Logo" class="logo-btn">
+        </a>
+        {% if u_type == "EXP"%}
+            <a class="active" href="/">Home</a>
+            <a href="/home">Extra</a>
+        {% else%}
+            <a href="/">Home</a>
+            <a class="active" href="/home">Extra</a>
+        {% endif %}    
+        <a href="/resultsBQ">Results</a>
+        <a href="/versions">Versions</a>
+        <a href="/about">About</a>
+        <a href="/contacts">Contact</a>
+        <a id="theme-toggle">🌙</a>
+        {% if session.logged_in %}
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login</a>
+        {% endif %}
+        <div class="search-container">
+            <form action="{{ url_for('search') }}" method="get" autocomplete="off">
+                <input id="search-input" type="text" placeholder="Search.." name="query" oninput="autocompleteSearch(this.value)">
+                <div id="autocomplete-box" class="autocomplete-items"></div>
+                <button type="submit"> 🔍 </button>
+            </form>
+            <script>
+                function autocompleteSearch(val) {
+                  const box = document.getElementById("autocomplete-box");
+                  box.innerHTML = "";
+                
+                  if (val.length < 2) return; // wait until at least 2 chars
+                
+                  fetch(`/autocomplete?q=${val}`)
+                    .then(res => res.json())
+                    .then(data => {
+                      data.forEach(item => {
+                        const div = document.createElement("div");
+                        div.textContent = item;
+                        div.onclick = function () {
+                          document.getElementById("search-input").value = item;
+                          box.innerHTML = "";
+                        };
+                        box.appendChild(div);
+                      });
+                    });
+                }
+                </script>                
+        </div>
+    </div>
+
+    {% if not session.logged_in %}
+        <div class="sessionLIO">
+            {% if language == 'EN' %}
+                <strong>Read-only mode:</strong> Login to enable editing features.
+            {% elif language == 'PT' %}
+                <strong>Read-only mode:</strong> Dá Login para editar a ontologia.
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <section class="rdf">
+        
+
+
+        <div>
+                <div class="topnav">
+                    <button href='\sync_ontology' id="B0" class="btn">Full Ontology</button>
+                    <button id="B1" class="btn">Classes</button>
+                    <button id="B2" class="btn">Data Properties</button>
+                    <button id="B3" class="btn">Object Properties</button>
+                    <button id="B4" class="btn">Individuals</button>
+                </div>
+
+
+                <div id="monaco-rdf-editor" style="height: 700px; width: 100%; border: 1px solid #ccc;"></div>
+                <input type="hidden" id="rdf" name="rdf">
+            </div>
+
+
+        <div style="margin: 20px">
+            {% if language == 'EN' %}
+                <a href="/ontology" class="btn">RDF Graph</a>
+                {% if session.logged_in %}
+                    <button id="editButton" class="btn">Edit Ontology in Protégé</button>
+                <!--button id="syncButton" class="btn">Sync Ontology</button-->
+                    <button id="saveButton" class="btn">Save Ontology</button>
+                    <button id="convertButton" class="btn">Convert Ontology</button>
+                {% endif %}
+                
+
+            {% elif language == 'PT' %}
+                <a href="/ontology" class="btn">RDF Graph</a>
+                {% if session.logged_in %}
+                    <button id="editButton" class="btn">Editar em Protégé</button>
+                <!--button id="syncButton" class="btn">Sync Ontology</button-->
+                    <button id="saveButton" class="btn">Guardar Alterações</button>
+                    <button id="convertButton" class="btn">Converter</button>
+                {% endif %}
+                
+            {% endif %}
+            
+        </div>
+        <!--a href="./ontology">
+            <button id="QButton" class="btn">Queries</button>
+        </a-->
+
+    </section>
+
+    <hr class="separator">
+
+    <section class="sparql">
+        <h2>SPARQL Query</h2>
+        <textarea id="query" rows="5" cols="50">
+SELECT ?class WHERE { 
+    ?class a owl:Class .
+}
+        </textarea>
+        <br>
+        <button class="btn" onclick="sendQuery()">Execute Me!</button>
+        <p id="message"></p>
+
+        <script>
+            function sendQuery() {
+                let queryText = document.getElementById("query").value;
+                fetch("/sparql", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ query: queryText })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.redirect) {
+                        window.location.href = data.redirect;
+                    } else {
+                        document.getElementById("message").innerText = "Error: " + data.error;
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+            }
+        </script>
+
+<script>
+// Move this OUTSIDE and AFTER the Monaco require block
+let editor;
+let currentSection = "full";  // default
+
+require.config({ paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor/min/vs' } });
+
+require(['vs/editor/editor.main'], function () {
+    // 1. Register the language
+    monaco.languages.register({ id: 'customTurtle' });
+
+    // 2. Define syntax rules
+    monaco.languages.setMonarchTokensProvider('customTurtle', {
+        defaultToken: 'invalid',
+        tokenizer: {
+            root: [
+                [/##.*/, 'comment.darker'],
+                [/#\S+/, 'notcomment'],
+                [/#\s+.*/, 'comment'],
+                [/prefix/, 'keyword'],
+                [/<[^>]*>/, 'constant.uri'],
+                [/\brdf:[\w\-]+/, 'rdf'],
+                [/\brdfs:[\w\-]+/, 'rdfs'],
+                [/\bowl:[\w\-]+/, 'owl'],
+                [/\"([^"\\]|\\.)*\"/, 'string'],
+                [/\./, 'delimiter'],
+                [/;/, 'delimiter'],
+                [/\b[a-zA-Z_][\w\-]*\b/, 'identifier']
+            ]
+        }
+    });
+
+    // 3. Define the theme with proper colors structure
+    monaco.editor.defineTheme('customDark', {
+        base: 'vs-dark',
+        inherit: true,
+        rules: [
+            { token: 'comment', foreground: '888888', fontStyle: 'italic' },
+            { token: 'notcomment', foreground: 'C586C0', fontStyle: 'italic' },
+            { token: 'comment.darker', foreground: '555555', fontStyle: 'italic' },
+            { token: 'keyword', foreground: '569CD6', fontStyle: 'bold' },
+            { token: 'rdf', foreground: 'C586C0' },
+            { token: 'rdfs', foreground: '9CDCFE' },
+            { token: 'owl', foreground: 'D7BA7D' },
+            { token: 'constant.uri', foreground: '4EC9B0' },
+            { token: 'string', foreground: 'CE9178' },
+            { token: 'delimiter', foreground: 'CCCCCC' },
+            { token: 'identifier', foreground: 'DDDDDD' }
+        ],
+        colors: {
+            'editor.foreground': '#CCCCCC',
+            'editor.background': '#1E1E1E'
+        }
+    });
+
+    monaco.editor.defineTheme('customLight', {
+        base: 'vs',
+        inherit: true,
+        rules: [
+            { token: 'comment', foreground: '008000', fontStyle: 'italic' },
+            { token: 'comment.darker', foreground: '555555', fontStyle: 'italic' },
+            { token: 'keyword', foreground: '0000FF', fontStyle: 'bold' },
+            { token: 'rdf', foreground: '800080' },
+            { token: 'rdfs', foreground: '0070C1' },
+            { token: 'owl', foreground: 'B8860B' },
+            { token: 'constant.uri', foreground: '008080' },
+            { token: 'string', foreground: 'A31515' },
+            { token: 'delimiter', foreground: '000000' },
+            { token: 'identifier', foreground: '000000' }
+        ],
+        colors: {
+            'editor.foreground': '#000000',
+            'editor.background': '#FFFFFF'
+        }
+    });
+
+    // 4. Create the editor with theme detection
+    const currentTheme = document.body.classList.contains('dark-mode') ? 'customDark' : 'customLight';
+    
+    editor = monaco.editor.create(document.getElementById('monaco-rdf-editor'), {
+        value: '',
+        language: 'customTurtle',
+        theme: currentTheme,
+        automaticLayout: true,
+        wordWrap: 'on'
+    });
+
+    // 5. Setup button endpoints INSIDE the require callback
+    const endpoints = {
+        B0: "/get_raw_ontology",
+        B1: "/get_classes_raw",
+        B2: "/get_data_properties_raw",
+        B3: "/get_object_properties_raw",
+        B4: "/get_individuals_raw"
+    };
+
+    Object.keys(endpoints).forEach(id => {
+        document.getElementById(id).addEventListener("click", () => {
+            fetch(endpoints[id])
+                .then(res => res.text())
+                .then(data => {
+                    editor.setValue(data);
+                    document.querySelectorAll(".topnav button").forEach(btn => btn.classList.remove("active"));
+                    document.getElementById(id).classList.add("active");
+                });
+        });
+    });
+
+    // Load full ontology on initial render
+    fetch(endpoints.B0)
+        .then(res => res.text())
+        .then(data => {
+            editor.setValue(data);
+            document.getElementById("B0").classList.add("active");
+        });
+});
+
+// MOVE THESE EVENT LISTENERS OUTSIDE THE REQUIRE BLOCK
+// Wrap in DOMContentLoaded to ensure DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Section tracking - with null checks
+    const b0 = document.getElementById("B0");
+    const b1 = document.getElementById("B1");
+    const b2 = document.getElementById("B2");
+    const b3 = document.getElementById("B3");
+    const b4 = document.getElementById("B4");
+    
+    if (b0) b0.addEventListener("click", () => currentSection = "full");
+    if (b1) b1.addEventListener("click", () => currentSection = "classes");
+    if (b2) b2.addEventListener("click", () => currentSection = "dataproperties");
+    if (b3) b3.addEventListener("click", () => currentSection = "objectproperties");
+    if (b4) b4.addEventListener("click", () => currentSection = "individuals");
+
+    // Save button - check if it exists first (for logged-in users)
+    const saveButton = document.getElementById("saveButton");
+    if (saveButton) {
+        saveButton.addEventListener("click", function() {
+            if (!editor) {
+                alert("Editor not ready yet!");
+                return;
+            }
+            
+            const content = editor.getValue();
+            
+            fetch("/save_ontology", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ 
+                    content: content,
+                    section: currentSection
+                })
+            })
+            .then(res => {
+                if (res.ok) {
+                    alert("Ontology saved successfully!");
+                    location.reload();
+                } else {
+                    alert("Failed to save ontology.");
+                }
+            });
+        });
+    }
+});
+</script>
+
+
+<!--
+        <button onclick="sendQueryI()">Individuals</button>
+        <p id="message"></p>
+
+        <script>
+            function sendQueryI() {
+                let queryText = "SELECT ?individual WHERE { ?individual rdf:type owl:NamedIndividual .}"
+                fetch("/sparql", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ query: queryText })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.redirect) {
+                        window.location.href = data.redirect;
+                    } else {
+                        document.getElementById("message").innerText = "Error: " + data.error;
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+            }
+        </script>
+
+        <button onclick="sendQueryC()">Classes</button>
+        <p id="message"></p>
+
+        <script>
+            function sendQueryC() {
+                let queryText = "SELECT ?class WHERE { ?class a owl:Class .}"
+                fetch("/sparql", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ query: queryText })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.redirect) {
+                        window.location.href = data.redirect;
+                    } else {
+                        document.getElementById("message").innerText = "Error: " + data.error;
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+            }
+        </script>
+
+        <button onclick="sendQueryOP()">Object Properties</button>
+        <p id="message"></p>
+
+        <script>
+            function sendQueryOP() {
+                let queryText = "SELECT ?property WHERE { ?property a owl:ObjectProperty .}"
+                fetch("/sparql", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ query: queryText })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.redirect) {
+                        window.location.href = data.redirect;
+                    } else {
+                        document.getElementById("message").innerText = "Error: " + data.error;
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+            }
+        </script>
+        
+        <button onclick="sendQueryDP()">Data Properties</button>
+        <p id="message"></p>
+
+        <script>
+            function sendQueryDP() {
+                let queryText = "SELECT ?property WHERE { ?property a owl:DatatypeProperty .}"
+                fetch("/sparql", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ query: queryText })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.redirect) {
+                        window.location.href = data.redirect;
+                    } else {
+                        document.getElementById("message").innerText = "Error: " + data.error;
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+            }
+        </script>
+    -->
+    </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleButton = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Load saved theme
+    if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark-mode');
+        toggleButton.textContent = "☀️";
+    }
+
+    toggleButton.addEventListener('click', function () {
+        body.classList.toggle('dark-mode');
+
+        if (body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            toggleButton.textContent = "☀️";
+        } else {
+            localStorage.setItem('theme', 'light');
+            toggleButton.textContent = "🌙";
+        }
+    });
+});
+</script>
+
+
+</body>
+
+
+<!-- Our codes -->
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>

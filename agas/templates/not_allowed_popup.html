@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="static/images/logo2.png">
+    <meta charset="UTF-8">
+    <title>Access Denied</title>
+    <script>
+        window.onload = function() {
+            alert("Sorry, you are not allowed to view the class '{{ cls }}'! You didn't name it in the DSL...");
+            window.location.href = "{{ url_for('homeEXP') }}";
+        }
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,4128 @@
+@prefix : <http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28/> .
+
+<http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28/hasSeason
+:hasSeason rdf:type owl:ObjectProperty ;
+           rdfs:domain :Monster ;
+           rdfs:range :Season .
+
+
+###  http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28/hasStrength
+:hasStrength rdf:type owl:ObjectProperty ;
+             rdfs:domain :Monster ;
+             rdfs:range :Strength .
+
+
+###  http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28/hasWeakness
+:hasWeakness rdf:type owl:ObjectProperty ;
+             rdfs:domain :Monster ;
+             rdfs:range :Weakness .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28#description
+:description rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Monster ;
+             rdfs:range xsd:string .
+
+
+###  http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28#killing
+:killing rdf:type owl:DatatypeProperty ;
+         rdfs:domain :Monster ;
+         rdfs:range xsd:string .
+
+
+###  http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28#origin
+:origin rdf:type owl:DatatypeProperty ;
+        rdfs:domain :Monster ;
+        rdfs:range xsd:string .
+
+
+###  http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28/rating
+:rating rdf:type owl:DatatypeProperty ;
+        rdfs:domain :Season ;
+        rdfs:range [
+            rdf:type rdfs:Datatype ;
+            owl:onDataRange xsd:float ;
+            owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] [ xsd:maxInclusive "10.0"^^xsd:float ] )
+        ] .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28/Monster
+:Monster rdf:type owl:Class ;
+         rdfs:subClassOf [ rdf:type owl:Restriction ;
+                           owl:onProperty :hasSeason ;
+                           owl:someValuesFrom :Season
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :hasStrength ;
+                           owl:someValuesFrom :Strength
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :hasWeakness ;
+                           owl:someValuesFrom :Weakness
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :description ;
+                           owl:someValuesFrom xsd:string
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :killing ;
+                           owl:someValuesFrom xsd:string
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :origin ;
+                           owl:someValuesFrom xsd:string
+                         ] .
+
+
+###  http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28/Season
+:Season rdf:type owl:Class ;
+        rdfs:subClassOf [ rdf:type owl:Restriction ;
+                          owl:onProperty :rating ;
+                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                          owl:onDataRange xsd:float
+                        ] .
+
+
+###  http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28/Strength
+:Strength rdf:type owl:Class .
+
+
+###  http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28/Weakness
+:Weakness rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+:Acheri a :Monster,
+        owl:NamedIndividual ;
+    :description "Acheri is a spirit in Native American folklore, often depicted as a ghostly figure of a young girl who brings sickness and death to those she encounters."^^xsd:string ;
+    :hasSeason :Season_2,
+        :Season_4 ;
+    :hasStrength :Body_Materialization,
+        :Flight,
+        :Invisibility,
+        :Shapeshifting,
+        :Super_Speed,
+        :Super_Strength ;
+    :hasWeakness :Iron,
+        :Salt,
+        :Special_Children ;
+    :killing "Bring sickness to humans, particularly children"^^xsd:string ;
+    :origin "Native American folklore"^^xsd:string .
+
+:Akrida a :Monster,
+        owl:NamedIndividual ;
+    :description "The Akrida are a species of monster not from Earth who have tried to invade multiple times in the past."^^xsd:string ;
+    :hasSeason :Season_1 ;
+    :hasStrength :Essence_Extraction,
+        :Immortality,
+        :Life-Force_Extraction,
+        :Nigh-Invulnerability,
+        :Possession ;
+    :hasWeakness :Anti-Possession_Tattoo,
+        :Connection_to_their_leader,
+        :Coven_Magic,
+        :Ostium,
+        :Otherworldly_Objects,
+        :Soul-Powered_Magic,
+        :The_Impala ;
+    :killing "They were created by God as a failsafe to destroy existence in case he failed in his own efforts."^^xsd:string ;
+    :origin "God"^^xsd:string .
+
+:Aliens a :Monster,
+        owl:NamedIndividual ;
+    :description "Aliens are extraterrestrial beings believed by some to visit or inhabit Earth. They are often featured in science fiction literature, films, and conspiracy theories."^^xsd:string ;
+    :hasSeason :Season_10,
+        :Season_11,
+        :Season_12,
+        :Season_13,
+        :Season_14,
+        :Season_2,
+        :Season_5,
+        :Season_6,
+        :Season_8 ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "Modern folklore"^^xsd:string .
+
+:Alphas a :Monster,
+        owl:NamedIndividual ;
+    :description "Alphas are the first monsters of each species created by Eve. They are the Fathers of Fallen Beasts."^^xsd:string ;
+    :hasSeason :Season_10,
+        :Season_12,
+        :Season_15,
+        :Season_6,
+        :Season_7,
+        :Season_8 ;
+    :hasStrength :Enhanced_Abilities,
+        :High_Endurance,
+        :Immortality,
+        :Immunity,
+        :Invulnerability,
+        :Super_Stamina,
+        :Super_Strength,
+        :Telepathic_Link ;
+    :hasWeakness :Decapitation,
+        :Eve,
+        :Horde_of_Demons,
+        :Leviathans,
+        :The_Colt ;
+    :killing "Depends on what species they are."^^xsd:string ;
+    :origin "Eve"^^xsd:string .
+
+:Amazons a :Monster,
+        owl:NamedIndividual ;
+    :description "They were created by a meeting of the pagan deities Ares and Harmonia, creating a tribe of warrior women who had no need for males, except for reproduction. At some point, they had a war, and their numbers were vastly depleted, as such they made a deal with Harmonia to save them from extinction, and she made them more than human, effectively turning them into monsters. Unlike most other monsters, they are not descended from Eve and thus have no Alpha."^^xsd:string ;
+    :hasSeason :Season_7 ;
+    :hasStrength :Handling_of_Weapons,
+        :Rapid_Aging,
+        :Super_Strength ;
+    :hasWeakness :Mortality ;
+    :killing "After mating, the child created must kill their father as a sign of initiation, they do this by first cutting off his limbs, and carving a symbol into his chest, before killing them. Children are taken at birth and trained and tortured in order to make them strong. Before their initiation, they have a mark burned into their skin. Any child who runs away may also be hunted down by other members."^^xsd:string ;
+    :origin "Greek mythology"^^xsd:string .
+
+:Arachne a :Monster,
+        owl:NamedIndividual ;
+    :description "An arachne is a creature that can create strong webs, just like real spiders can do, so they can trap their victims with ease. They are also capable of changing humans into arachne by biting them, in order to propagate their species."^^xsd:string ;
+    :hasSeason :Season_13,
+        :Season_6 ;
+    :hasStrength :Invulnerability,
+        :Limb_Regrowth,
+        :Stinger_Protrusion,
+        :Super_Agility,
+        :Super_Senses,
+        :Super_Speed,
+        :Super_Strength,
+        :Venom,
+        :Webbing_Generation ;
+    :hasWeakness :Decapitation ;
+    :killing "Poisoning and feeding upon human flesh."^^xsd:string ;
+    :origin "Eve"^^xsd:string .
+
+:Aswang a :Monster,
+        owl:NamedIndividual ;
+    :description "Aswang are mythical creatures in Philippine folklore, often depicted as shape-shifters and tricksters that prey on humans, particularly pregnant women and children. They mostly take an appearance of a beautiful young woman during the day, but can change their age and even species."^^xsd:string ;
+    :hasStrength :Invulnerability,
+        :Paralysis,
+        :Regeneration,
+        :Shapeshifting,
+        :Super_Strength ;
+    :hasWeakness :Aswang_whip,
+        :Cold,
+        :Spice_Concoction ;
+    :killing "They grow bat wings and preys on pregnant woman, eating the unborn baby inside."^^xsd:string ;
+    :origin "Philippine folklore"^^xsd:string .
+
+:Baku a :Monster,
+        owl:NamedIndividual ;
+    :description "Baku are supernatural beings in Japanese folklore, often depicted as dream-eating creatures that can protect sleepers from nightmares."^^xsd:string ;
+    :hasSeason :Season_11 ;
+    :hasStrength :Dream_Manipulation ;
+    :killing "Legends say the Baku will come into the child's room and devour the bad dream, allowing the child to go back to sleep peacefully. However, calling to the Baku must be done sparingly, because if he remains hungry after eating one's nightmare, he may also devour their hopes and desires as well, leaving them to live an empty life."^^xsd:string ;
+    :origin "Japanese folklore"^^xsd:string .
+
+:Banshee a :Monster,
+        owl:NamedIndividual ;
+    :description "There exists two specific types: a benevolent one that wails in the night as a warning when someone is about to die, and a malevolent one that uses their supernatural screaming to drive humans insane and bash their own heads in."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_11,
+        :Season_12,
+        :Season_3 ;
+    :hasWeakness :Banshee_banishing_spell,
+        :Celtic_Blood_Trapping_Spell,
+        :Gold,
+        :Salt,
+        :Salting_and_Burning_of_Remains ;
+    :killing " They use their piercing scream to drive their prey crazy. Once the human is dead, the malevolent banshees then feed on their frontal lobe."^^xsd:string ;
+    :origin "Irish and Scottish folklore"^^xsd:string .
+
+:Bigfoot a :Monster,
+        owl:NamedIndividual ;
+    :description "Bigfoot, also known as Sasquatch, is a legendary ape-like creature said to inhabit forests, particularly in the Pacific Northwest region of North America."^^xsd:string ;
+    :hasSeason :Season_12,
+        :Season_15,
+        :Season_2,
+        :Season_3,
+        :Season_4,
+        :Season_5,
+        :Season_9 ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "North American folklore"^^xsd:string .
+
+:Bisaan a :Monster,
+        owl:NamedIndividual ;
+    :description "Bisaan were said to have originated in the forests of Malaysia and are very rare in America. In their true forms they have no genitalia as a result they emerge from underground every 27 years and possess humans through the mouth, so they can mate and breed. "^^xsd:string ;
+    :hasSeason :Season_11 ;
+    :hasStrength :Fangs,
+        :Possession,
+        :Reproduction,
+        :Super_Strength ;
+    :hasWeakness :Decapitation,
+        :Fire,
+        :Sage,
+        :Short_Life-Span ;
+    :killing "Possession."^^xsd:string ;
+    :origin "Malaysian folklore"^^xsd:string .
+
+:Black_Dogs a :Monster,
+        owl:NamedIndividual ;
+    :description "Black Dogs are spectral or supernatural canines found in European folklore, often associated with death or the Devil."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_2 ;
+    :killing "They have similarities with hell hounds and wendigos."^^xsd:string ;
+    :origin "European folklore"^^xsd:string .
+
+:Borderwalker a :Monster,
+        owl:NamedIndividual ;
+    :description "A normal Borderwalker is a shape-shifter, able to take on aspects of various desert animals such as the coyote, the scorpion or the rattlesnake. Borderwalkers are only female, like the Amazons."^^xsd:string ;
+    :hasStrength :Portal_Creation,
+        :Shapeshifting,
+        :Superhuman_Strength ;
+    :hasWeakness :Emotions,
+        :Itztlitlantl,
+        :Marigold_flowers,
+        :Obsidian_Weapons,
+        :Spells ;
+    :killing "They are generally harmless and are left alone by hunters."^^xsd:string ;
+    :origin "Trickster God"^^xsd:string .
+
+:Braydon_Albright a :Monster,
+        owl:NamedIndividual ;
+    :description "Braydon Albright was a man who gained the power to shapeshift into a creature known as Sheepsquatch or the White Thing through unknown means."^^xsd:string ;
+    :hasStrength :Deadly_Claws,
+        :Invulnerability,
+        :Shapeshifting,
+        :Super_Strength ;
+    :hasWeakness :White_Ash_Stake ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "Demon deal"^^xsd:string .
+
+:Buruburu a :Monster,
+        owl:NamedIndividual ;
+    :description "The Buruburu are ghosts born of a person's fear after dying in a terrifying manner. They can then infect others with their fear, and this infection is known as the Ghost Sickness. The people they infect are usually people who have made a habit of terrorizing others."^^xsd:string ;
+    :hasSeason :Season_4 ;
+    :hasStrength :Electrokinesis,
+        :Ghost_Sickness,
+        :Super_Strength,
+        :Teleportation ;
+    :hasWeakness :Iron,
+        :Salt,
+        :Salting_and_Burning_the_Remains,
+        :Scared_to_Rest ;
+    :killing "Infects victims with ghost sickness."^^xsd:string ;
+    :origin "Japanese folklore"^^xsd:string .
+
+:Changelings a :Monster,
+        owl:NamedIndividual ;
+    :description "Changelings are mythological beings in European folklore, believed to be fairy or demon children left in the place of human infants."^^xsd:string ;
+    :hasSeason :Season_3,
+        :Season_4,
+        :Season_6,
+        :Season_9 ;
+    :hasStrength :Invulnerability,
+        :Lamprey-like_mouth,
+        :Shapeshifting,
+        :Super_agility,
+        :Super_strength,
+        :Teleportation ;
+    :hasWeakness :Family,
+        :Fire,
+        :Mirrors ;
+    :killing "They feed on humans, specifically on synovial fluid. "^^xsd:string ;
+    :origin "European folklore"^^xsd:string .
+
+:Cherubim a :Monster,
+        owl:NamedIndividual ;
+    :description "also called Cupids by humans, are a type of angel that seem to be at the very bottom of Heaven's hierarchy. They are tasked with pairing important bloodlines together by means, as it is their chore."^^xsd:string ;
+    :hasSeason :Season_10,
+        :Season_11,
+        :Season_13,
+        :Season_2,
+        :Season_3,
+        :Season_4,
+        :Season_5,
+        :Season_6,
+        :Season_8,
+        :Season_9 ;
+    :hasStrength :Bowhunting,
+        :Immortality,
+        :Invisibility,
+        :Invulnerability,
+        :Pathokinesis,
+        :Possession,
+        :Super_strength,
+        :Supernatural_Perception,
+        :Teleportation ;
+    :hasWeakness :Angel_Blade,
+        :Higher_Angels ;
+    :killing "They are generally harmless and are left alone by hunters."^^xsd:string ;
+    :origin "God"^^xsd:string .
+
+:Chimera a :Monster,
+        owl:NamedIndividual ;
+    :description "This Chimera, being constituted of multiple parts from multiple random animals and humans, are very formidable threats. Its mutation effects are also very dangerous, because it will transform human to human-animal hybrids to the point that cannot be recovered from."^^xsd:string ;
+    :hasWeakness :Beheading,
+        :Culling ;
+    :killing "Infection with their blood"^^xsd:string ;
+    :origin "Greek mythology"^^xsd:string .
+
+:Chupacabra a :Monster,
+        owl:NamedIndividual ;
+    :description "Chupacabra is a legendary creature in Latin American folklore, said to attack livestock and drain their blood, often described as resembling a reptilian or alien creature."^^xsd:string ;
+    :hasSeason :Season_11,
+        :Season_12,
+        :Season_2,
+        :Season_4,
+        :Season_8 ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "Latin American folklore"^^xsd:string .
+
+:Cloaked_Figures a :Monster,
+        owl:NamedIndividual ;
+    :description "The cloaked figures look like humanoid monsters with glowing red eyes, clad in long black, ragged cloaks. They also cover their mouth with a crude mask that, when opened, exposes their predator-like face, covered in slime. When wounded, they expel thick blue blood."^^xsd:string ;
+    :hasSeason :Season_13,
+        :Season_15 ;
+    :hasStrength :Super_Agility,
+        :Super_Speed,
+        :Super_Strength ;
+    :hasWeakness :Fire,
+        :Mortality,
+        :Primordial_Entities ;
+    :killing "Hunting and killing"^^xsd:string ;
+    :origin "The Bad Place"^^xsd:string .
+
+:Creatures a :Monster,
+        owl:NamedIndividual ;
+    :description "Creatures are non-human beings that have an unknown origin and/or are not descended from Eve. They come from various realms, have various powers and unique appearances."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_10,
+        :Season_11,
+        :Season_12,
+        :Season_13,
+        :Season_14,
+        :Season_15,
+        :Season_2,
+        :Season_3,
+        :Season_4,
+        :Season_5,
+        :Season_6,
+        :Season_7,
+        :Season_8,
+        :Season_9 ;
+    :killing "Depends on what species they are."^^xsd:string ;
+    :origin "Unknown"^^xsd:string .
+
+:Croatoan_Virus a :Monster,
+        owl:NamedIndividual ;
+    :description "The Croatoan Virus is a creation from the show, depicted as a demonic virus designed to turn humans into demons. The virus is spread by blood to blood contact and usually takes three to four hours for the symptoms and sulfur to manifest."^^xsd:string ;
+    :hasSeason :Season_2,
+        :Season_5 ;
+    :killing "Infects people and turns them into murderous rabid creatures with varying degrees of intelligence, ranging from cruel and cunning to savage and mindless."^^xsd:string ;
+    :origin "Demonic virus"^^xsd:string .
+
+:Crocotta a :Monster,
+        owl:NamedIndividual ;
+    :description "Crocotta is a mythical creature from medieval folklore, often depicted as a hybrid between a dog and a wolf, known for its ability to mimic human voices."^^xsd:string ;
+    :hasSeason :Season_3,
+        :Season_9 ;
+    :hasStrength :Electronic_Manipulation,
+        :Invulnerability,
+        :Longevity,
+        :Shapeshifting,
+        :Soul_Devouring,
+        :Super_Speed,
+        :Super_Strength,
+        :Voice_Mimicry ;
+    :hasWeakness :Spinal_Cord_Injuries ;
+    :killing "Mimic any person's voice to lure their victims out so they can feed."^^xsd:string ;
+    :origin "Medieval folklore"^^xsd:string .
+
+:Crossroad_Demon a :Monster,
+        owl:NamedIndividual ;
+    :description "Crossroad demons are a creation from the show, depicted as demons tasked with 'buying' souls for Hell through deals with humans. These deals consist of the demon granting the human's wish in exchange for ownership over that person's soul, resulting in the person dying and going to Hell to be transformed into a demon upon death."^^xsd:string ;
+    :hasSeason :Season_10,
+        :Season_11,
+        :Season_12,
+        :Season_13,
+        :Season_14,
+        :Season_15,
+        :Season_2,
+        :Season_3,
+        :Season_4,
+        :Season_5,
+        :Season_6,
+        :Season_7,
+        :Season_8,
+        :Season_9 ;
+    :hasStrength :Astral_Perception,
+        :Demonic_Possession,
+        :Flight,
+        :Healing,
+        :Immortality,
+        :Invulnerability,
+        :Power_Granting,
+        :Reality_Warping_\(by_deals\),
+        :Resurrection,
+        :Soul_Reading,
+        :Super_Stamina,
+        :Super_Strength,
+        :Telekinesis,
+        :Teleportation ;
+    :hasWeakness :Angel_Blades,
+        :Angels,
+        :Burning_Their_Human_Bones,
+        :Demon-Killing_Knife,
+        :Demon_Curing_Ritual,
+        :Devil_s_Trap,
+        :Exorcism,
+        :Hex_Bags,
+        :Higher_Demons,
+        :Holy_Water,
+        :Lucifer_s_Spear,
+        :Nephilim,
+        :The_Colt ;
+    :killing "Making deals with humans in exchange for their souls"^^xsd:string ;
+    :origin "Lucifer"^^xsd:string .
+
+:Cthulhu a :Monster,
+        owl:NamedIndividual ;
+    :description "Cthulhu is a cosmic entity created by H.P. Lovecraft, depicted as a monstrous, tentacled being worshipped by cultists. It is a central figure in Lovecraftian horror."^^xsd:string ;
+    :hasSeason :Season_6 ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "H.P. Lovecraft"^^xsd:string .
+
+:Daeva a :Monster,
+        owl:NamedIndividual ;
+    :description "A Daeva is an ancient demonic creature of shadow, a special type of demon, that can be summoned by other demons."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_2 ;
+    :hasWeakness :Light,
+        :Magic ;
+    :killing "Used by demons as invisible killers."^^xsd:string ;
+    :origin "Lucifer"^^xsd:string .
+
+:Death_Echo a :Monster,
+        owl:NamedIndividual ;
+    :description "A Death Echo is a type of trapped Ghost. The spirit is stuck reenacting its death over and over in a loop. Sometimes the spirit can be shocked into moving on, particularly by someone with whom the deceased has an emotional connection."^^xsd:string ;
+    :hasSeason :Season_3 ;
+    :killing "They are generally harmless and are left alone by hunters."^^xsd:string ;
+    :origin "Modern folklore"^^xsd:string .
+
+:Death_Omen a :Monster,
+        owl:NamedIndividual ;
+    :description "While they appear violent and intimidating, they're not dangerous ghosts but rather are trying to warn people who may be murdered by the person who killed them. They are tied to the Earth because they wish to find out who killed them."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_11,
+        :Season_12,
+        :Season_2,
+        :Season_3,
+        :Season_4,
+        :Season_5,
+        :Season_7 ;
+    :killing "They are generally harmless and are left alone by hunters."^^xsd:string ;
+    :origin "Modern folklore"^^xsd:string .
+
+:Deities a :Monster,
+        owl:NamedIndividual ;
+    :description "When we, humans first climbed down from the trees, we didn't pray to God. We prayed to the sun, the womb, the rain and the stars. And, at first, God was furious, but soon enough, he birthed Ra, Anu, Hera, Mixcoatl, and all the rest."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_10,
+        :Season_11,
+        :Season_12,
+        :Season_13,
+        :Season_14,
+        :Season_15,
+        :Season_2,
+        :Season_3,
+        :Season_4,
+        :Season_5,
+        :Season_6,
+        :Season_7,
+        :Season_8,
+        :Season_9 ;
+    :hasStrength :Affinity_to_animals,
+        :Apporting,
+        :Astral_Projection,
+        :Biokinesis,
+        :Blessings,
+        :Chronokinesis,
+        :Clairsentience,
+        :Conjuration,
+        :Cosmic_Awareness,
+        :Cursing,
+        :Electrokinesis,
+        :Foresight,
+        :Immortality,
+        :Influence_Over_Vegetation,
+        :Invulnerability,
+        :Lower_Tier_Nigh-Omnipotence,
+        :Magic,
+        :Minion_creation,
+        :Multilingualism,
+        :Necromancy,
+        :Nigh_Indestructibility,
+        :Possession,
+        :Power_Granting,
+        :Precognition,
+        :Pyrokinesis,
+        :Reality_Warping,
+        :Resurrection,
+        :Sacrifice_Empowerment,
+        :Shapeshifting,
+        :Soul_Control,
+        :Spell_Casting,
+        :Super_Senses,
+        :Super_Speed,
+        :Super_stamina,
+        :Super_strength,
+        :Supernatural_Perception,
+        :Telekinesis,
+        :Telepathy,
+        :Teleportation,
+        :Truth_Compulsion,
+        :Weather_Manipulation ;
+    :hasWeakness :Adamantine_s_Silver_Gauntlet,
+        :Angel_Blades,
+        :Archangels,
+        :Armament_s_Shotgun,
+        :Artemis__Blade,
+        :Artemis__Bow_and_Arrows,
+        :Blight_s_Club,
+        :Divine_Weapons,
+        :Fate-Killing_Blade,
+        :Fire,
+        :Flare_s_Copper_Circlet,
+        :Gabriel_s_swords,
+        :Higher_Deities,
+        :Karrion_s_Machete,
+        :Lack_of_Tributes,
+        :Masque_s_Mask,
+        :Mjolnir,
+        :Paeon_s_Caduceus,
+        :Specific_Rituals,
+        :The_Colt,
+        :Their_Own_Weapons_\(Apotheosis__Gods\),
+        :Wooden_Stakes,
+        :Wyld_s_Spear ;
+    :killing "Some of them are neutral or indifferent to humans, but some are evil and enjoy and have a taste for human flesh and sacrifices."^^xsd:string ;
+    :origin "God"^^xsd:string .
+
+:Demigods a :Monster,
+        owl:NamedIndividual ;
+    :description "Demigods are the children of gods with a being of another species. An entire race such as the gorgons or tricksters can be demigods as well."^^xsd:string ;
+    :hasSeason :Season_13,
+        :Season_14,
+        :Season_15,
+        :Season_2,
+        :Season_5,
+        :Season_6,
+        :Season_8,
+        :Season_9 ;
+    :killing "Depends on what species they are."^^xsd:string ;
+    :origin "Deities"^^xsd:string .
+
+:Disaster_Demon a :Monster,
+        owl:NamedIndividual ;
+    :description "An unnamed demon caused disasters by crashing planes."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_14,
+        :Season_2 ;
+    :hasStrength :Demonic_Possession,
+        :Electromagnetic_Interference,
+        :Flight,
+        :Immortality,
+        :Invulnerability,
+        :Super_Strength,
+        :Telepathy_\(unconfirmed\),
+        :Unique,
+        :Voice_Manipulation ;
+    :hasWeakness :Exorcism,
+        :Holy_water ;
+    :killing "Engage in all sorts of torture and destruction."^^xsd:string ;
+    :origin "Lucifer"^^xsd:string .
+
+:Djinn a :Monster,
+        owl:NamedIndividual ;
+    :description "Djinns, also spelled Jinns and sometimes even called Genies (Jinni), are a rare race of supernatural cave dwelling hermits that have the power to produce powerful hallucinations inside the minds of humans."^^xsd:string ;
+    :hasSeason :Season_12,
+        :Season_13,
+        :Season_14,
+        :Season_15,
+        :Season_2,
+        :Season_6,
+        :Season_8,
+        :Season_9 ;
+    :hasStrength :Dream_Walking,
+        :Hallucinogenic_Touch,
+        :Immortality,
+        :Invulnerability,
+        :Pyrokinesis,
+        :Shapeshifting,
+        :Super_Agility,
+        :Super_Senses,
+        :Super_Speed,
+        :Super_Strength,
+        :Telepathy ;
+    :hasWeakness :Angel_Blades,
+        :Explosions,
+        :Extreme_Brain_Damage,
+        :High-Tier_Demons,
+        :Nephilim,
+        :Seraphim,
+        :Silver_and_lamb_blood,
+        :Traumatic_Memories ;
+    :killing "They feed on human blood and can poison their victims with a touch. The poison can be used either to kill their victims quickly, or to leave victims in a coma-like state while the djinn feeds on their blood over a long period of time. "^^xsd:string ;
+    :origin "Arabian mythology"^^xsd:string .
+
+:Edward_Trenton_s_Species a :Monster,
+        owl:NamedIndividual ;
+    :description "Edward Trenton's Species refers to an unidentified and apparently very rare type of monster that Edward Trenton transformed into."^^xsd:string ;
+    :hasSeason :Season_10 ;
+    :hasStrength :Invulnerability,
+        :Super_Strength ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "Unknown"^^xsd:string .
+
+:Eleanor_Visyak_s_Species a :Monster,
+        owl:NamedIndividual ;
+    :description "Eleanor Visyak's Species refers to an unidentified race of creature that Dr. Eleanor Visyak was a part of. Being the only one to appear, not much is known about this race."^^xsd:string ;
+    :hasSeason :Season_6 ;
+    :hasStrength :Immortality,
+        :Invisibility,
+        :Possession,
+        :Superhuman_Strength,
+        :Supernatural_Endurance ;
+    :hasWeakness :Angels ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "Unknown"^^xsd:string .
+
+:Elves a :Monster,
+        owl:NamedIndividual ;
+    :description "Elves are a type of fairy."^^xsd:string ;
+    :hasSeason :Season_6 ;
+    :hasStrength :Diminutive_Size ;
+    :hasWeakness :Cream,
+        :Fairy_Banishing_Spell,
+        :Higher_Fairies,
+        :Items_That_Have_Multiple_Grains,
+        :Rock_Salt ;
+    :killing "They are generally harmless and are left alone by hunters."^^xsd:string ;
+    :origin "Unknown"^^xsd:string .
+
+:Fairies a :Monster,
+        owl:NamedIndividual ;
+    :description "Fairies are supernatural beings found in European folklore, often depicted as small, humanoid creatures with magical powers and a connection to nature. They are mischievous creatures that come in a variety of forms and that can only be seen by those who have been to their realm or if they choose to be seen. "^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_10,
+        :Season_11,
+        :Season_15,
+        :Season_3,
+        :Season_4,
+        :Season_5,
+        :Season_6,
+        :Season_7,
+        :Season_8,
+        :Season_9 ;
+    :hasStrength :Apporting,
+        :Flight,
+        :Immortality,
+        :Invisibility,
+        :Magic,
+        :Reality_Warping,
+        :Soul_Reading,
+        :Spell_Casting,
+        :Super_Strength,
+        :Telekinesis,
+        :Teleportation ;
+    :hasWeakness :Cream,
+        :Devil_s_Trap,
+        :Family,
+        :Fire,
+        :Iron,
+        :Items_that_have_Multiple_Grains,
+        :Magic,
+        :Mirrors,
+        :Poppy_Extract,
+        :Radiation,
+        :Ruby_Slippers,
+        :Salt,
+        :Silver ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "European folklore"^^xsd:string .
+
+:Familiar a :Monster,
+        owl:NamedIndividual ;
+    :description "Familiars are magical animals or spirits in European folklore believed to assist witches or wizards in their magical practices."^^xsd:string ;
+    :hasSeason :Season_8 ;
+    :hasStrength :Shapeshifting,
+        :Telepathy ;
+    :hasWeakness :Mortality ;
+    :killing "Follow their masters orders."^^xsd:string ;
+    :origin "European folklore"^^xsd:string .
+
+:Flying_Monkeys a :Monster,
+        owl:NamedIndividual ;
+    :description "Flying Monkeys are creatures native to Oz. They were under the control of the Wicked Witch."^^xsd:string ;
+    :hasSeason :Season_9 ;
+    :hasStrength :Flight ;
+    :killing "Follow their masters orders."^^xsd:string ;
+    :origin "Oz"^^xsd:string .
+
+:Four_Horsemen_of_the_Apocalypse a :Monster,
+        owl:NamedIndividual ;
+    :description "The Four Horsemen of the Apocalypse are figures mentioned in the Book of Revelation in the Bible, representing War, Famine, Pestilence, and Death as harbingers of the end times."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_10,
+        :Season_11,
+        :Season_12,
+        :Season_13,
+        :Season_14,
+        :Season_15,
+        :Season_2,
+        :Season_4,
+        :Season_5,
+        :Season_6,
+        :Season_7,
+        :Season_9 ;
+    :hasStrength :Biokinesis,
+        :Cosmic_Awareness,
+        :Demonic_Exorcism,
+        :Electrokinesis,
+        :Electromagnetic_Interference,
+        :Gluttony_Augmentation,
+        :Illusion_Casting,
+        :Immortality,
+        :Indestructibility,
+        :Insect_Manipulation,
+        :Invisibility,
+        :Necrokinesis,
+        :Nigh-Omnipotence,
+        :Nigh-Omniscience,
+        :Reality_Warping,
+        :Resurrection,
+        :Soul_Absorption,
+        :Soul_Reading,
+        :Super_Strength,
+        :Superhuman_Stamina,
+        :Telekinesis,
+        :Telepathy,
+        :Teleportation,
+        :Weather_Manipulation ;
+    :hasWeakness <http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28/Binding/Summoning>,
+        :Death_s_Scythe,
+        :Dependency,
+        :Physical_attacks,
+        :Ring_Removal ;
+    :killing "They drive the Apocalypse."^^xsd:string ;
+    :origin "God"^^xsd:string .
+
+:Ghouls a :Monster,
+        owl:NamedIndividual ;
+    :description "Ghouls are scavenger creatures that live in graveyards and traditionally feed on the flesh and blood of the dead. Ghouls are not nocturnal, they eat whenever they get the chance. At times ghouls will change their diet and will feed on living humans instead of the dead. Ghouls can also take the form of any person they have eaten, whether the person is still alive or already dead."^^xsd:string ;
+    :hasSeason :Season_12,
+        :Season_13,
+        :Season_14,
+        :Season_4,
+        :Season_5,
+        :Season_6,
+        :Season_7,
+        :Season_9 ;
+    :hasStrength :Enhanced_Durability,
+        :Shapeshifting,
+        :Super_Agility,
+        :Super_Senses,
+        :Super_Speed,
+        :Super_Strength,
+        :Tunnelling ;
+    :hasWeakness :Decapitation,
+        :Demons,
+        :Extreme_Brain_Damage,
+        :Vamptonite ;
+    :killing "Feed on human flesh"^^xsd:string ;
+    :origin "Arabian folklore"^^xsd:string .
+
+:Giant_\(The_Bad_Place\) a :Monster,
+        owl:NamedIndividual ;
+    :description "Not much is known about this creature except for its massive size."^^xsd:string ;
+    :hasSeason :Season_13,
+        :Season_15 ;
+    :hasStrength :Giant,
+        :Gigantic_Size,
+        :Super_Strength ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "The Bad Place"^^xsd:string .
+
+:Giant_Alligator a :Monster,
+        owl:NamedIndividual ;
+    :description "Giant Alligators are enhanced reptilian creatures thought to only be an urban legend."^^xsd:string ;
+    :hasSeason :Season_15,
+        :Season_2 ;
+    :killing "Alligator style."^^xsd:string ;
+    :origin "Modern folklore"^^xsd:string .
+
+:Gog_and_Magog a :Monster,
+        owl:NamedIndividual ;
+    :description "Gog and Magog are names that appear in the Bible, the Quran, and various mythological traditions. They were primitive humanoid creatures made of rock and sand who became ancient warriors."^^xsd:string ;
+    :hasSeason :Season_13,
+        :Season_5 ;
+    :hasStrength :Immortality,
+        :Invulnerability,
+        :Super_Strength ;
+    :hasWeakness :Angel_Blades,
+        :Drowning,
+        :God-touched_Weapons,
+        :Gog_s_Sword,
+        :Magic,
+        :Magog_s_Sword,
+        :Their_Swords ;
+    :killing "Conquer and enslave"^^xsd:string ;
+    :origin "Biblical folklore"^^xsd:string .
+
+:Gog_and_Magog_s_Species a :Monster,
+        owl:NamedIndividual ;
+    :description "In Biblical times, the species was created by an unknown being. At least two members of the species received swords forged by a god. Supposedly, most of the species went extinct during the Great Flood with the only known survivors being Gog and Magog."^^xsd:string ;
+    :hasSeason :Season_13 ;
+    :hasStrength :Immortality,
+        :Invulnerability,
+        :Super_Strength ;
+    :hasWeakness :Angel_Blades,
+        :Drowning,
+        :God-touched_Weapons,
+        :Gog_s_Sword,
+        :Magic,
+        :Magog_s_Sword ;
+    :killing "Conquer and enslave"^^xsd:string ;
+    :origin "Unknown"^^xsd:string .
+
+:Golem a :Monster,
+        owl:NamedIndividual ;
+    :description "Golems are animated beings created from inanimate matter, typically clay or mud, brought to life through mystical means to serve their creators."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_12,
+        :Season_3,
+        :Season_8 ;
+    :hasStrength :Immortality,
+        :Invulnerability,
+        :Super_stamina,
+        :Super_strength ;
+    :hasWeakness :Binding,
+        :Scroll_Destruction,
+        :Scroll_Removal ;
+    :killing "Follow their masters orders."^^xsd:string ;
+    :origin "Jewish folklore"^^xsd:string .
+
+:Gorgons a :Monster,
+        owl:NamedIndividual ;
+    :description "Gorgons are demigods with serpentine characteristics and affinity for snakes, venomous snakes. The most famous Gorgon is Medusa, whose gaze could turn people to stone."^^xsd:string ;
+    :hasSeason :Season_13,
+        :Season_14,
+        :Season_8,
+        :Season_9 ;
+    :hasStrength :Immortality,
+        :Invulnerability,
+        :Paralyzing_Poison,
+        :Precognition,
+        :Snake_Communication,
+        :Super_Strength,
+        :Telepathy ;
+    :hasWeakness :Angelic_Beings,
+        :Decapitation_with_a_Silver_Blade,
+        :Gorgon_s_Poison_Antidote,
+        :Nephilims ;
+    :killing "Snake style."^^xsd:string ;
+    :origin "Greek mythology"^^xsd:string .
+
+:Gorilla-wolves a :Monster,
+        owl:NamedIndividual ;
+    :description "Gorilla-wolves are monstrous creatures seen in Purgatory."^^xsd:string ;
+    :hasSeason :Season_7,
+        :Season_8 ;
+    :hasStrength :Enhanced_Senses,
+        :Enhanced_Speed ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "Unknown"^^xsd:string .
+
+:Green-eyed_Demons a :Monster,
+        owl:NamedIndividual ;
+    :description "The theoretical existence of green-eyed demons was implied when Sam and Dean investigated a case about the Bisaan. However, no further proof from the series were seen."^^xsd:string ;
+    :hasSeason :Season_11 ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "Lucifer"^^xsd:string .
+
+:Griffin a :Monster,
+        owl:NamedIndividual ;
+    :description "Griffins are mythical creatures with the body of a lion and the head and wings of an eagle. They are often depicted as guardians of treasures and sacred sites."^^xsd:string ;
+    :hasSeason :Season_9 ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "Greek mythology"^^xsd:string .
+
+:Grigori a :Monster,
+        owl:NamedIndividual ;
+    :description "Grigori, or Watchers, are fallen angels mentioned in the Book of Enoch. They are said to have descended to Earth and taught humans forbidden knowledge."^^xsd:string ;
+    :hasSeason :Season_10,
+        :Season_15 ;
+    :hasStrength :Angelic_Possession,
+        :Apporting,
+        :Biokinesis,
+        :Clairsentience,
+        :Healing,
+        :Immortality,
+        :Invulnerability,
+        :Perception_Altering,
+        :Sedation,
+        :Soul_Feeding,
+        :Super_Strength,
+        :Supernatural_Concealment,
+        :Supernatural_Perception,
+        :Teleportation ;
+    :hasWeakness :Angel_Blades,
+        :Angel_Swords,
+        :Jack,
+        :Mark_of_Cain ;
+    :killing "Some say that they prey on people."^^xsd:string ;
+    :origin "Biblical folklore"^^xsd:string .
+
+:Harpy a :Monster,
+        owl:NamedIndividual ;
+    :description "Harpies are wind spirits depicted as winged women with sharp claws. They are known for their predatory nature."^^xsd:string ;
+    :hasStrength :Flight,
+        :Invulnerability,
+        :Regeneration,
+        :Super_Strength,
+        :Talons_and_Claws ;
+    :hasWeakness :Fire,
+        :Massive_Heart_Damage ;
+    :killing "Kidnapped targets, ate them, buried their bodies in shallow graves and burned their belongings."^^xsd:string ;
+    :origin "Greek mythology"^^xsd:string .
+
+:Hell_Ghosts a :Monster,
+        owl:NamedIndividual ;
+    :description "The Hell Ghosts are the ghosts released by God from Hell when he began the end of the world."^^xsd:string ;
+    :hasSeason :Season_14,
+        :Season_15 ;
+    :hasStrength :Ghost_Possession,
+        :Immunity,
+        :Invisibility,
+        :Soul_Absorption,
+        :Super_Strength,
+        :Teleportation,
+        :Thermokinesis ;
+    :hasWeakness :Iron,
+        :Lilith_s_Crook,
+        :Magic,
+        :Salt ;
+    :killing "Possession."^^xsd:string ;
+    :origin "Hell"^^xsd:string .
+
+:Hellhounds a :Monster,
+        owl:NamedIndividual ;
+    :description "Hellhounds are supernatural dogs associated with the underworld. They are often depicted as large, black, and ferocious demon pit bulls, serving as a demons right hand. "^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_10,
+        :Season_11,
+        :Season_12,
+        :Season_13,
+        :Season_15,
+        :Season_2,
+        :Season_3,
+        :Season_4,
+        :Season_5,
+        :Season_6,
+        :Season_8,
+        :Season_9 ;
+    :hasStrength :Dimensional_Travel,
+        :Hallucinations,
+        :Immortality,
+        :Invisibility,
+        :Invulnerability,
+        :Super_Senses,
+        :Super_Speed,
+        :Super_Stamina,
+        :Super_Strength,
+        :Tracking ;
+    :hasWeakness :Angel_Blades,
+        :Demon-Killing_Knife,
+        :Devil_s_Shoestring,
+        :God,
+        :Goofer_Dust,
+        :Iron,
+        :Jack_Kline,
+        :Salt,
+        :The_Colt ;
+    :killing "Tasked with collecting the souls of humans whose deals are come due."^^xsd:string ;
+    :origin "Hell"^^xsd:string .
+
+:Hybrid a :Monster,
+        owl:NamedIndividual ;
+    :description "A Hybrid is a cross between two species, one usually human."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_12,
+        :Season_13,
+        :Season_14,
+        :Season_15,
+        :Season_4,
+        :Season_5,
+        :Season_6,
+        :Season_8 ;
+    :killing "Depends on what species they are."^^xsd:string ;
+    :origin "Depends on the parents"^^xsd:string .
+
+:Jakkal a :Monster,
+        owl:NamedIndividual ;
+    :description "Jakkals are a race of carrion-eating scavengers, similiar to ghouls. They are also renowned for their hatred toward werewolves."^^xsd:string ;
+    :hasStrength :Fangs,
+        :Healing,
+        :Life_Force_Transference,
+        :Magic,
+        :Power_Negation,
+        :Super_Strength,
+        :Trap_Making ;
+    :killing "Their kind was known and respected by humans as servants of the great Anubis."^^xsd:string ;
+    :origin "Egyptian folklore"^^xsd:string .
+
+:Jefferson_Starships a :Monster,
+        owl:NamedIndividual ;
+    :description "Jefferson Starships, named by Dean Winchester, were new monster hybrids created by Eve as a test subject to see if she could create the ultimate supernatural predator."^^xsd:string ;
+    :hasSeason :Season_6 ;
+    :hasStrength :Fangs,
+        :Infectious_Bite,
+        :Invulnerability,
+        :Regeneration,
+        :Shapeshifting,
+        :Spikes,
+        :Super_Agility,
+        :Super_Speed,
+        :Super_Stamina,
+        :Super_Strength ;
+    :hasWeakness :Angels,
+        :Decapitation,
+        :Demons,
+        :Heart_Extraction,
+        :Retinal_Flare,
+        :Silver ;
+    :killing "They had the teeth of vampires and the spike of wraiths."^^xsd:string ;
+    :origin "Eve"^^xsd:string .
+
+:Jormungandr a :Monster,
+        owl:NamedIndividual ;
+    :hasSeason :Season_5 .
+
+:Kappa a :Monster,
+        owl:NamedIndividual ;
+    :description "Kappa are a helpful type of specter that originates from Japan. They are covered with scales, and have webbed hands and feet with sharp claw like fingers. Humanoid but turtle and frog-like in appearance, they also have big eyes and a large toothy smile."^^xsd:string ;
+    :hasStrength :Longevity,
+        :Precognition,
+        :Super_Speed,
+        :Super_Strength,
+        :Underwater_Breathing ;
+    :killing "They protect humans from harm in exchange for food."^^xsd:string ;
+    :origin "Japanese folklore"^^xsd:string .
+
+:Khan_worm a :Monster,
+        owl:NamedIndividual ;
+    :description "The Khan Worms, named by Dean Winchester, was a new type of monster created by Eve."^^xsd:string ;
+    :hasSeason :Season_10,
+        :Season_6 ;
+    :hasStrength :Animation,
+        :Possession,
+        :Super_Agility,
+        :Super_Strength,
+        :Supernatural_Durability ;
+    :hasWeakness :Diminutive_Size,
+        :Electrocution,
+        :Extreme_Dehydration ;
+    :killing "Entered into people's heads through their ears or mouth, and controlled their actions."^^xsd:string ;
+    :origin "Eve"^^xsd:string .
+
+:Kitsune a :Monster,
+        owl:NamedIndividual ;
+    :description "A kitsune is a monster that, in appearance, looks somewhat similar to werewolves, but with a more fox-like than wolf-like appearance. Kitsunes seem to be very rare and uncommon."^^xsd:string ;
+    :hasSeason :Season_10,
+        :Season_7,
+        :Season_8 ;
+    :hasStrength :Claws,
+        :Invulnerability,
+        :Shapeshifting,
+        :Super_Speed,
+        :Super_Strength ;
+    :hasWeakness :Heart_destruction,
+        :Starvation,
+        :The_Colt ;
+    :killing "They feed on the pituitary gland, a part of the brain, since without it, they will die."^^xsd:string ;
+    :origin "Japanese folklore"^^xsd:string .
+
+:Knights_of_Hell a :Monster,
+        owl:NamedIndividual ;
+    :description "Knights of Hell are a creation from the show, depicted as elite demons created by Lucifer and trained by Cain, the original knight. The Knights are thought to be among the oldest and most powerful of their kind."^^xsd:string ;
+    :hasSeason :Season_10,
+        :Season_11,
+        :Season_12,
+        :Season_15,
+        :Season_5,
+        :Season_6,
+        :Season_8,
+        :Season_9 ;
+    :hasStrength :Apporting,
+        :Biokinesis,
+        :Electromagnetic_Interference,
+        :Flight,
+        :Immortality,
+        :Immunity,
+        :Invulnerability,
+        :Possession,
+        :Super_Stamina,
+        :Super_Strength,
+        :Tactile_Exorcism,
+        :Telekinesis,
+        :Telepathy,
+        :Teleportation,
+        :Terrakinesis,
+        :Unique_Smiting,
+        :Weather_Manipulation ;
+    :hasWeakness :Angels,
+        :Demon-Killing_Knife,
+        :Demon_Curing_Ritual,
+        :Devil_s_trap,
+        :Holy_fire,
+        :Holy_water,
+        :Primordial_Entities,
+        :Purified_blood,
+        :The_First_Blade ;
+    :killing "Engage in all sorts of torture and destruction."^^xsd:string ;
+    :origin "Lucifer"^^xsd:string .
+
+:Kohonta a :Monster,
+        owl:NamedIndividual ;
+    :description "A kohonta is a human who has been cursed into a creature of insatiable hunger for extreme acts of cannibalism."^^xsd:string ;
+    :hasSeason :Season_14 ;
+    :hasStrength :Acidic_Bile,
+        :Electromagnetic_Interference,
+        :Immortality,
+        :Invulnerability,
+        :Super_Speed,
+        :Super_Strength ;
+    :hasWeakness :Shaman_Magic,
+        :Silver_Blade_Through_the_Heart,
+        :Starvation ;
+    :killing "Cannibalism"^^xsd:string ;
+    :origin "Modern folklore"^^xsd:string .
+
+:Kraken a :Monster,
+        owl:NamedIndividual ;
+    :description "The Kraken is a giant sea monster in Norse mythology, often depicted as a massive cephalopod capable of dragging entire ships under the sea."^^xsd:string ;
+    :hasSeason :Season_5,
+        :Season_9 ;
+    :hasStrength :Unknown ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "Norse mythology"^^xsd:string .
+
+:La_Tunda a :Monster,
+        owl:NamedIndividual ;
+    :description "La Tunda is a mythological monster from Colombian folklore, depicted as a shapeshifting woman who lures people, especially children, into the forest to feed on them. It can have plant-like characteristics."^^xsd:string ;
+    :hasSeason :Season_1 ;
+    :hasWeakness :Her_heart,
+        :Her_leg ;
+    :killing "Lures and feeds on children."^^xsd:string ;
+    :origin "Colombian folklore"^^xsd:string .
+
+:Lamia a :Monster,
+        owl:NamedIndividual ;
+    :description "Lamia is a child-eating demon or monster in Greek mythology, often depicted as a beautiful woman who transforms into a serpent-like creature to prey on children."^^xsd:string ;
+    :hasSeason :Season_15,
+        :Season_6 ;
+    :hasStrength :Invulnerability,
+        :Shapeshifting,
+        :Super_Agility,
+        :Super_Strength ;
+    :hasWeakness :Blessed_Silver_Knife,
+        :Rosemary_and_Salt ;
+    :killing "Lures and feeds on children."^^xsd:string ;
+    :origin "Greek mythology"^^xsd:string .
+
+:Lee_s_Marid a :Monster,
+        owl:NamedIndividual ;
+    :description "Marids are powerful jinn in Islamic mythology, known for their strength and often depicted as rebellious and difficult to control."^^xsd:string ;
+    :hasSeason :Season_15 ;
+    :hasStrength :Reality_Warping,
+        :Super_Strength ;
+    :hasWeakness :Decapitation ;
+    :killing "They feed on blood."^^xsd:string ;
+    :origin "Islamic folklore"^^xsd:string .
+
+:Leprechauns a :Monster,
+        owl:NamedIndividual ;
+    :description "Leprechauns are small, bearded fairies in Irish folklore, known for their mischief and their pot of gold hidden at the end of a rainbow."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_4,
+        :Season_6,
+        :Season_7 ;
+    :hasStrength :Invisibility,
+        :Super_strength,
+        :Teleportation ;
+    :hasWeakness :Cream,
+        :Grained_substances,
+        :Iron,
+        :Salt,
+        :Silver ;
+    :killing "Do not have an aversion to killing humans who get in their way."^^xsd:string ;
+    :origin "Irish folklore"^^xsd:string .
+
+:Lizard_People a :Monster,
+        owl:NamedIndividual ;
+    :description "Lizard People refers to lizard-like beings that can disguise as humans. It's unknown if they're peaceful or malicious."^^xsd:string ;
+    :hasSeason :Season_12,
+        :Season_14 ;
+    :hasStrength :Shapeshifting ;
+    :hasWeakness :Jack_Kline ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "Modern folklore"^^xsd:string .
+
+:Loch_Ness_Monster a :Monster,
+        owl:NamedIndividual ;
+    :description "The Loch Ness Monster, or Nessie, is a cryptid said to inhabit Loch Ness in Scotland, often described as a large, long-necked creature."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_15,
+        :Season_6 ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "Scottish folklore"^^xsd:string .
+
+:Loup-Garou a :Monster,
+        owl:NamedIndividual ;
+    :description "Loup-Garou are a species of monster that are bipedal reptilian/canines."^^xsd:string ;
+    :hasSeason :Season_1 ;
+    :hasStrength :Deadly_Claws,
+        :Super_Strength ;
+    :hasWeakness :Decapitation,
+        :Silver ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "Unknown"^^xsd:string .
+
+:Marid a :Monster,
+        owl:NamedIndividual ;
+    :description "A Marid is a type of creature that can grant riches and health in exchange for the blood of innocents."^^xsd:string ;
+    :hasSeason :Season_15 ;
+    :hasStrength :Reality_Warping,
+        :Super_Strength ;
+    :hasWeakness :Decapitation ;
+    :killing "They feed on blood."^^xsd:string ;
+    :origin "Islamic folklore"^^xsd:string .
+
+:Moa_ah a :Monster,
+        owl:NamedIndividual ;
+    :description "Moa'ah is a unique demonic breed of creature which is commonly found in Southern American. It's commonly found on land which supported massive carnage."^^xsd:string ;
+    :hasStrength :Biokinesis,
+        :Infection,
+        :Mental_Manipulation,
+        :Possession,
+        :Super_Strength ;
+    :hasWeakness :Demon-Killing_Knife,
+        :Exorcism,
+        :Holy_Water,
+        :Magic,
+        :Overstraining ;
+    :killing "They drive the Apocalypse."^^xsd:string ;
+    :origin "Native American folklore"^^xsd:string .
+
+<http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28/Monsters_(It_s_the_Great_Pumpkin,_Sam_Winchester)> a :Monster,
+        owl:NamedIndividual ;
+    :hasSeason :Season_4,
+        :Season_7 .
+
+:Mothra a :Monster,
+        owl:NamedIndividual ;
+    :description "Mothra is a mythological creature, and may be connected to Leviathans and Purgatory in some way."^^xsd:string ;
+    :hasSeason :Season_4,
+        :Season_7 ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "Modern folklore"^^xsd:string .
+
+:Muscas a :Monster,
+        owl:NamedIndividual ;
+    :description "Muscas are hybrid-looking creatures between humans and flies."^^xsd:string ;
+    :hasSeason :Season_14 ;
+    :hasStrength :Super_Agility,
+        :Super_Speed,
+        :Super_Strength,
+        :Viscous_Goo_Production ;
+    :killing "Attack humans"^^xsd:string ;
+    :origin "Hybrids"^^xsd:string .
+
+:Myling a :Monster,
+        owl:NamedIndividual ;
+    :description "Mylings are the ghosts of unbaptized children in Scandinavian folklore, often depicted as seeking revenge or proper burial from the living."^^xsd:string ;
+    :hasSeason :Season_12 ;
+    :killing "They are the vengeful spirits of children who lure adults to their deaths with cries for help."^^xsd:string ;
+    :origin "Scandinavian folklore"^^xsd:string .
+
+:Nachzehrer a :Monster,
+        owl:NamedIndividual ;
+    :description "Nachzehrers were monsters that were similar to ghouls and vampires. Their existence was known since ancient Greece and by the Men of Letters. They can be cured by killing the pack alpha."^^xsd:string ;
+    :hasSeason :Season_11 ;
+    :hasWeakness :Copper_Coins,
+        :Decapitation,
+        :Killing_the_Pack_Alpha,
+        :Silver ;
+    :killing "Some breeds feed on the flesh of the dead. Others feed on the blood and hearts of the living."^^xsd:string ;
+    :origin "German folklore"^^xsd:string .
+
+:Night_Hag a :Monster,
+        owl:NamedIndividual ;
+    :description "They were known to create and manipulate nightmares which would then materialize in the real world and go on killing sprees."^^xsd:string ;
+    :hasStrength :Animation,
+        :Conjuration,
+        :Electrokinesis,
+        :Electromagnetic_Interference,
+        :Empathy,
+        :Invulnerability,
+        :Life_Force_Draining,
+        :Mental_Manipulation,
+        :Pyrokinesis,
+        :Reality_Warping,
+        :Terrakinesis,
+        :Weather_Manipulation ;
+    :killing "Hunting and killing"^^xsd:string ;
+    :origin "Polish folklore"^^xsd:string .
+
+:Okami a :Monster,
+        owl:NamedIndividual ;
+    :description "Okami are Japanese wolf deities. They are often considered protectors of the mountains and are associated with the Shinto faith."^^xsd:string ;
+    :hasSeason :Season_6 ;
+    :hasStrength :Fangs,
+        :Invulnerability,
+        :Regeneration,
+        :Super_Agility,
+        :Super_Strength ;
+    :hasWeakness :Bamboo_Dagger_Blessed_by_a_Shino_Priest,
+        :Dismemberment ;
+    :killing "Hypnotism."^^xsd:string ;
+    :origin "Japanese folklore"^^xsd:string .
+
+:Ondines a :Monster,
+        owl:NamedIndividual ;
+    :description "Close to mermaids, the Ondine were creatures from the sea who took men, mainly sailors, away to feed. Live in close family units, the females do most of the hunting, while men guard the children and home."^^xsd:string ;
+    :hasWeakness :Heat,
+        :Suffocation ;
+    :killing "Lures and feeds on sailors."^^xsd:string ;
+    :origin "Japanese folklore"^^xsd:string .
+
+:Oni a :Monster,
+        owl:NamedIndividual ;
+    :description "Oni are demons or ogres in Japanese mythology. They appear as normal humans for the most part but will eventually grow horns and claws and their third eye will open at an age of maturity."^^xsd:string ;
+    :hasStrength :Biokinesis,
+        :Blood_Link,
+        :Chaos_Absorption,
+        :Clairvoyance,
+        :Conversion,
+        :Disease_Manipulation,
+        :Electrokinesis,
+        :Electromagnetic_Interference,
+        :Invisibility,
+        :Invulnerability,
+        :Mental_Manipulation,
+        :Power_Granting,
+        :Pyrokinesis,
+        :Reality_Warping,
+        :Sedation,
+        :Shapeshifting,
+        :Spell_Casting,
+        :Super_Agility,
+        :Super_strength,
+        :Talon_like_claws,
+        :Telekinesis,
+        :Telepathy,
+        :Terrakinesis,
+        :Thermokinesis,
+        :Third_Eye,
+        :Weather_manipulation ;
+    :hasWeakness :Armor-Piercing_Rounds,
+        :Death_of_its_Children,
+        :Holly,
+        :Loss_of_Kanabo,
+        :Mortality,
+        :Obake,
+        :Overstraining,
+        :Restoration_of_Order,
+        :Soybean_Ritual,
+        :Third_Eye ;
+    :killing "Cause disasters and epidemics on a large scale."^^xsd:string ;
+    :origin "Japanese folklore"^^xsd:string .
+
+:Orange-eyed_Demons a :Monster,
+        owl:NamedIndividual ;
+    :description "Orange-eyed Demons are a rare type of demon mentioned in Bobby Singer's Guide to Hunting, Bobby himself never encountered one, but heard stories about it."^^xsd:string ;
+    :hasStrength :Possession ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "Lucifer"^^xsd:string .
+
+:Phoenix a :Monster,
+        owl:NamedIndividual ;
+    :description "Phoenixes were powerful monsters who appeared human and were very rare in existence, so rare that, much like dragons, they were believed to be mythical even by veteran hunters like Bobby Singer or Samuel Colt."^^xsd:string ;
+    :hasSeason :Season_6,
+        :Season_7 ;
+    :hasStrength <http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28/(Possibly)>,
+        :Flight,
+        :Immortality,
+        :Incineration_Touch,
+        :Invulnerability,
+        :Pyrokinesis,
+        :Regeneration,
+        :Resurrection,
+        :Shapeshifting,
+        :Super_Speed,
+        :Superhuman_Strength ;
+    :hasWeakness :Iron,
+        :The_Colt ;
+    :killing "Power to burn anyone into ash with a simple touch of its hand."^^xsd:string ;
+    :origin "Greek mythology"^^xsd:string .
+
+:Pishtaco a :Monster,
+        owl:NamedIndividual ;
+    :description "Pishtaco is a mythological figure from Andean folklore, often depicted as a white man who preys on indigenous people, extracting their fat for various uses."^^xsd:string ;
+    :hasSeason :Season_10,
+        :Season_9 ;
+    :hasStrength :Invulnerability,
+        :Lamprey_Mouth,
+        :Super_Strength ;
+    :hasWeakness :Severing_Their_Proboscis,
+        :Silver ;
+    :killing "They are generally harmless and are left alone by hunters."^^xsd:string ;
+    :origin "Andean folklore"^^xsd:string .
+
+:Poltergeists a :Monster,
+        owl:NamedIndividual ;
+    :description "Poltergeists are a type of spirit that seeks recognition and attention, and will do anything to receive it."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_11,
+        :Season_2,
+        :Season_5,
+        :Season_7 ;
+    :hasStrength :Biokinesis,
+        :Invisibility,
+        :Telekinesis ;
+    :hasWeakness :Ghosts,
+        :House_Purification_Ritual,
+        :Salt,
+        :Salting_and_Burning_remains ;
+    :killing "Poltergeists are invisible and telekinetic spirits that uniquely seek attention through sometimes violent and deadly actions."^^xsd:string ;
+    :origin "Western folklore"^^xsd:string .
+
+:Pontianak a :Monster,
+        owl:NamedIndividual ;
+    :description "Pontianak are vampiric female ghosts in Malay and Indonesian mythology, often depicted as beautiful women who prey on men and pregnant women. They are born from the spirits of women that died during childbirth."^^xsd:string ;
+    :hasStrength :Biokinesis,
+        :Body_Parts_Fragmentation,
+        :Claws,
+        :Intangibility,
+        :Invisibility,
+        :Invulnerability,
+        :Memory_Manipulation,
+        :Mental_Manipulation,
+        :Possession,
+        :Scent_Production,
+        :Shapeshifting,
+        :Teleportation,
+        :Voice_Mimicry ;
+    :hasWeakness :Angels,
+        :Decapitation,
+        :Iron,
+        :Iron_Stakes ;
+    :killing "Prey on humans"^^xsd:string ;
+    :origin "Malay and Indonesian folklore"^^xsd:string .
+
+:Princes_of_Hell a :Monster,
+        owl:NamedIndividual ;
+    :description "The Princes of Hell were the first generation of demons created by Lucifer himself after the creation of Lilith. Lucifer created them himself before the sinking of Atlantis. In the demonic hierarchy of Hell, they ranked among the highest, eclipsed only by the original demon Lilith."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_10,
+        :Season_12,
+        :Season_13,
+        :Season_14,
+        :Season_2,
+        :Season_3,
+        :Season_4,
+        :Season_5,
+        :Season_6,
+        :Season_7,
+        :Season_8,
+        :Season_9 ;
+    :hasStrength <http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28/(by_Grace)>,
+        :Azazel,
+        :Biokinesis,
+        :Clairsentience,
+        :Demonic_Possession,
+        :Dream_Walking,
+        :Electrokinesis,
+        :Electromagnetic_Interference,
+        :Energy_Blasts,
+        :Flight,
+        :Healing_\(by_deals\),
+        :Immortality,
+        :Immunity,
+        :Invulnerability,
+        :Memory_Manipulation,
+        :Mind_Control,
+        :Molecular_Combustion,
+        :Photokinesis,
+        :Pyrokinesis,
+        :Ramiel,
+        :Reality_Warping_\(by_deals\),
+        :Resurrection_\(by_deals\),
+        :Shapeshifting,
+        :Smiting,
+        :Spell_Casting,
+        :Super_Senses,
+        :Super_Stamina,
+        :Super_Strength,
+        :Telekinesis,
+        :Teleportation,
+        :Thermokinesis,
+        :Voice_Mimicry,
+        :Weather_Manipulation ;
+    :hasWeakness :Archangels,
+        :Devil_s_Trap,
+        :Holy_Fire_\(possibly\),
+        :Lance_of_Michael,
+        :Nephilim,
+        :The_Colt ;
+    :killing "Engage in all sorts of torture and destruction."^^xsd:string ;
+    :origin "Lucifer"^^xsd:string .
+
+:Qareen a :Monster,
+        owl:NamedIndividual ;
+    :description "Qareens are a type of creature, similar to a genie, that can be controlled to do the bidding of a master, who is in possession of their heart."^^xsd:string ;
+    :hasSeason :Season_11 ;
+    :hasStrength :Empathy,
+        :Invulnerability,
+        :Shapeshifting,
+        :Super_Stamina,
+        :Super_Strength,
+        :Telepathy ;
+    :hasWeakness :Destruction_of_its_heart,
+        :Magic,
+        :Retinal_flare ;
+    :killing "Will take on the form of a person's deepest, darkest desire to seduce and then kill the victim."^^xsd:string ;
+    :origin "Islamic mythology"^^xsd:string .
+
+:Rabid a :Monster,
+        owl:NamedIndividual ;
+    :description "Rabids, named by Sam Winchester, were a new kind of creature created by the Darkness by corrupting humans."^^xsd:string ;
+    :hasSeason :Season_11 ;
+    :hasStrength :Aggression,
+        :Infection,
+        :Super_Senses,
+        :Telepathy ;
+    :hasWeakness :Electrocution,
+        :God,
+        :Heart,
+        :Holy_Fire,
+        :Shelf_life,
+        :Throat ;
+    :killing "Infection with their blood"^^xsd:string ;
+    :origin "The Darkness"^^xsd:string .
+
+:Rakshasa a :Monster,
+        owl:NamedIndividual ;
+    :description "Rakshasas it's a race of ancient Hindu creatures. They appear in human form, they feed on human flesh, they can make themselves invisible, and they cannot enter a home without first being invited."^^xsd:string ;
+    :hasSeason :Season_2,
+        :Season_3,
+        :Season_5 ;
+    :hasStrength :Invisibility,
+        :Invulnerability,
+        :Shapeshifting,
+        :Super_Senses,
+        :Super_Speed,
+        :Super_Strength ;
+    :hasWeakness :Brass,
+        :Invitation ;
+    :killing "Feed on human flesh"^^xsd:string ;
+    :origin "Hindu folklore"^^xsd:string .
+
+:Rawhead a :Monster,
+        owl:NamedIndividual ;
+    :description "Rawhead is a boogeyman figure in English folklore, often used to frighten children into good behavior. They lurk in basements and preys upon children."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_14 ;
+    :hasStrength :Invulnerability,
+        :Super_Speed,
+        :Super_Strength ;
+    :hasWeakness :Electrocution ;
+    :killing "Prey on humans"^^xsd:string ;
+    :origin "English folklore"^^xsd:string .
+
+:Redcaps a :Monster,
+        owl:NamedIndividual ;
+    :description "Redcaps are malevolent, goblin-like creatures in Scottish folklore, known for dyeing their hats with the blood of their victims."^^xsd:string ;
+    :hasSeason :Season_6 ;
+    :hasStrength :Invisibility,
+        :Shapeshifting,
+        :Super_strength,
+        :Teleportation ;
+    :killing "Prey on humans"^^xsd:string ;
+    :origin "Scottish folklore"^^xsd:string .
+
+:Revenant a :Monster,
+        owl:NamedIndividual ;
+    :description "Revenants are reanimated corpses that return from the grave to terrorize the living. They are often associated with vengeance and unfinished business."^^xsd:string ;
+    :hasSeason :Season_13,
+        :Season_2,
+        :Season_4,
+        :Season_5,
+        :Season_8 ;
+    :killing "Can eventually go wild, in which case hunters have to stop them."^^xsd:string ;
+    :origin "European folklore"^^xsd:string .
+
+:Rit_Zien a :Monster,
+        owl:NamedIndividual ;
+    :description "On the battlefields of Heaven, there was a special class of angel. The Rit Zien. It's Enochian for 'hands of mercy.' They functioned like medics, they tended to the wounded, they healed those who could be healed. But for the mortally wounded, those who were past saving, the Rit Zien's job was to put them down."^^xsd:string ;
+    :hasSeason :Season_9 ;
+    :hasStrength :Advanced_Healing,
+        :Angelic_Possession,
+        :Empathy,
+        :Immortality,
+        :Pain_Detection,
+        :Super_Strength,
+        :Supernatural_Perception,
+        :Telekinesis,
+        :Telepathy,
+        :Unique_Smiting ;
+    :hasWeakness :Angel_Blade,
+        :Angel_banishing_sigil,
+        :Metatron_s_Spell ;
+    :killing "Painless"^^xsd:string ;
+    :origin "God"^^xsd:string .
+
+:Rugaru a :Monster,
+        owl:NamedIndividual ;
+    :description "They start out human, for all intents and purpose. About age 30, they start changing, bones shift around, animal instincts kick in. But most of all, they're hungry. At first, for everything, but then for long pig."^^xsd:string ;
+    :hasSeason :Season_10,
+        :Season_11,
+        :Season_12,
+        :Season_13,
+        :Season_14,
+        :Season_4,
+        :Season_5,
+        :Season_6,
+        :Season_8,
+        :Season_9 ;
+    :hasStrength :Evolution,
+        :Invulnerability,
+        :Super_Senses,
+        :Super_Speed,
+        :Super_Stamina,
+        :Super_Strength ;
+    :hasWeakness :Demon-Killing_Knife,
+        :Excessive_Mechanical_Trauma,
+        :Fire,
+        :Hunger,
+        :Nephilim,
+        :Rugaru_Killing_Gun,
+        :Vamptonite ;
+    :killing "Feed on human flesh"^^xsd:string ;
+    :origin "Native American folklore"^^xsd:string .
+
+:Satyrs a :Monster,
+        owl:NamedIndividual ;
+    :description "Satyrs are half-human, half-goat creatures associated with Dionysus, the god of wine, fertility, and revelry. They are known for their love of music, dance, and hedonistic pleasures."^^xsd:string ;
+    :hasSeason :Season_12 ;
+    :hasWeakness :Uncontrollable_Lust ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "Greek mythology"^^xsd:string .
+
+:Scaly_Thing a :Monster,
+        owl:NamedIndividual ;
+    :description "The scaly thing was one of the first organisms that developed out of abiogenesis during the early phases of Earth."^^xsd:string ;
+    :hasSeason :Season_11,
+        :Season_6,
+        :Season_9 ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "God"^^xsd:string .
+
+:Selkies a :Monster,
+        owl:NamedIndividual ;
+    :description "Selkies are shapeshifting monsters capable of assuming human form. They originated mainly in Scotland and nearby areas."^^xsd:string ;
+    :hasWeakness :Fatal_Wounds ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "Irish and Scottish folklore"^^xsd:string .
+
+:Shadow_Spirit a :Monster,
+        owl:NamedIndividual ;
+    :description "A Shadow Spirit is an entity embedded in a magical artifact created by the deity Erebus in The Winchesters."^^xsd:string ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "Erebus"^^xsd:string .
+
+:Shapeshifters a :Monster,
+        owl:NamedIndividual ;
+    :description "Shapeshifters, or just Shifters for short, are a species of monster that can take the form of any human being."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_10,
+        :Season_11,
+        :Season_12,
+        :Season_13,
+        :Season_14,
+        :Season_15,
+        :Season_2,
+        :Season_4,
+        :Season_6,
+        :Season_7,
+        :Season_8,
+        :Season_9 ;
+    :hasStrength :Invulnerability,
+        :Regeneration,
+        :Shapeshifting,
+        :Super_Agility,
+        :Super_Speed,
+        :Super_Strength,
+        :Telepathy,
+        :Voice_Mimicry ;
+    :hasWeakness :Decapitation,
+        :Dogs,
+        :Explosions,
+        :Heart_Extraction,
+        :Iridium,
+        :Pepper_Spray,
+        :Retinal_Flare,
+        :Silver,
+        :Vamptonite ;
+    :killing "Prey on humans"^^xsd:string ;
+    :origin "Eve"^^xsd:string .
+
+:Shedim a :Monster,
+        owl:NamedIndividual ;
+    :description "Long ago, Asmodeus sought to please Lucifer by freeing the Shedim (Jewish demon name means benevolent one) as he believed that he could train and use them. However, since they were Hell's most savage creatures, even Lucifer feared the Shedim and subsequently locked them back up, and then scarred Asmodeus as punishment for disappointing him."^^xsd:string ;
+    :hasSeason :Season_13 ;
+    :hasWeakness :Archangels,
+        :God ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "Jewish folklore"^^xsd:string .
+
+:Shojo a :Monster,
+        owl:NamedIndividual ;
+    :description "SA Shojo is a Japanese alcohol spirit but is different in that it's corporeal and only those who are drunk can perceive them."^^xsd:string ;
+    :hasSeason :Season_7 ;
+    :hasStrength :Claws,
+        :Invisibility,
+        :Invulnerability,
+        :Super_strength,
+        :Telekinesis,
+        :Teleportation ;
+    :hasWeakness :Katana_blessed_by_a_Shinto_Priest,
+        :Magic ;
+    :killing "Kills by disemboweling"^^xsd:string ;
+    :origin "Japanese folklore"^^xsd:string .
+
+:Shtriga a :Monster,
+        owl:NamedIndividual ;
+    :description "A shtriga is a kind of witch. They're Albanian, but legends about them date back to Ancient Rome."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_4 ;
+    :hasStrength :Electromagnetic_Interference,
+        :Invulnerability,
+        :Life_Force_Draining,
+        :Longevity,
+        :Shapeshifting,
+        :Super_Agility,
+        :Super_Speed,
+        :Super_Strength ;
+    :hasWeakness :Consecrated_Iron,
+        :Soulless_Individuals ;
+    :killing "They feed of spiritus vitae. 'Breath of Life'."^^xsd:string ;
+    :origin "Albanian folklore"^^xsd:string .
+
+:Siren a :Monster,
+        owl:NamedIndividual ;
+    :description "Sirens are a type of supernatural creature that can take different forms to lure and compel humans to perform drastic acts to prove their love and devotion. Not much is known about them however, due to the fact that they are creatures rarely seen outside of Greece."^^xsd:string ;
+    :hasSeason :Season_12,
+        :Season_4,
+        :Season_7 ;
+    :hasStrength :Compulsion,
+        :Invulnerability,
+        :Pathokinesis,
+        :Shapeshifting,
+        :Telepathy,
+        :Venom_Spit ;
+    :hasWeakness :Bronze_Dagger_Coated_in_the_Blood_of_Victim,
+        :Mirrors,
+        :Severe_Trauma ;
+    :killing "Compel destructive or violent actions that usually result in death."^^xsd:string ;
+    :origin "Greek mythology"^^xsd:string .
+
+:Skinwalkers a :Monster,
+        owl:NamedIndividual ;
+    :description "Skinwalkers are supernatural dog-like monsters that originate from the Alpha Skinwalker."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_2,
+        :Season_6,
+        :Season_9 ;
+    :hasStrength :Accelerated_healing,
+        :Enhanced_Strength,
+        :Infectious_Bite,
+        :Invulnerability,
+        :Shapeshifting,
+        :Super_Senses,
+        :Super_Speed ;
+    :hasWeakness :Silver ;
+    :killing "Turn humans into one of them. Don't usually kill."^^xsd:string ;
+    :origin "Alpha Skinwalker"^^xsd:string .
+
+:Sonja_s_Qareen a :Monster,
+        owl:NamedIndividual ;
+    :description "The Qareen of Sonja. A witch."^^xsd:string ;
+    :hasSeason :Season_11 ;
+    :hasStrength :Empathy,
+        :Invulnerability,
+        :Shapeshifting,
+        :Super_Stamina,
+        :Super_Strength,
+        :Telepathy ;
+    :hasWeakness :Destruction_of_its_Heart,
+        :Magic,
+        :Retinal_Flare,
+        :Strong_Physical_Blows ;
+    :killing "Will take on the form of a person's deepest, darkest desire to seduce and then kill the victim."^^xsd:string ;
+    :origin "Islamic folklore"^^xsd:string .
+
+:Soul_Eater a :Monster,
+        owl:NamedIndividual ;
+    :description "Soul eaters are ancient spiritual entities that live in another dimension and feed on human souls."^^xsd:string ;
+    :hasSeason :Season_11 ;
+    :hasStrength :EVP,
+        :Electromagnetic_Interference,
+        :Invisibility,
+        :Invulnerability,
+        :Possession,
+        :Reality_Warping,
+        :Soul_Extracting,
+        :Super_Stamina,
+        :Super_Strength,
+        :Telekinesis,
+        :Teleportation,
+        :Thermokinesis ;
+    :hasWeakness :Celtic_Monster_Trapping_Sigil,
+        :Soul_Eater_Killing_Sigil ;
+    :killing "Prey on humans"^^xsd:string ;
+    :origin "Unknown"^^xsd:string .
+
+:Specter a :Monster,
+        owl:NamedIndividual ;
+    :description " Specter is a type of ghost that possesses the living and causes them to act on any grudges they may hold, no matter how small or old they may be. They are created when a person's death involves a betrayal, such as being killed by a brother. "^^xsd:string ;
+    :hasSeason :Season_8 ;
+    :hasStrength :Anger_Fueling,
+        :Ectoplasm_Secretion,
+        :Electronic_Manipulation,
+        :Emotion_Detection,
+        :Ghost_Possession,
+        :Super_Durability,
+        :Super_strength ;
+    :killing "Possession."^^xsd:string ;
+    :origin "Modern folklore"^^xsd:string .
+
+:Succubi a :Monster,
+        owl:NamedIndividual ;
+    :description "n lore, succubi are a type of demon that sexually assault men in their sleep and drain them of energy; their male counterparts who do likewise to sleeping women are called incubi. It is said that after Lilith became a demon, she and Lucifer or Sammael had demonic children. These children were the succubi and incubi."^^xsd:string ;
+    :hasSeason :Season_3 ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "Lucifer"^^xsd:string .
+
+:Succubi_\(Comics\) a :Monster,
+        owl:NamedIndividual ;
+    :description "According to John Winchester, Succubi are Hell's whores. They lure men into fits of ecstasy and then kill them by sucking out their life force, or so the legend goes."^^xsd:string ;
+    :hasStrength :Immortality,
+        :Possession,
+        :Seduction,
+        :Shapeshifting,
+        :Soul_Consumption,
+        :Super_Strength,
+        :Telepathy ;
+    :hasWeakness :Exorcism ;
+    :killing "Suck on male life force."^^xsd:string ;
+    :origin "Lucifer"^^xsd:string .
+
+:Tempter_Demons a :Monster,
+        owl:NamedIndividual ;
+    :description "Tempter Demons were a type of demon that existed in the Apocalypse World. How and if they vary from other demons aside from physical manifestations of horns and sharp teeth is currently unknown."^^xsd:string ;
+    :hasSeason :Season_12,
+        :Season_13,
+        :Season_15 ;
+    :hasWeakness :Angel-killing_bullets,
+        :Angel_Blades,
+        :God ;
+    :killing "Engage in all sorts of torture and destruction."^^xsd:string ;
+    :origin "Lucifer"^^xsd:string .
+
+:The_Collectors a :Monster,
+        owl:NamedIndividual ;
+    :description "The Collectors is a race of Hell-dwelling spirit like creatures. Many of its worked under Judas Iscariot, while some other work under other demons, or even humans, by though deal for latter."^^xsd:string ;
+    :hasStrength :Lightweightness,
+        :Partial_Immunity,
+        :Super_Strength ;
+    :hasWeakness :Hoodoo_Binding_Charm,
+        :Magic,
+        :Two_Stabs_with_the_Demon-killing_Knife ;
+    :killing "Engage in all sorts of torture and destruction."^^xsd:string ;
+    :origin "Lucifer"^^xsd:string .
+
+:The_Giant_\(The_Bad_Place\) a :Monster,
+        owl:NamedIndividual ;
+    :description "Not much is known about this creature except for its massive size."^^xsd:string ;
+    :hasSeason :Season_13 ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "The Bad Place"^^xsd:string .
+
+:The_Shadow_People a :Monster,
+        owl:NamedIndividual ;
+    :description "While the novel refer the creature as 'The Shadow People', Sam, Dean, and others referred them as 'Shade(s)' or 'Shadow(s)', as nobody know the proper name of the species of ghost."^^xsd:string ;
+    :hasStrength :Claws,
+        :Infectious_Possession,
+        :Intangibility,
+        :Invisibility,
+        :Memory_Manipulation,
+        :Mental_Manipulation,
+        :Shapeshifting ;
+    :hasWeakness :Destruction_of_Object_where_they_are_tethered_to,
+        :Electrocution,
+        :Fire,
+        :Retinal_Flare,
+        :Salt,
+        :Salting_and_Burning_Their_Remains,
+        :UV-A_Light_from_a_Blacklight ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "Modern folklore"^^xsd:string .
+
+:Tinks a :Monster,
+        owl:NamedIndividual ;
+    :description "At first, they appear to just be hovering orbs of bright light, but they are actually little beings that are naked, beautiful women with wings that shine like tinkles."^^xsd:string ;
+    :hasSeason :Season_6,
+        :Season_7 ;
+    :hasStrength :Diminutive_Size,
+        :Flight,
+        :Invisibility,
+        :Super_strength ;
+    :hasWeakness :Cream,
+        :Grained_Substances,
+        :Involuntary_Glow,
+        :Iron,
+        :Radiation ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "European folklore"^^xsd:string .
+
+:Tooth_Fairies a :Monster,
+        owl:NamedIndividual ;
+    :description "Tooth fairies, as all fairies in general, are believed to not be real even among most hunters and other people aware of the supernatural world like Bela Talbot."^^xsd:string ;
+    :hasSeason :Season_15,
+        :Season_3,
+        :Season_5,
+        :Season_8 ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "Western folklore"^^xsd:string .
+
+:Tricksters a :Monster,
+        owl:NamedIndividual ;
+    :description "Tricksters are a type of mischievous gods with the ability to warp reality and make realistic objects and people out of thin air."^^xsd:string ;
+    :hasSeason :Season_13,
+        :Season_2,
+        :Season_3,
+        :Season_5,
+        :Season_9 ;
+    :hasStrength :Conjuration,
+        :Highly_Advanced_Reality_Warping,
+        :Immortality,
+        :Invulnerability,
+        :Shapeshifting,
+        :Super_Strength,
+        :Telekinesis,
+        :Teleportation ;
+    :hasWeakness :A_Stake_of_Wood_Dipped_in_the_Blood_of_a_Trickster_Victim,
+        :Angels,
+        :Archangels,
+        :Gabriel_s_swords,
+        :Snake_Venom ;
+    :killing "Accomplishes its destructive feats via unusual and often humorous means, its intent to humble the self-important."^^xsd:string ;
+    :origin "God"^^xsd:string .
+
+:Trogs a :Monster,
+        owl:NamedIndividual ;
+    :description "Trogs are prehistoric humanoid creatures that reside in depth of Mammoth Cave, Brownsdale, Kentucky."^^xsd:string ;
+    :hasStrength :Claws,
+        :Fangs,
+        :Powerful_Jaw,
+        :Resilience,
+        :Super_Strength ;
+    :hasWeakness :Fire,
+        :Mortality ;
+    :killing "Eat to survive."^^xsd:string ;
+    :origin "Modern folklore"^^xsd:string .
+
+<http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28/Tulpa:_Tibetan_Spirit_Sigil> a :Monster,
+        owl:NamedIndividual ;
+    :description "A Tulpa can be created by many people concentrating on one thing while looking at a Tibetan Spirit Sigil. Once created, a Tulpa takes on a life of its own and no longer needs people to believe in it."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_10,
+        :Season_3,
+        :Season_4,
+        :Season_7,
+        :Season_8,
+        :Season_9 ;
+    :killing "Depends on the belief behind them."^^xsd:string ;
+    :origin "Tibetan Buddhism"^^xsd:string .
+
+:Twigs_and_Twine_Clones a :Monster,
+        owl:NamedIndividual ;
+    :description "A borrower witch who made a deal with a demon managed to gain access to a powerful spell that allowed her to animate twigs and twine dolls to appear and act exactly like an intended target. The witch created clones for every victim she killed, using their hearts as a key ingredient for the spell."^^xsd:string ;
+    :hasSeason :Season_12 ;
+    :hasStrength :Immortality,
+        :Regeneration,
+        :Super_Strength ;
+    :hasWeakness :Killing_the_Controlling_Witch ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "Demon deal"^^xsd:string .
+
+:Tzitzimimeh a :Monster,
+        owl:NamedIndividual ;
+    :description "Tzitzimimeh are star deities and skeletal figures associated with darkness and chaos. They are believed to descend to earth during solar eclipses to devour humans."^^xsd:string ;
+    :hasStrength :Possession,
+        :Soul_Consumption,
+        :Super_Strength ;
+    :hasWeakness :De-Fanging,
+        :Soullessness ;
+    :killing "Prey on humans"^^xsd:string ;
+    :origin "Aztec mythology"^^xsd:string .
+
+:Unicorns a :Monster,
+        owl:NamedIndividual ;
+    :description "A Unicorn, according to the lore, is a mythological horse creature that has been described since antiquity as a beast with a large, pointed, spiraling horn projecting from its forehead."^^xsd:string ;
+    :hasSeason :Season_11,
+        :Season_2,
+        :Season_7,
+        :Season_8,
+        :Season_9 ;
+    :killing "Not confirmed"^^xsd:string ;
+    :origin "European folklore"^^xsd:string .
+
+:Unnamed_Shojos a :Monster,
+        owl:NamedIndividual ;
+    :description "These unnamed shojos were shojos in Japan."^^xsd:string ;
+    :hasSeason :Season_7 ;
+    :hasWeakness :Kitana_with_Shinto_Blessing ;
+    :killing "Kills by disemboweling"^^xsd:string ;
+    :origin "Japanese folklore"^^xsd:string .
+
+:Vampires a :Monster,
+        owl:NamedIndividual ;
+    :description "ampires, or Vamps for short, are a race of blood-drinking supernatural creatures that were once human. They have been encountered by the Winchesters, Gordon Walker and other hunters. However it has been stated encountering a vampire is very rare as hunters have hunted them near to extinction although due to their ability to reproduce by transfusion, meaning that there only needs to be one for them to repopulate."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_10,
+        :Season_11,
+        :Season_12,
+        :Season_13,
+        :Season_14,
+        :Season_15,
+        :Season_2,
+        :Season_3,
+        :Season_4,
+        :Season_5,
+        :Season_6,
+        :Season_7,
+        :Season_8,
+        :Season_9 ;
+    :hasStrength :Fangs,
+        :Immortality,
+        :Invulnerability,
+        :Regeneration,
+        :Stealth,
+        :Super_Agility,
+        :Super_Senses,
+        :Super_Speed,
+        :Super_Stamina,
+        :Super_Strength ;
+    :hasWeakness :Angels,
+        :Anti-Vampire_Device,
+        :Dead_man_s_blood,
+        :Decapitation,
+        :Demons,
+        :Leviathans,
+        :Nephilim,
+        :Primordial_entities,
+        :Scent-blocking_Mixture,
+        :Serious_Physical_Injury,
+        :Sunlight,
+        :The_Colt,
+        :The_Spear,
+        :Vampire_Irradiation_Gun,
+        :Vamptonite ;
+    :killing "They need fresh human blood to survive."^^xsd:string ;
+    :origin "Alpha Vampire"^^xsd:string .
+
+:Vengeful_Spirit a :Monster,
+        owl:NamedIndividual ;
+    :description "They are ghosts who have had some great wrong done to them in their lives (normally what killed them). This causes them to remain after death to try and avenge this wrong. Over time, they slowly become obsessed with this until it is the only thing they can think of. Bobby described it like 'an itch that you just can't scratch'."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_10,
+        :Season_11,
+        :Season_12,
+        :Season_13,
+        :Season_14,
+        :Season_15,
+        :Season_2,
+        :Season_3,
+        :Season_4,
+        :Season_6,
+        :Season_7,
+        :Season_8 ;
+    :hasWeakness :Salt,
+        :Salt_Water,
+        :Salt_Water_Soaked_Ropes,
+        :Salting_and_Burning_their_Mortal_Remains ;
+    :killing "Vengence and anger."^^xsd:string ;
+    :origin "Modern folklore"^^xsd:string .
+
+:Vetala a :Monster,
+        owl:NamedIndividual ;
+    :description "Vetalas are a type of monster, almost snake-like, that hunt in pairs so they can capture their prey. They don't usually hunt solo. They also appear to be loyal and protective of their kind, obviously having a strong pack mentality that extends like family. Vetalas are a type of monster, almost snake-like, that hunt in pairs so they can capture their prey. They don't usually hunt solo. They also appear to be loyal and protective of their kind, obviously having a strong pack mentality that extends like family."^^xsd:string ;
+    :hasSeason :Season_14,
+        :Season_7,
+        :Season_9 ;
+    :hasStrength :Fangs,
+        :Invulnerability,
+        :Paralyzing_Venom,
+        :Super_Agility,
+        :Super_Senses,
+        :Super_Speed,
+        :Super_Strength ;
+    :hasWeakness :Silver_Knife ;
+    :killing "Hunting and killing"^^xsd:string ;
+    :origin "Eve"^^xsd:string .
+
+:Violent_Spirits a :Monster,
+        owl:NamedIndividual ;
+    :description "Unlike Vengeful Spirits, who are the ghosts of those who have some wrong done to them in their life, violent spirits are usually the ghosts of evil or cruel people (or at least had something wrong with them), who in their lives brought pain and suffering to others, and in their deaths continue to do so."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_12,
+        :Season_13,
+        :Season_14,
+        :Season_15,
+        :Season_2,
+        :Season_3,
+        :Season_4,
+        :Season_5,
+        :Season_7 ;
+    :killing "Prey on humans"^^xsd:string ;
+    :origin "Modern folklore"^^xsd:string .
+
+:William_Foster a :Monster,
+        owl:NamedIndividual ;
+    :description "William Foster is a member of the Donner Party who became a wendigo due to his cannibalism."^^xsd:string ;
+    :hasStrength :Claws,
+        :Immortality,
+        :Invulnerability,
+        :Super_Senses,
+        :Super_Speed,
+        :Super_Stamina,
+        :Superhuman_Agility,
+        :Superhuman_Strength,
+        :Voice_Mimicry ;
+    :hasWeakness :Fire ;
+    :killing "Wendigo style."^^xsd:string ;
+    :origin "Cannibalism"^^xsd:string .
+
+<http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28/(Possibly)> a :Strength,
+        owl:NamedIndividual .
+
+<http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28/(by_Grace)> a :Strength,
+        owl:NamedIndividual .
+
+:A_Stake_of_Wood_Dipped_in_the_Blood_of_a_Trickster_Victim a :Weakness,
+        owl:NamedIndividual .
+
+:Accelerated_healing a :Strength,
+        owl:NamedIndividual .
+
+:Acidic_Bile a :Strength,
+        owl:NamedIndividual .
+
+:Adamantine_s_Silver_Gauntlet a :Weakness,
+        owl:NamedIndividual .
+
+:Advanced_Healing a :Strength,
+        owl:NamedIndividual .
+
+:Affinity_to_animals a :Strength,
+        owl:NamedIndividual .
+
+:Aggression a :Strength,
+        owl:NamedIndividual .
+
+:Angel_Radio a :Weakness,
+        owl:NamedIndividual .
+
+:Angel_Swords a :Weakness,
+        owl:NamedIndividual .
+
+:Angelic_Beings a :Weakness,
+        owl:NamedIndividual .
+
+:Anger_Fueling a :Strength,
+        owl:NamedIndividual .
+
+:Animal_Communication a :Strength,
+        owl:NamedIndividual .
+
+:Anti-Possession_Tattoo a :Weakness,
+        owl:NamedIndividual .
+
+:Anti-Vampire_Device a :Weakness,
+        owl:NamedIndividual .
+
+:Archangel_Blades a :Weakness,
+        owl:NamedIndividual .
+
+:Armament_s_Shotgun a :Weakness,
+        owl:NamedIndividual .
+
+:Armor-Piercing_Rounds a :Weakness,
+        owl:NamedIndividual .
+
+:Artemis__Blade a :Weakness,
+        owl:NamedIndividual .
+
+:Artemis__Bow_and_Arrows a :Weakness,
+        owl:NamedIndividual .
+
+:Aswang_whip a :Weakness,
+        owl:NamedIndividual .
+
+:Azazel a :Strength,
+        owl:NamedIndividual .
+
+:Bamboo_Dagger_Blessed_by_a_Shino_Priest a :Weakness,
+        owl:NamedIndividual .
+
+:Banshee_banishing_spell a :Weakness,
+        owl:NamedIndividual .
+
+:Beheading a :Weakness,
+        owl:NamedIndividual .
+
+:Binding a :Weakness,
+        owl:NamedIndividual .
+
+<http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28/Binding/Summoning> a :Weakness,
+        owl:NamedIndividual .
+
+:Blessed_Silver_Knife a :Weakness,
+        owl:NamedIndividual .
+
+:Blessings a :Strength,
+        owl:NamedIndividual .
+
+:Blight_s_Club a :Weakness,
+        owl:NamedIndividual .
+
+:Blood_Link a :Strength,
+        owl:NamedIndividual .
+
+:Body_Materialization a :Strength,
+        owl:NamedIndividual .
+
+:Body_Obliteration a :Weakness,
+        owl:NamedIndividual .
+
+:Body_Parts_Fragmentation a :Strength,
+        owl:NamedIndividual .
+
+:Bone_Of_Righteous_Mortal_Washed_In_the_Three_Bloods_of_Fallen a :Weakness,
+        owl:NamedIndividual .
+
+:Borax a :Weakness,
+        owl:NamedIndividual .
+
+:Bowhunting a :Strength,
+        owl:NamedIndividual .
+
+:Brain_Damage a :Weakness,
+        owl:NamedIndividual .
+
+:Brass a :Weakness,
+        owl:NamedIndividual .
+
+:Bronze_Dagger_Coated_in_the_Blood_of_Victim a :Weakness,
+        owl:NamedIndividual .
+
+:Burning_Their_Human_Bones a :Weakness,
+        owl:NamedIndividual .
+
+:Cannibalism a :Weakness,
+        owl:NamedIndividual .
+
+:Castiel a :Weakness,
+        owl:NamedIndividual .
+
+:Cat_s_Eye_Shells a :Weakness,
+        owl:NamedIndividual .
+
+:Celtic_Blood_Trapping_Spell a :Weakness,
+        owl:NamedIndividual .
+
+:Chaos_Absorption a :Strength,
+        owl:NamedIndividual .
+
+:Clairvoyance a :Strength,
+        owl:NamedIndividual .
+
+:Cold a :Weakness,
+        owl:NamedIndividual .
+
+:Common_Angelic_Weaknesses a :Weakness,
+        owl:NamedIndividual .
+
+:Connection_to_their_leader a :Weakness,
+        owl:NamedIndividual .
+
+:Consecrated_Iron a :Weakness,
+        owl:NamedIndividual .
+
+:Copper_Coins a :Weakness,
+        owl:NamedIndividual .
+
+:Coven_Magic a :Weakness,
+        owl:NamedIndividual .
+
+:Culling a :Weakness,
+        owl:NamedIndividual .
+
+:Cursing a :Strength,
+        owl:NamedIndividual .
+
+:De-Fanging a :Weakness,
+        owl:NamedIndividual .
+
+:Dead_man_s_blood a :Weakness,
+        owl:NamedIndividual .
+
+:Death_of_its_Children a :Weakness,
+        owl:NamedIndividual .
+
+:Decapitation_with_a_Silver_Blade a :Weakness,
+        owl:NamedIndividual .
+
+:Demonic_Exorcism a :Strength,
+        owl:NamedIndividual .
+
+:Dependency a :Weakness,
+        owl:NamedIndividual .
+
+:Destroying_the_Haunted_Object a :Weakness,
+        owl:NamedIndividual .
+
+:Destruction_of_Object_where_they_are_tethered_to a :Weakness,
+        owl:NamedIndividual .
+
+:Destruction_of_its_Heart a :Weakness,
+        owl:NamedIndividual .
+
+:Destruction_of_its_heart a :Weakness,
+        owl:NamedIndividual .
+
+:Devil_s_Shoestring a :Weakness,
+        owl:NamedIndividual .
+
+:Devil_s_trap a :Weakness,
+        owl:NamedIndividual .
+
+:Dimensional_Access a :Strength,
+        owl:NamedIndividual .
+
+:Dimensional_Travel a :Strength,
+        owl:NamedIndividual .
+
+<http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28/Disease/Death_Transference> a :Strength,
+        owl:NamedIndividual .
+
+:Disease_Manipulation a :Strength,
+        owl:NamedIndividual .
+
+:Dismemberment a :Weakness,
+        owl:NamedIndividual .
+
+:Divine_Weapons a :Weakness,
+        owl:NamedIndividual .
+
+:Dogs a :Weakness,
+        owl:NamedIndividual .
+
+:Dragon-Killing_Swords a :Weakness,
+        owl:NamedIndividual .
+
+:Dragons a :Monster,
+        :Weakness,
+        owl:NamedIndividual ;
+    :description "Dragons are a very rare race of monsters that have not been hunted or even seen for over 700 years. In fact, they are so rare that most veteran hunters (like Bobby Singer) dismiss their existence as purely fictional."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_10,
+        :Season_12,
+        :Season_13,
+        :Season_14,
+        :Season_3,
+        :Season_6,
+        :Season_8,
+        :Season_9 ;
+    :hasStrength :Flight,
+        :Immortality,
+        :Invulnerability,
+        :Pyrokinesis,
+        :Shapeshifting,
+        :Super_Senses,
+        :Super_Speed,
+        :Super_Stamina,
+        :Super_Strength ;
+    :hasWeakness :Dragon-Killing_Swords,
+        :Eve,
+        :Excalibur,
+        :Other_2_or_3_Unknown_Swords,
+        :Sword_of_Bruncvik,
+        :Sword_of_St._George ;
+    :killing "Eat female human virgins."^^xsd:string ;
+    :origin "Eve"^^xsd:string .
+
+:Dream_Manipulation a :Strength,
+        owl:NamedIndividual .
+
+:Each_Other a :Weakness,
+        owl:NamedIndividual .
+
+:Ectoplasm_Creation a :Strength,
+        owl:NamedIndividual .
+
+:Ectoplasm_Secretion a :Strength,
+        owl:NamedIndividual .
+
+:Emotion_Detection a :Strength,
+        owl:NamedIndividual .
+
+:Emotions a :Weakness,
+        owl:NamedIndividual .
+
+:Energy_Blasts a :Strength,
+        owl:NamedIndividual .
+
+:Enhanced_Abilities a :Strength,
+        owl:NamedIndividual .
+
+:Enhanced_Durability a :Strength,
+        owl:NamedIndividual .
+
+:Enhanced_Speed a :Strength,
+        owl:NamedIndividual .
+
+:Enhanced_Strength a :Strength,
+        owl:NamedIndividual .
+
+:Environment_Manipulation a :Strength,
+        owl:NamedIndividual .
+
+:Essence_Extraction a :Strength,
+        owl:NamedIndividual .
+
+:Evolution a :Strength,
+        owl:NamedIndividual .
+
+:Excalibur a :Weakness,
+        owl:NamedIndividual .
+
+:Excessive_Mechanical_Trauma a :Weakness,
+        owl:NamedIndividual .
+
+:Extending_Intangibility a :Strength,
+        owl:NamedIndividual .
+
+:Extreme_Dehydration a :Weakness,
+        owl:NamedIndividual .
+
+:Fairy_Banishing_Spell a :Weakness,
+        owl:NamedIndividual .
+
+:Fatal_Wounds a :Weakness,
+        owl:NamedIndividual .
+
+:Fate-Killing_Blade a :Weakness,
+        owl:NamedIndividual .
+
+:Flare_s_Copper_Circlet a :Weakness,
+        owl:NamedIndividual .
+
+:Foresight a :Strength,
+        owl:NamedIndividual .
+
+:Ghost_Repelling_Spell a :Weakness,
+        owl:NamedIndividual .
+
+:Ghost_Sickness a :Strength,
+        owl:NamedIndividual .
+
+:Giant a :Strength,
+        owl:NamedIndividual .
+
+:Gigantic_Size a :Strength,
+        owl:NamedIndividual .
+
+:Gluttony_Augmentation a :Strength,
+        owl:NamedIndividual .
+
+:God_\(formerly\) a :Weakness,
+        owl:NamedIndividual .
+
+:Gold a :Weakness,
+        owl:NamedIndividual .
+
+:Goofer_Dust a :Weakness,
+        owl:NamedIndividual .
+
+:Gorgon_s_Poison_Antidote a :Weakness,
+        owl:NamedIndividual .
+
+:Grace_Extraction a :Weakness,
+        owl:NamedIndividual .
+
+:Grained_Substances a :Weakness,
+        owl:NamedIndividual .
+
+:Grained_substances a :Weakness,
+        owl:NamedIndividual .
+
+:Hallucinations a :Strength,
+        owl:NamedIndividual .
+
+:Hallucinogenic_Touch a :Strength,
+        owl:NamedIndividual .
+
+:Handling_of_Weapons a :Strength,
+        owl:NamedIndividual .
+
+:Healing_\(by_deals\) a :Strength,
+        owl:NamedIndividual .
+
+:Heart a :Weakness,
+        owl:NamedIndividual .
+
+:Heart_destruction a :Weakness,
+        owl:NamedIndividual .
+
+:Heat a :Weakness,
+        owl:NamedIndividual .
+
+:Her_heart a :Weakness,
+        owl:NamedIndividual .
+
+:Her_leg a :Weakness,
+        owl:NamedIndividual .
+
+:Hex_Bags a :Weakness,
+        owl:NamedIndividual .
+
+:High-Tier_Demons a :Weakness,
+        owl:NamedIndividual .
+
+:High_Endurance a :Strength,
+        owl:NamedIndividual .
+
+:Higher_Angels a :Weakness,
+        owl:NamedIndividual .
+
+:Higher_Beings a :Weakness,
+        owl:NamedIndividual .
+
+:Higher_Deities a :Weakness,
+        owl:NamedIndividual .
+
+:Higher_Fairies a :Weakness,
+        owl:NamedIndividual .
+
+:Highly_Advanced_Reality_Warping a :Strength,
+        owl:NamedIndividual .
+
+:Holly a :Weakness,
+        owl:NamedIndividual .
+
+:Holy_Fire a :Weakness,
+        owl:NamedIndividual .
+
+:Holy_Fire_\(possibly\) a :Weakness,
+        owl:NamedIndividual .
+
+:Holy_Ground a :Weakness,
+        owl:NamedIndividual .
+
+:Holy_fire a :Weakness,
+        owl:NamedIndividual .
+
+:Hoodoo_Binding_Charm a :Weakness,
+        owl:NamedIndividual .
+
+:Horde_of_Demons a :Weakness,
+        owl:NamedIndividual .
+
+:House_Purification_Ritual a :Weakness,
+        owl:NamedIndividual .
+
+:Hunger a :Weakness,
+        owl:NamedIndividual .
+
+:Hydrokinesis a :Strength,
+        owl:NamedIndividual .
+
+:Hypnotism_\(possibly\) a :Strength,
+        owl:NamedIndividual .
+
+:Illusion a :Strength,
+        owl:NamedIndividual .
+
+:Illusion_Casting a :Strength,
+        owl:NamedIndividual .
+
+:Immortality_\(possibly\) a :Strength,
+        owl:NamedIndividual .
+
+:Inability_to_Pass_as_Human a :Weakness,
+        owl:NamedIndividual .
+
+:Incinerating_Spell a :Weakness,
+        owl:NamedIndividual .
+
+:Incineration_Touch a :Strength,
+        owl:NamedIndividual .
+
+:Indestructibility a :Strength,
+        owl:NamedIndividual .
+
+:Infectious_Possession a :Strength,
+        owl:NamedIndividual .
+
+:Influence_Over_Vegetation a :Strength,
+        owl:NamedIndividual .
+
+:Insatiable_Hunger a :Weakness,
+        owl:NamedIndividual .
+
+:Insect_Manipulation a :Strength,
+        owl:NamedIndividual .
+
+:Invitation a :Weakness,
+        owl:NamedIndividual .
+
+:Involuntary_Glow a :Weakness,
+        owl:NamedIndividual .
+
+:Iridium a :Weakness,
+        owl:NamedIndividual .
+
+:Iron_Stakes a :Weakness,
+        owl:NamedIndividual .
+
+:Items_That_Have_Multiple_Grains a :Weakness,
+        owl:NamedIndividual .
+
+:Items_that_have_Multiple_Grains a :Weakness,
+        owl:NamedIndividual .
+
+:Itztlitlantl a :Weakness,
+        owl:NamedIndividual .
+
+:Jack a :Weakness,
+        owl:NamedIndividual .
+
+:Karrion_s_Machete a :Weakness,
+        owl:NamedIndividual .
+
+:Katana_blessed_by_a_Shinto_Priest a :Weakness,
+        owl:NamedIndividual .
+
+:Killing_Touch a :Strength,
+        owl:NamedIndividual .
+
+:Killing_the_Controlling_Witch a :Weakness,
+        owl:NamedIndividual .
+
+:Killing_the_Pack_Alpha a :Weakness,
+        owl:NamedIndividual .
+
+:Kitana_with_Shinto_Blessing a :Weakness,
+        owl:NamedIndividual .
+
+:Lack_of_Tributes a :Weakness,
+        owl:NamedIndividual .
+
+:Lamprey-like_mouth a :Strength,
+        owl:NamedIndividual .
+
+:Lamprey_Mouth a :Strength,
+        owl:NamedIndividual .
+
+:Last_Rites a :Weakness,
+        owl:NamedIndividual .
+
+:Lie_Detection a :Strength,
+        owl:NamedIndividual .
+
+:Life-Force_Extraction a :Strength,
+        owl:NamedIndividual .
+
+:Life_Force_Transference a :Strength,
+        owl:NamedIndividual .
+
+:Light a :Weakness,
+        owl:NamedIndividual .
+
+:Lightweightness a :Strength,
+        owl:NamedIndividual .
+
+:Lilith_s_Crook a :Weakness,
+        owl:NamedIndividual .
+
+:Limb_Regrowth a :Strength,
+        owl:NamedIndividual .
+
+:Localization a :Strength,
+        owl:NamedIndividual .
+
+:Loss_of_Kanabo a :Weakness,
+        owl:NamedIndividual .
+
+:Lower_Tier_Nigh-Omnipotence a :Strength,
+        owl:NamedIndividual .
+
+:Lucifer_s_Spear a :Weakness,
+        owl:NamedIndividual .
+
+:Marigold_flowers a :Weakness,
+        owl:NamedIndividual .
+
+:Mark_of_Cain a :Weakness,
+        owl:NamedIndividual .
+
+:Masque_s_Mask a :Weakness,
+        owl:NamedIndividual .
+
+:Massive_Heart_Damage a :Weakness,
+        owl:NamedIndividual .
+
+:Material_Attachment a :Strength,
+        owl:NamedIndividual .
+
+:Mental_Influence a :Strength,
+        owl:NamedIndividual .
+
+:Mental_Projection a :Strength,
+        owl:NamedIndividual .
+
+:Metatron_s_Spell a :Weakness,
+        owl:NamedIndividual .
+
+:Minion_creation a :Strength,
+        owl:NamedIndividual .
+
+:Mjolnir a :Weakness,
+        owl:NamedIndividual .
+
+:Molecular_Combustion a :Strength,
+        owl:NamedIndividual .
+
+:Monster_Biokinesis a :Strength,
+        owl:NamedIndividual .
+
+:Monster_Birthing a :Strength,
+        owl:NamedIndividual .
+
+:Multilingualism a :Strength,
+        owl:NamedIndividual .
+
+:Necrokinesis a :Strength,
+        owl:NamedIndividual .
+
+:Necromancy a :Strength,
+        owl:NamedIndividual .
+
+:Nephilims a :Weakness,
+        owl:NamedIndividual .
+
+:Neteru a :Monster,
+        :Weakness,
+        owl:NamedIndividual ;
+    :description "Neteru are zombie-like soulless guardians. They are created from reanimated corpses through a Jakkal bite."^^xsd:string ;
+    :hasWeakness :Body_Obliteration,
+        :Brain_Damage,
+        :Neteru,
+        :Short_Lifespan,
+        :Stronger_Beings ;
+    :killing "Follow their masters orders."^^xsd:string ;
+    :origin "Egyptian folklore"^^xsd:string .
+
+:Nigh-Invulnerability a :Strength,
+        owl:NamedIndividual .
+
+:Nigh-Omnipotence a :Strength,
+        owl:NamedIndividual .
+
+:Nigh-Omniscience a :Strength,
+        owl:NamedIndividual .
+
+:Nigh_Indestructibility a :Strength,
+        owl:NamedIndividual .
+
+:Obake a :Monster,
+        :Weakness,
+        owl:NamedIndividual ;
+    :description "Obake, or 'bakemono,' are shapeshifting spirits or ghosts in Japanese folklore."^^xsd:string ;
+    :hasStrength :Hypnotism_\(possibly\),
+        :Shapeshifting ;
+    :killing "They are generally harmless and are left alone by hunters."^^xsd:string ;
+    :origin "Japanese folklore"^^xsd:string .
+
+:Obsidian_Weapons a :Weakness,
+        owl:NamedIndividual .
+
+:Ostium a :Weakness,
+        owl:NamedIndividual .
+
+:Other_2_or_3_Unknown_Swords a :Weakness,
+        owl:NamedIndividual .
+
+:Otherworldly_Objects a :Weakness,
+        owl:NamedIndividual .
+
+:Paeon_s_Caduceus a :Weakness,
+        owl:NamedIndividual .
+
+:Pain_Detection a :Strength,
+        owl:NamedIndividual .
+
+:Paralysis a :Strength,
+        owl:NamedIndividual .
+
+:Paralyzing_Poison a :Strength,
+        owl:NamedIndividual .
+
+:Paralyzing_Venom a :Strength,
+        owl:NamedIndividual .
+
+:Partial_Immunity a :Strength,
+        owl:NamedIndividual .
+
+:Pepper_Spray a :Weakness,
+        owl:NamedIndividual .
+
+:Phoenix_ash a :Weakness,
+        owl:NamedIndividual .
+
+:Physical_attacks a :Weakness,
+        owl:NamedIndividual .
+
+:Poppy_Extract a :Weakness,
+        owl:NamedIndividual .
+
+:Portal_Creation a :Strength,
+        owl:NamedIndividual .
+
+:Powerful_Jaw a :Strength,
+        owl:NamedIndividual .
+
+:Powerful_Jaws a :Strength,
+        owl:NamedIndividual .
+
+:Purified_blood a :Weakness,
+        owl:NamedIndividual .
+
+:Ramiel a :Strength,
+        owl:NamedIndividual .
+
+:Reality_Manipulation a :Strength,
+        owl:NamedIndividual .
+
+:Reaper_trap a :Weakness,
+        owl:NamedIndividual .
+
+:Reapers a :Monster,
+        :Weakness,
+        owl:NamedIndividual ;
+    :description "Reapers are beings that serve Death. They assist in maintaining The Natural Order and used to be thought as completely neutral, aligned with neither Heaven nor Hell nor Purgatory."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_11,
+        :Season_12,
+        :Season_13,
+        :Season_14,
+        :Season_15,
+        :Season_2,
+        :Season_4,
+        :Season_5,
+        :Season_6,
+        :Season_7,
+        :Season_8,
+        :Season_9 ;
+    :hasStrength :Astral_Perception,
+        :Astral_Projection,
+        :Biokinesis,
+        :Chronokinesis,
+        :Cosmic_Awareness,
+        :Dimensional_Access,
+        <http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28/Disease/Death_Transference>,
+        :Dream_Walking,
+        :Electromagnetic_Interference,
+        :Extending_Intangibility,
+        :Flight,
+        :Immortality,
+        :Intangibility,
+        :Invisibility,
+        :Invulnerability,
+        :Killing_Touch,
+        :Memory_Manipulation,
+        :Perception_Altering,
+        :Possession,
+        :Resurrection,
+        :Soul_Control,
+        :Super_Stamina,
+        :Super_Strength,
+        :Telekinesis,
+        :Teleportation,
+        :Wind_Manipulation ;
+    :hasWeakness :Angel_Blades,
+        :Archangels,
+        :Death,
+        :Death_s_Scythe,
+        :Higher_Beings,
+        :Higher_Demons,
+        :Incinerating_Spell,
+        :Magic,
+        :Reaper_trap,
+        :The_First_Blade ;
+    :killing "Delivering souls to their final destination."^^xsd:string ;
+    :origin "Death"^^xsd:string .
+
+:Reproduction a :Strength,
+        owl:NamedIndividual .
+
+:Resilience a :Strength,
+        owl:NamedIndividual .
+
+:Resolving_the_ghost_s_issues a :Weakness,
+        owl:NamedIndividual .
+
+:Restoration_of_Order a :Weakness,
+        owl:NamedIndividual .
+
+:Resurrecting_Angel_Ritual a :Weakness,
+        owl:NamedIndividual .
+
+:Resurrection_\(by_deals\) a :Strength,
+        owl:NamedIndividual .
+
+:Retinal_flare a :Weakness,
+        owl:NamedIndividual .
+
+:Rigid_Hierarchy a :Weakness,
+        owl:NamedIndividual .
+
+:Ring_Removal a :Weakness,
+        owl:NamedIndividual .
+
+:Rock_Salt a :Weakness,
+        owl:NamedIndividual .
+
+:Rosemary_and_Salt a :Weakness,
+        owl:NamedIndividual .
+
+:Ruby_Slippers a :Weakness,
+        owl:NamedIndividual .
+
+:Rugaru_Killing_Gun a :Weakness,
+        owl:NamedIndividual .
+
+:Sacrifice_Empowerment a :Strength,
+        owl:NamedIndividual .
+
+:Sage a :Weakness,
+        owl:NamedIndividual .
+
+:Salting_and_Burning_Their_Remains a :Weakness,
+        owl:NamedIndividual .
+
+:Salting_and_Burning_of_Remains a :Weakness,
+        owl:NamedIndividual .
+
+:Salting_and_Burning_remains a :Weakness,
+        owl:NamedIndividual .
+
+:Salting_and_Burning_the_Bones a :Weakness,
+        owl:NamedIndividual .
+
+:Salting_and_Burning_the_Remains a :Weakness,
+        owl:NamedIndividual .
+
+:Salting_and_Burning_their_Mortal_Remains a :Weakness,
+        owl:NamedIndividual .
+
+:Scared_to_Rest a :Weakness,
+        owl:NamedIndividual .
+
+:Scent-blocking_Mixture a :Weakness,
+        owl:NamedIndividual .
+
+:Scent_Production a :Strength,
+        owl:NamedIndividual .
+
+:Scroll_Destruction a :Weakness,
+        owl:NamedIndividual .
+
+:Scroll_Removal a :Weakness,
+        owl:NamedIndividual .
+
+:Seduction a :Strength,
+        owl:NamedIndividual .
+
+:Seraphim a :Monster,
+        :Weakness,
+        owl:NamedIndividual ;
+    :description "eraphim are a higher class of angel, above normal angels such as Uriel and Joshua, but lower in status than archangels. Their exact role in Heaven is unclear. Akobel was sent to watch, observe and learn about humanity."^^xsd:string ;
+    :hasSeason :Season_10,
+        :Season_11,
+        :Season_12,
+        :Season_13,
+        :Season_14,
+        :Season_15,
+        :Season_5,
+        :Season_6,
+        :Season_7,
+        :Season_8 ;
+    :hasStrength :Angelic_Possession,
+        :Animal_Communication,
+        :Apporting,
+        :Astral_Projection,
+        :Biokinesis,
+        :Chronokinesis,
+        :Dream_Walking,
+        :Healing,
+        :Immortality,
+        :Invisibility,
+        :Lie_Detection,
+        :Localization,
+        :Mental_Manipulation,
+        :Mental_Projection,
+        :Mind_Control,
+        :Photokinesis,
+        :Power_Negation,
+        :Pyrokinesis,
+        :Reality_Warping,
+        :Regeneration,
+        :Resurrection,
+        :Smiting,
+        <http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28/Soul_Reading/Channeling>,
+        :Super_Stamina,
+        :Super_Strength,
+        :Telekinesis,
+        :Telepathy,
+        :Teleportation,
+        :Vessel_Locking ;
+    :hasWeakness :Angel-killing_bullets,
+        :Angel_Blades,
+        :Angel_banishing_sigil,
+        :Common_Angelic_Weaknesses,
+        :Lance_of_Michael,
+        :Leviathans,
+        :Nephilim,
+        :Primordial_Entities,
+        :The_Shadow ;
+    :killing "Angel blade and with their celestial/true form."^^xsd:string ;
+    :origin "God"^^xsd:string .
+
+:Serious_Physical_Injury a :Weakness,
+        owl:NamedIndividual .
+
+:Severe_Trauma a :Weakness,
+        owl:NamedIndividual .
+
+:Severing_Their_Proboscis a :Weakness,
+        owl:NamedIndividual .
+
+:Shaman_Magic a :Weakness,
+        owl:NamedIndividual .
+
+:Shelf_life a :Weakness,
+        owl:NamedIndividual .
+
+:Short_Life-Span a :Weakness,
+        owl:NamedIndividual .
+
+:Short_Lifespan a :Weakness,
+        owl:NamedIndividual .
+
+:Shredding a :Weakness,
+        owl:NamedIndividual .
+
+:Silver_Blade_Through_the_Heart a :Weakness,
+        owl:NamedIndividual .
+
+:Silver_Knife a :Weakness,
+        owl:NamedIndividual .
+
+:Silver_and_lamb_blood a :Weakness,
+        owl:NamedIndividual .
+
+:Snake_Communication a :Strength,
+        owl:NamedIndividual .
+
+:Snake_Venom a :Weakness,
+        owl:NamedIndividual .
+
+:Soul-Powered_Magic a :Weakness,
+        owl:NamedIndividual .
+
+:Soul_Channeling a :Strength,
+        owl:NamedIndividual .
+
+:Soul_Devouring a :Strength,
+        owl:NamedIndividual .
+
+:Soul_Eater_Killing_Sigil a :Weakness,
+        owl:NamedIndividual .
+
+:Soul_Extracting a :Strength,
+        owl:NamedIndividual .
+
+:Soul_Feeding a :Strength,
+        owl:NamedIndividual .
+
+<http://rpcw.di.uminho.pt/2024/2024/5/untitled-ontology-28/Soul_Reading/Channeling> a :Strength,
+        owl:NamedIndividual .
+
+:Soulless_Individuals a :Weakness,
+        owl:NamedIndividual .
+
+:Soullessness a :Weakness,
+        owl:NamedIndividual .
+
+:Soybean_Ritual a :Weakness,
+        owl:NamedIndividual .
+
+:Special_Children a :Weakness,
+        owl:NamedIndividual .
+
+:Specific_Rituals a :Weakness,
+        owl:NamedIndividual .
+
+:Spell_Resistance a :Strength,
+        owl:NamedIndividual .
+
+:Spells a :Weakness,
+        owl:NamedIndividual .
+
+:Spice_Concoction a :Weakness,
+        owl:NamedIndividual .
+
+:Spikes a :Strength,
+        owl:NamedIndividual .
+
+:Spinal_Cord_Injuries a :Weakness,
+        owl:NamedIndividual .
+
+:Stealth a :Strength,
+        owl:NamedIndividual .
+
+:Stinger_Protrusion a :Strength,
+        owl:NamedIndividual .
+
+:Strong_Physical_Blows a :Weakness,
+        owl:NamedIndividual .
+
+:Stronger_Beings a :Weakness,
+        owl:NamedIndividual .
+
+:Suffocation a :Weakness,
+        owl:NamedIndividual .
+
+:Sunlight a :Weakness,
+        owl:NamedIndividual .
+
+:Super_Durability a :Strength,
+        owl:NamedIndividual .
+
+:Super_Intelligence a :Strength,
+        owl:NamedIndividual .
+
+:Super_agility a :Strength,
+        owl:NamedIndividual .
+
+:Superhuman_Agility a :Strength,
+        owl:NamedIndividual .
+
+:Superhuman_Stamina a :Strength,
+        owl:NamedIndividual .
+
+:Supernatural_Durability a :Strength,
+        owl:NamedIndividual .
+
+:Supernatural_Endurance a :Strength,
+        owl:NamedIndividual .
+
+:Sword_of_Bruncvik a :Weakness,
+        owl:NamedIndividual .
+
+:Sword_of_St._George a :Weakness,
+        owl:NamedIndividual .
+
+:Tactile_Exorcism a :Strength,
+        owl:NamedIndividual .
+
+:Talon_like_claws a :Strength,
+        owl:NamedIndividual .
+
+:Talons_and_Claws a :Strength,
+        owl:NamedIndividual .
+
+:Telepathic_Link a :Strength,
+        owl:NamedIndividual .
+
+:Telepathy_\(unconfirmed\) a :Strength,
+        owl:NamedIndividual .
+
+:The_Darkness a :Weakness,
+        owl:NamedIndividual .
+
+:The_Impala a :Weakness,
+        owl:NamedIndividual .
+
+:The_Shadow a :Weakness,
+        owl:NamedIndividual .
+
+:The_Spear a :Weakness,
+        owl:NamedIndividual .
+
+:Their_Own_Weapons_\(Apotheosis__Gods\) a :Weakness,
+        owl:NamedIndividual .
+
+:Their_Swords a :Weakness,
+        owl:NamedIndividual .
+
+:Throat a :Weakness,
+        owl:NamedIndividual .
+
+:Tracking a :Strength,
+        owl:NamedIndividual .
+
+:Trap_Making a :Strength,
+        owl:NamedIndividual .
+
+:Traumatic_Memories a :Weakness,
+        owl:NamedIndividual .
+
+:Truth_Compulsion a :Strength,
+        owl:NamedIndividual .
+
+:Tunnelling a :Strength,
+        owl:NamedIndividual .
+
+:Two_Stabs_with_the_Demon-killing_Knife a :Weakness,
+        owl:NamedIndividual .
+
+:UV-A_Light_from_a_Blacklight a :Weakness,
+        owl:NamedIndividual .
+
+:Uncontrollable_Lust a :Weakness,
+        owl:NamedIndividual .
+
+:Unexpected_Mechanical_Trauma a :Weakness,
+        owl:NamedIndividual .
+
+:Unique a :Strength,
+        owl:NamedIndividual .
+
+:Unknown a :Strength,
+        owl:NamedIndividual .
+
+:Vamp-Tonite a :Weakness,
+        owl:NamedIndividual .
+
+:Vampire_Irradiation_Gun a :Weakness,
+        owl:NamedIndividual .
+
+:Venom a :Strength,
+        owl:NamedIndividual .
+
+:Venom_Spit a :Strength,
+        owl:NamedIndividual .
+
+:Venomous_Blood a :Strength,
+        owl:NamedIndividual .
+
+:Very_Heavy-Angel_Warding a :Weakness,
+        owl:NamedIndividual .
+
+:Vessel_Locking a :Strength,
+        owl:NamedIndividual .
+
+:Viscous_Goo_Production a :Strength,
+        owl:NamedIndividual .
+
+:Voice_Manipulation a :Strength,
+        owl:NamedIndividual .
+
+:Weather_manipulation a :Strength,
+        owl:NamedIndividual .
+
+:Webbing_Generation a :Strength,
+        owl:NamedIndividual .
+
+:White_Ash_Stake a :Weakness,
+        owl:NamedIndividual .
+
+:Wind_Manipulation a :Strength,
+        owl:NamedIndividual .
+
+:Witchcraft a :Weakness,
+        owl:NamedIndividual .
+
+:Wooden_Stakes a :Weakness,
+        owl:NamedIndividual .
+
+:Wyld_s_Spear a :Weakness,
+        owl:NamedIndividual .
+
+:Angel-killing_bullets a :Weakness,
+        owl:NamedIndividual .
+
+:Angel_Blade a :Weakness,
+        owl:NamedIndividual .
+
+:Angel_banishing_sigil a :Weakness,
+        owl:NamedIndividual .
+
+:Angelic_Power_Negation a :Strength,
+        owl:NamedIndividual .
+
+:Animation a :Strength,
+        owl:NamedIndividual .
+
+:Celtic_Monster_Trapping_Sigil a :Weakness,
+        owl:NamedIndividual .
+
+:Compulsion a :Strength,
+        owl:NamedIndividual .
+
+:Conversion a :Strength,
+        owl:NamedIndividual .
+
+:Deadly_Claws a :Strength,
+        owl:NamedIndividual .
+
+:Death a :Weakness,
+        owl:NamedIndividual .
+
+:Demon_Curing_Ritual a :Weakness,
+        owl:NamedIndividual .
+
+:Drowning a :Weakness,
+        owl:NamedIndividual .
+
+:EVP a :Strength,
+        owl:NamedIndividual .
+
+:Electronic_Manipulation a :Strength,
+        owl:NamedIndividual .
+
+:Enhanced_Senses a :Strength,
+        owl:NamedIndividual .
+
+:Family a :Weakness,
+        owl:NamedIndividual .
+
+:Gabriel_s_swords a :Weakness,
+        owl:NamedIndividual .
+
+:Ghost_Possession a :Strength,
+        owl:NamedIndividual .
+
+:God-touched_Weapons a :Weakness,
+        owl:NamedIndividual .
+
+:Gog_s_Sword a :Weakness,
+        owl:NamedIndividual .
+
+:Heart_Extraction a :Weakness,
+        owl:NamedIndividual .
+
+:Higher_Demons a :Weakness,
+        owl:NamedIndividual .
+
+:Holy_Water a :Weakness,
+        owl:NamedIndividual .
+
+:Holy_water a :Weakness,
+        owl:NamedIndividual .
+
+:Infection a :Strength,
+        owl:NamedIndividual .
+
+:Infectious_Bite a :Strength,
+        owl:NamedIndividual .
+
+:Jack_Kline a :Weakness,
+        owl:NamedIndividual .
+
+:Lance_of_Michael a :Weakness,
+        owl:NamedIndividual .
+
+:Magog_s_Sword a :Weakness,
+        owl:NamedIndividual .
+
+:Pathokinesis a :Strength,
+        owl:NamedIndividual .
+
+:Perception_Altering a :Strength,
+        owl:NamedIndividual .
+
+:Power_Negation a :Strength,
+        owl:NamedIndividual .
+
+:Primordial_entities a :Weakness,
+        owl:NamedIndividual .
+
+:Purgatory a :Weakness,
+        owl:NamedIndividual .
+
+:Radiation a :Weakness,
+        owl:NamedIndividual .
+
+:Rapid_Aging a :Strength,
+        owl:NamedIndividual .
+
+:Reality_Warping_\(by_deals\) a :Strength,
+        owl:NamedIndividual .
+
+:Salt_Water a :Weakness,
+        owl:NamedIndividual .
+
+:Salt_Water_Soaked_Ropes a :Weakness,
+        owl:NamedIndividual .
+
+:Smiting a :Strength,
+        owl:NamedIndividual .
+
+:Soul_Consumption a :Strength,
+        owl:NamedIndividual .
+
+:Starvation a :Weakness,
+        owl:NamedIndividual .
+
+:Super_stamina a :Strength,
+        owl:NamedIndividual .
+
+:Third_Eye a :Strength,
+        :Weakness,
+        owl:NamedIndividual .
+
+:Underwater_Breathing a :Strength,
+        owl:NamedIndividual .
+
+:Unique_Smiting a :Strength,
+        owl:NamedIndividual .
+
+:Angelic_Possession a :Strength,
+        owl:NamedIndividual .
+
+:Astral_Projection a :Strength,
+        owl:NamedIndividual .
+
+:Chronokinesis a :Strength,
+        owl:NamedIndividual .
+
+:Clairsentience a :Strength,
+        owl:NamedIndividual .
+
+:Conjuration a :Strength,
+        owl:NamedIndividual .
+
+:Cosmic_Awareness a :Strength,
+        owl:NamedIndividual .
+
+:Death_s_Scythe a :Weakness,
+        owl:NamedIndividual .
+
+:Demonic_Possession a :Strength,
+        owl:NamedIndividual .
+
+:Devil_s_Trap a :Weakness,
+        owl:NamedIndividual .
+
+:Diminutive_Size a :Strength,
+        :Weakness,
+        owl:NamedIndividual .
+
+:Eve a :Monster,
+        :Weakness,
+        owl:NamedIndividual ;
+    :description "Eve was a mysterious and powerful being known by the title of Mother of All. Eve was part of existence before angels and created the Alphas, which were the first monsters of their allotted kind from whom their entire species is descended."^^xsd:string ;
+    :hasSeason :Season_15,
+        :Season_6,
+        :Season_7 ;
+    :hasStrength :Angelic_Power_Negation,
+        :Compulsion,
+        :Conversion,
+        :Flight,
+        :Immortality,
+        :Invulnerability,
+        :Monster_Biokinesis,
+        :Monster_Birthing,
+        :Possession,
+        :Regeneration,
+        :Shapeshifting,
+        :Super_Senses,
+        :Super_Speed,
+        :Super_Strength,
+        :Supernatural_Concealment,
+        :Telepathy ;
+    :hasWeakness :Leviathans,
+        :Phoenix_ash,
+        :Purgatory ;
+    :killing "Births harmful species"^^xsd:string ;
+    :origin "God"^^xsd:string .
+
+:Explosions a :Weakness,
+        owl:NamedIndividual .
+
+:Extreme_Brain_Damage a :Weakness,
+        owl:NamedIndividual .
+
+:Ghosts a :Monster,
+        :Weakness,
+        owl:NamedIndividual ;
+    :description "Ghosts, also called Spirits, are souls of deceased humans and animals that did not go with their reaper to their respective afterlife and are stuck on Earth."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_10,
+        :Season_11,
+        :Season_12,
+        :Season_13,
+        :Season_14,
+        :Season_15,
+        :Season_2,
+        :Season_3,
+        :Season_4,
+        :Season_5,
+        :Season_6,
+        :Season_7,
+        :Season_8,
+        :Season_9 ;
+    :hasStrength :Astral_Perception,
+        :Biokinesis,
+        :EVP,
+        :Ectoplasm_Creation,
+        :Electrokinesis,
+        :Electromagnetic_Interference,
+        :Empathy,
+        :Environment_Manipulation,
+        :Flight,
+        :Hydrokinesis,
+        :Immunity,
+        :Intangibility,
+        :Invisibility,
+        :Material_Attachment,
+        :Mental_Influence,
+        :Photokinesis,
+        :Possession,
+        :Pyrokinesis,
+        :Reality_Manipulation,
+        :Shapeshifting,
+        :Soul_Absorption,
+        :Soul_Channeling,
+        :Soul_Control,
+        :Super_Speed,
+        :Super_Strength,
+        :Telekinesis,
+        :Teleportation,
+        :Thermokinesis,
+        :Voice_Mimicry ;
+    :hasWeakness :Angels,
+        :Cat_s_Eye_Shells,
+        :Destroying_the_Haunted_Object,
+        :Ghost_Repelling_Spell,
+        :Ghosts,
+        :God,
+        :Holy_Ground,
+        :Iron,
+        :Last_Rites,
+        :Magic,
+        :Overstraining,
+        :Reapers,
+        :Resolving_the_ghost_s_issues,
+        :Salt,
+        :Salt_Water,
+        :Salt_Water_Soaked_Ropes,
+        :Salting_and_Burning_the_Bones ;
+    :killing "Ghosts are neither good nor evil, as their behavior is ultimately dictated by who they were in life and how they died. They can become violent and angry."^^xsd:string ;
+    :origin "Modern folklore"^^xsd:string .
+
+:Life_Force_Draining a :Strength,
+        owl:NamedIndividual .
+
+:Longevity a :Strength,
+        owl:NamedIndividual .
+
+:Mind_Control a :Strength,
+        owl:NamedIndividual .
+
+:Overstraining a :Weakness,
+        owl:NamedIndividual .
+
+:Photokinesis a :Strength,
+        owl:NamedIndividual .
+
+:Power_Granting a :Strength,
+        owl:NamedIndividual .
+
+:Primordial_Entities a :Monster,
+        :Weakness,
+        owl:NamedIndividual ;
+    :description "Primordial Entities or Cosmic Beings refer to a group of nigh- or lower-tier omnipotent beings who existed before the creation of the Universe."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_10,
+        :Season_11,
+        :Season_12,
+        :Season_13,
+        :Season_14,
+        :Season_15,
+        :Season_2,
+        :Season_3,
+        :Season_4,
+        :Season_5,
+        :Season_6,
+        :Season_7,
+        :Season_8,
+        :Season_9 ;
+    :killing "All powerful, just like God."^^xsd:string ;
+    :origin "Unknown"^^xsd:string .
+
+:Sedation a :Strength,
+        owl:NamedIndividual .
+
+:Soul_Absorption a :Strength,
+        owl:NamedIndividual .
+
+:Soul_Control a :Strength,
+        owl:NamedIndividual .
+
+:Soul_Reading a :Strength,
+        owl:NamedIndividual .
+
+:Supernatural_Concealment a :Strength,
+        owl:NamedIndividual .
+
+:Terrakinesis a :Strength,
+        owl:NamedIndividual .
+
+:The_First_Blade a :Weakness,
+        owl:NamedIndividual .
+
+:Astral_Perception a :Strength,
+        owl:NamedIndividual .
+
+:Cream a :Weakness,
+        owl:NamedIndividual .
+
+:Demons a :Monster,
+        :Weakness,
+        owl:NamedIndividual ;
+    :description "Demons are malevolent spiritual entities that are considered the direct opposites to angels. They are created from human souls who have endured prolonged extreme torture in Hell. Via this process, they become corrupted, extremely evil, and also very powerful."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_10,
+        :Season_11,
+        :Season_12,
+        :Season_13,
+        :Season_14,
+        :Season_15,
+        :Season_2,
+        :Season_3,
+        :Season_4,
+        :Season_5,
+        :Season_6,
+        :Season_7,
+        :Season_8,
+        :Season_9 ;
+    :killing "Engage in all sorts of torture and destruction."^^xsd:string ;
+    :origin "Lucifer"^^xsd:string .
+
+:Dream_Walking a :Strength,
+        owl:NamedIndividual .
+
+:Exorcism a :Weakness,
+        owl:NamedIndividual .
+
+:Intangibility a :Strength,
+        owl:NamedIndividual .
+
+:Leviathans a :Monster,
+        :Weakness,
+        owl:NamedIndividual ;
+    :description "The Leviathans, also called Leviathan, The Old Ones, Chompers, or Levis for short, are a race of ancient, primordial monsters that served as God's very first beasts. Thus, they predate angels, humans, and the soul itself."^^xsd:string ;
+    :hasSeason :Season_10,
+        :Season_11,
+        :Season_13,
+        :Season_14,
+        :Season_15,
+        :Season_6,
+        :Season_7,
+        :Season_8 ;
+    :hasStrength :Angelic_Power_Negation,
+        :Enhanced_Senses,
+        :Flight,
+        :Immortality,
+        :Invulnerability,
+        :Possession,
+        :Powerful_Jaws,
+        :Regeneration,
+        :Shapeshifting,
+        :Spell_Resistance,
+        :Super_Agility,
+        :Super_Intelligence,
+        :Super_Speed,
+        :Super_Stamina,
+        :Super_Strength,
+        :Supernatural_Concealment,
+        :Underwater_Breathing,
+        :Venomous_Blood,
+        :Voice_Mimicry ;
+    :hasWeakness :Bone_Of_Righteous_Mortal_Washed_In_the_Three_Bloods_of_Fallen,
+        :Borax,
+        :Cannibalism,
+        :Castiel,
+        :Death,
+        :Decapitation,
+        :Ghosts,
+        :God,
+        :Insatiable_Hunger,
+        :Purgatory,
+        :Rigid_Hierarchy,
+        :The_Darkness,
+        :Witchcraft ;
+    :killing "Hungry and destructive. Eat all."^^xsd:string ;
+    :origin "Biblical folklore"^^xsd:string .
+
+:Memory_Manipulation a :Strength,
+        owl:NamedIndividual .
+
+:Mirrors a :Weakness,
+        owl:NamedIndividual .
+
+:Precognition a :Strength,
+        owl:NamedIndividual .
+
+:Retinal_Flare a :Weakness,
+        owl:NamedIndividual .
+
+:Spell_Casting a :Strength,
+        owl:NamedIndividual .
+
+:Superhuman_Strength a :Strength,
+        owl:NamedIndividual .
+
+:Supernatural_Perception a :Strength,
+        owl:NamedIndividual .
+
+:Vamptonite a :Weakness,
+        owl:NamedIndividual .
+
+:Apporting a :Strength,
+        owl:NamedIndividual .
+
+:Archangels a :Monster,
+        :Weakness,
+        owl:NamedIndividual ;
+    :description "Archangels are primordial angels that existed long before the creation of the Big Bang,[1] being looked at as Heaven's most fearsome wrath.[2] They were the first and strongest class of angels to be created, making them one of God's first creations. They were created in this order: Michael, Lucifer, Raphael, and Gabriel."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_10,
+        :Season_11,
+        :Season_12,
+        :Season_13,
+        :Season_14,
+        :Season_15,
+        :Season_2,
+        :Season_3,
+        :Season_4,
+        :Season_5,
+        :Season_6,
+        :Season_7,
+        :Season_8,
+        :Season_9 ;
+    :killing "Weapons, like The Horn of Gabriel, The Sword of Michael, and with their celestial power and form that can cause natural disasters."^^xsd:string ;
+    :origin "God"^^xsd:string .
+
+:Demon-Killing_Knife a :Weakness,
+        owl:NamedIndividual .
+
+:Electrocution a :Weakness,
+        owl:NamedIndividual .
+
+:Empathy a :Strength,
+        owl:NamedIndividual .
+
+:Healing a :Strength,
+        owl:NamedIndividual .
+
+:Mortality a :Weakness,
+        owl:NamedIndividual .
+
+:Thermokinesis a :Strength,
+        owl:NamedIndividual .
+
+:Weather_Manipulation a :Strength,
+        owl:NamedIndividual .
+
+:Claws a :Strength,
+        owl:NamedIndividual .
+
+:God a :Weakness,
+        owl:NamedIndividual .
+
+:Immunity a :Strength,
+        owl:NamedIndividual .
+
+:Mental_Manipulation a :Strength,
+        owl:NamedIndividual .
+
+:Electrokinesis a :Strength,
+        owl:NamedIndividual .
+
+:Fangs a :Strength,
+        owl:NamedIndividual .
+
+:Nephilim a :Monster,
+        :Weakness,
+        owl:NamedIndividual ;
+    :description "Nephilim are the offspring of the 'sons of God' and the 'daughters of men' mentioned in the Bible, often depicted as giants or mighty warriors. The offspring contains a mixture of human soul and angelic grace as a source of power, inherited from both parents. "^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_11,
+        :Season_12,
+        :Season_13,
+        :Season_14,
+        :Season_15,
+        :Season_8,
+        :Season_9 ;
+    :hasStrength :Astral_Perception,
+        :Healing,
+        :Illusion,
+        :Immortality_\(possibly\),
+        :Immunity,
+        :Invulnerability,
+        :Life_Force_Draining,
+        :Mind_Control,
+        :Precognition,
+        :Rapid_Aging,
+        :Reality_Warping,
+        :Regeneration,
+        :Resurrection,
+        :Sedation,
+        :Super_Senses,
+        :Super_Strength,
+        :Telekinesis,
+        :Telepathy,
+        :Teleportation ;
+    :hasWeakness :Angel_Blades,
+        :Angel_Radio,
+        :Archangel_Blades,
+        :God_\(formerly\),
+        :Grace_Extraction,
+        :Resurrecting_Angel_Ritual,
+        :Unexpected_Mechanical_Trauma,
+        :Very_Heavy-Angel_Warding ;
+    :killing "Whenever a Nephilim grew into their power, entire worlds died, the Nephilim is destinated to became more powerful than the angel that genereted them."^^xsd:string ;
+    :origin "Biblical folklore"^^xsd:string .
+
+:Resurrection a :Strength,
+        owl:NamedIndividual .
+
+:Voice_Mimicry a :Strength,
+        owl:NamedIndividual .
+
+:Angels a :Monster,
+        :Weakness,
+        owl:NamedIndividual ;
+    :description "Angels are celestial beings found in various religious traditions, often depicted as messengers of God or guardians of humans. They power Heaven and at full potential they are imbued with considerable power."^^xsd:string ;
+    :hasSeason :Season_1,
+        :Season_10,
+        :Season_11,
+        :Season_12,
+        :Season_13,
+        :Season_14,
+        :Season_15,
+        :Season_2,
+        :Season_3,
+        :Season_4,
+        :Season_5,
+        :Season_6,
+        :Season_7,
+        :Season_8,
+        :Season_9 ;
+    :killing "Angel blade and with their celestial/true form."^^xsd:string ;
+    :origin "God"^^xsd:string .
+
+:Pyrokinesis a :Strength,
+        owl:NamedIndividual .
+
+:Silver a :Weakness,
+        owl:NamedIndividual .
+
+:The_Colt a :Weakness,
+        owl:NamedIndividual .
+
+:Iron a :Weakness,
+        owl:NamedIndividual .
+
+:Reality_Warping a :Strength,
+        owl:NamedIndividual .
+
+:Super_strength a :Strength,
+        owl:NamedIndividual .
+
+:Angel_Blades a :Weakness,
+        owl:NamedIndividual .
+
+:Electromagnetic_Interference a :Strength,
+        owl:NamedIndividual .
+
+:Fire a :Weakness,
+        owl:NamedIndividual .
+
+:Salt a :Weakness,
+        owl:NamedIndividual .
+
+:Biokinesis a :Strength,
+        owl:NamedIndividual .
+
+:Regeneration a :Strength,
+        owl:NamedIndividual .
+
+:Decapitation a :Weakness,
+        owl:NamedIndividual .
+
+:Flight a :Strength,
+        owl:NamedIndividual .
+
+:Super_Agility a :Strength,
+        owl:NamedIndividual .
+
+:Magic a :Strength,
+        :Weakness,
+        owl:NamedIndividual .
+
+:Super_Senses a :Strength,
+        owl:NamedIndividual .
+
+:Super_Stamina a :Strength,
+        owl:NamedIndividual .
+
+:Telekinesis a :Strength,
+        owl:NamedIndividual .
+
+:Possession a :Strength,
+        owl:NamedIndividual .
+
+:Telepathy a :Strength,
+        owl:NamedIndividual .
+
+:Invisibility a :Strength,
+        owl:NamedIndividual .
+
+:Teleportation a :Strength,
+        owl:NamedIndividual .
+
+:Super_Speed a :Strength,
+        owl:NamedIndividual .
+
+:Season_3 a :Season,
+        owl:NamedIndividual ;
+    :rating "8.5"^^xsd:float .
+
+:Season_10 a :Season,
+        owl:NamedIndividual ;
+    :rating "8.2"^^xsd:float .
+
+:Immortality a :Strength,
+        owl:NamedIndividual .
+
+:Season_14 a :Season,
+        owl:NamedIndividual ;
+    :rating "8.2"^^xsd:float .
+
+:Shapeshifting a :Strength,
+        owl:NamedIndividual .
+
+:Season_4 a :Season,
+        owl:NamedIndividual ;
+    :rating "9.0"^^xsd:float .
+
+:Season_5 a :Season,
+        owl:NamedIndividual ;
+    :rating "8.8"^^xsd:float .
+
+:Season_1 a :Season,
+        owl:NamedIndividual ;
+    :rating "8.2"^^xsd:float .
+
+:Season_2 a :Season,
+        owl:NamedIndividual ;
+    :rating "8.6"^^xsd:float .
+
+:Season_11 a :Season,
+        owl:NamedIndividual ;
+    :rating "8.5"^^xsd:float .
+
+:Season_12 a :Season,
+        owl:NamedIndividual ;
+    :rating "8.1"^^xsd:float .
+
+:Season_15 a :Season,
+        owl:NamedIndividual ;
+    :rating "8.0"^^xsd:float .
+
+:Season_7 a :Season,
+        owl:NamedIndividual ;
+    :rating "8.4"^^xsd:float .
+
+:Season_13 a :Season,
+        owl:NamedIndividual ;
+    :rating "8.4"^^xsd:float .
+
+:Season_8 a :Season,
+        owl:NamedIndividual ;
+    :rating "7.9"^^xsd:float .
+
+:Season_9 a :Season,
+        owl:NamedIndividual ;
+    :rating "8.2"^^xsd:float .
+
+:Season_6 a :Season,
+        owl:NamedIndividual ;
+    :rating "8.4"^^xsd:float .
+
+:Invulnerability a :Strength,
+        owl:NamedIndividual .
+
+:Super_Strength a :Strength,
+        owl:NamedIndividual .
+
+###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi

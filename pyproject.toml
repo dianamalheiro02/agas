@@ -1,0 +1,39 @@
+[build-system]
+requires = ["flit_core >= 3.12.0, <4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "agas"
+dynamic = ["version", "description"]
+dependencies = [
+    "flask>=3.0",
+    "rdflib>=7.0",
+    "lark",
+    "werkzeug>=3.0",
+    "jinja2",
+    "graphviz",
+]
+requires-python = ">=3.10"
+authors = [
+  {name = "Diana Teixeira", email = "pg53766@alunos.uminho.pt"},
+  {name = "José Almeida", email = "jj@di.uminho.pt"},
+  {name = "Alberto Simões", email = "alberto.simoes@checkmarx.com"},
+]
+maintainers = [
+  {name = "Diana Teixeira", email = "pg53766@alunos.uminho.pt"}
+]
+keywords = ["ontology", "semantic-web", "dsl", "web-prototyping", "flask", "SPARQL"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12"
+]
+readme = "README.md"
+
+[project.scripts]
+agas = "agas.cli:main"

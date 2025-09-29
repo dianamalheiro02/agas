@@ -1,0 +1,119 @@
+# DSL de configuração será responsável por: diálogo, templates, processamento (resumos, estatísticas)
+# Configuration for PWGAS platform
+
+# Specify the path to your ontology file and Protégé executable
+ONTOLOGY_FILE = '/home/diana-teixeira/Desktop/AGAS/ontos/typeB/cwr_ttl_file.ttl'
+PROTEGE_PATH = '/home/diana-teixeira/Desktop/Thesis/Protege-5.6.4-linux/Protege-5.6.4/protege'
+
+#Specify the type of ontology A, B, C1 or C2
+ONTOLOGY_TYPE = 'B'
+
+#Specify who can edit the ontology -> 'ALL', 'LOGIN' are the option
+ONTOLOGY_EDIT = 'ALL'
+
+#Specify if ontology has images that are from your own pc ('NONE' if not), if it does, please give the path to the folder you have them in
+ONTOLOGY_IMAGES = 'NONE'
+
+#Specify the type of user for a custom experience -> pode ser subed pelo login!! (EXP/NONEXP)
+USER_TYPE = 'EXP'
+
+#Direct to templates you want to use
+TEMPLATES = '~/Desktop/AGAS/templates/'
+
+#Define what language you want to use: 'PT'/'EN'
+LANGUAGE = 'EN'
+
+#What you want to see in the RDF, which classes -> PLACE DOWN 'ALL' IF YOU WANT THEM ALL SHOWN
+RDF_VIEW = ['water','plant','fire'] 
+
+#Specify things you'd like to see in the pages -> PLACE DOWN 'ALL' IF YOU WANT THEM ALL SHOWN -> PLACE DOWN 'STARS' IF YOU WANT TO USE STAR SYSTEM
+VIEW_CLASSES = 'STARS'
+
+#Specify specific pages you'd like to have, like about a specific individual -> PLACE DOWN 'STARS' IF YOU WANT TO USE STAR SYSTEM
+SPECIFIC_PAGES = 'STARS'
+
+#Specify which properties you'd like to 'prettify' and give them their own card
+MAKE_PRETTY = ['isPartOf', 'isPropertyOf']
+
+#Specify which properties you'd like to see a list of individuals for (e.g. hasFather is appointed and you'll see siblings, not the dad.)
+SEE_PROPERTIES = 'NONE'
+
+#To specify the order of the cards in the page, do 'NONE' if you don't want any priority
+GIVE_PRIORITY = ['madeFrom','isAuthorOf', 'hasAuthor']
+
+#List of sparql queries that are going to be executed as a base for this to work
+BASE_QUERIES = {
+    'Retrieves the first 10 triples in the dataset': '
+SELECT ?subject ?predicate ?object
+WHERE {
+    ?subject ?predicate ?object.
+    }
+    LIMIT 10
+    ',
+    'Get Classes': '
+SELECT ?class WHERE { 
+    ?class a owl:Class .
+}
+    ',
+    'Get Obj Properties': '
+SELECT ?property WHERE { 
+    ?property a owl:ObjectProperty .
+}
+    ',
+    'Get Data Properties with range too': '
+SELECT ?prop ?domain ?range WHERE {
+    ?prop a owl:DatatypeProperty ;
+            rdfs:domain ?domain ;
+            rdfs:range ?range .
+}
+    '
+}
+
+
+# METADADOS focused variables:
+#Name to give your project
+AGAS_NAME = 'AGROVOC_1'
+
+#How to show a list, either it is 'up' - vertical or 'side' - horizontal
+L_DISPOSITION = 'side'
+
+#Not to be shown -> classes + individuals + DOPs
+NOT_SHOW = ['bryophyte']
+
+#Want to see information expanded - module type, like Story is (e.g. don't want to see Description link, want DescriptionText)
+MODULES = 'NONE'
+#It's a dict
+
+#About your ontology and it's structure, to show at the about.html page
+ABOUT = '/home/diana-teixeira/Desktop/AGAS/about.md'
+
+#ontology source -> url/link of where you got it from, if made please use url from the AGAS platform
+ONTOLOGY_SOURCE = 'https://natura.di.uminho.pt/~jj/Diana/cwr.owl'
+
+
+#USER DATA for the contact page
+#username
+USERNAME = 'diana-teixeira'
+
+#user email
+USER_EMAIL = 'dianaf.malheiro@hotmail.com'
+
+#user github
+USER_GITHUB = 'diana-teixeira'
+
+#user socials
+USER_SOCIALS = {
+  'LinkedIn': 'diana-teixeira@linkIn',
+  'Instagram': 'diana@insta',
+  'Portfolio': 'personal@website.com'
+}
+
+
+#STYLE OF PAGE -> Blog or not
+#If you want it in blog format or normal pages ('BLOG'/'PAGES')
+AGAS_PAGES = 'PAGES'
+
+#If you want to put a personal background on the app, mostly common on blogs, but can be used in the normal pages too
+AGAS_BACKGROUNG = 'NONE'
+
+

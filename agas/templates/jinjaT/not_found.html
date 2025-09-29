@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Ontology</title>
+</head-->
+
+<head>
+    <link rel="icon" type="image/png" href="static/images/logo2.png">
+    <meta charset="UTF-8">
+    <meta http-equiv=“Pragma” content=”no-cache”>
+    <meta http-equiv=“Expires” content=”-1″>
+    <meta http-equiv=“CACHE-CONTROL” content=”NO-CACHE”>
+
+    <script>
+    if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+    }
+    </script>
+
+
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <title>Your Ontology</title>
+</head>
+
+<body>
+    <div class="topnav">
+        <a href="/AGAS" class="logo-link">
+            <img src="{{ url_for('static', filename='images/logo2.png') }}" alt="Logo" class="logo-btn">
+        </a>
+        <a class="active" href="/">Home</a>
+        <a href="/home">Extra</a>
+        <a href="/resultsBQ">Results</a>
+        <a href="/versions">Versions</a>
+        <a href="/about">About</a>
+        <a href="/contacts">Contact</a>
+        <a id="theme-toggle">🌙</a>
+        {% if session.logged_in %}
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login</a>
+        {% endif %}
+        <div class="search-container">
+          <form action="/action_page.php">
+            <input type="text" placeholder="Search.." name="search">
+            <button type="submit"> 🔍 </button>
+          </form>
+        </div>
+    </div>
+
+    <h2>Nothing found for "{{ query }}"</h2>
+    <p>Try searching for another class or individual name.</p>
+
+      
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleButton = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Load saved theme
+    if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark-mode');
+        toggleButton.textContent = "☀️";
+    }
+
+    toggleButton.addEventListener('click', function () {
+        body.classList.toggle('dark-mode');
+
+        if (body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            toggleButton.textContent = "☀️";
+        } else {
+            localStorage.setItem('theme', 'light');
+            toggleButton.textContent = "🌙";
+        }
+    });
+});
+</script>
+
+</body>
+</html>

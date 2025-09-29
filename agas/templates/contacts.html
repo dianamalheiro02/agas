@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="static/images/logo2.png">
+    <meta charset="UTF-8">
+    <title>Contacts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Favicon -->
+    <!--link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 100 100'><rect width='100' height='100' rx='50' fill='%230058ff'></rect><path fill='%23fff' d='M72.15 21.33...'/></svg>"-->
+
+    <!-- Theme toggle -->
+    <script>
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <div class="topnav">
+        <a href="/AGAS" class="logo-link">
+            <img src="{{ url_for('static', filename='images/logo2.png') }}" alt="Logo" class="logo-btn">
+        </a>
+        <a href="/">Home</a>
+        <a href="/home">Extra</a>
+        <a href="/resultsBQ">Results</a>
+        <a href="/versions">Versions</a>
+        <a href="/about">About</a>
+        <a class="active" href="/contacts">Contact</a>
+        <a id="theme-toggle">🌙</a>
+        {% if session.logged_in %}
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login</a>
+        {% endif %}
+        <div class="search-container">
+            <form action="{{ url_for('search') }}" method="get" autocomplete="off">
+                <input id="search-input" type="text" placeholder="Search.." name="query" oninput="autocompleteSearch(this.value)">
+                <div id="autocomplete-box" class="autocomplete-items"></div>
+                <button type="submit"> 🔍 </button>
+            </form>
+        </div>
+    </div>
+
+{% if language == 'EN' %}
+    <!-- Contact Section -->
+    <section style="padding: 40px; max-width: 800px; margin: auto;">
+        <h2>📬 Contact & About the Author</h2>
+
+        <p>
+            Find your own information bellow if you filled it in the DSL. If you didn't and wish to see it, you know what to do!
+        </p>
+
+        <div class="story-card">
+            <p><strong>{{ stats.user_name }}</strong><br>
+            📧 <a href="mailto:{{ stats.user_email }}">Email</a><br>
+            🔗 <a href="{{ stats.user_github }}" target="_blank">GitHub Profile</a><br>
+            {% for social,link in stats.socials %}
+                🌐 <a href={{ link }} target="_blank">{{ social }}</a><br>
+            {% endfor %}
+            </p>
+        </div>
+
+        <p>
+           You can also find the AGAS creators information bellow. So contact us if you want to help improve the platform! You can contact us bellow or submit issues on <a href="https://github.com/your-repo">GitHub</a>.
+        </p>
+
+        <div class="text-cards">
+        <div class="card">
+        <p><strong>Diana Teixeira</strong><br>
+        Master's Student in Software Engineering<br>
+        University of Minho<br>
+        📧 <a href="mailto:pg53766@alunos.uminho.pt">pg53766@alunos.uminho.pt</a><br>
+        🔗 <a href="https://github.com/dianamalheiro02" target="_blank">GitHub Profile</a><br>
+        <!--🌐 <a href="/static/PORFOLIO/index.html" target="_blank">Portfolio Website</a-->
+        </p>
+        </div>
+
+        <div class="card">
+        <p><strong>Advisors</strong><br>
+        Professors/Language Engineers<br>
+        University of Minho<br>
+        📧 <a href="mailto:jj@di.uminho.pt">jj@di.uminho.pt</a><br>
+        📧 <a href="mailto:alberto.simoes@checkmarx.com">alberto.simoes@checkmarx.com</a><br>
+        </p>
+        </div>
+        </div>
+
+    </section>
+
+{%elif language == 'PT'%}
+
+<!-- Contact Section -->
+    <section style="padding: 40px; max-width: 800px; margin: auto;">
+        <h2>📬 Contactos & Sobre o Autor</h2>
+
+        <p>
+            Encontra a tua informação em baixo, se a preencheste na DSL. Se não o fizeste mas gostarias de a ver, sabes o que fazer!
+        </p>
+
+        <div class="story-card">
+            <p><strong>{{ stats.user_name }}</strong><br>
+            📧 <a href="mailto:{{ stats.user_email }}">Email</a><br>
+            🔗 <a href="{{ stats.user_github }}" target="_blank">GitHub Profile</a><br>
+            {% for social,link in stats.socials %}
+                🌐 <a href={{ link }} target="_blank">{{ social }}</a><br>
+            {% endfor %}
+            </p>
+        </div>
+
+        <p>
+            Também podes encontrar, de seguida, informação sobre os criadores do AGAS. Contacta-nos se tiveres alguma sugestão para a plataforma! Ou se tiveres algum problema e precisares de ajuda, vai ao link do <a href="https://github.com/your-repo">GitHub</a>.
+        </p>
+
+        <div class="text-cards">
+        <div class="card">
+        <p><strong>Diana Teixeira</strong><br>
+        Master's Student in Software Engineering<br>
+        University of Minho<br>
+        📧 <a href="mailto:pg53766@alunos.uminho.pt">pg53766@alunos.uminho.pt</a><br>
+        🔗 <a href="https://github.com/dianamalheiro02" target="_blank">GitHub Profile</a><br>
+        <!--🌐 <a href="/static/PORFOLIO/index.html" target="_blank">Portfolio Website</a-->
+        </p>
+        </div>
+
+        <div class="card">
+        <p><strong>Advisors</strong><br>
+        Professors/Language Engineers<br>
+        University of Minho<br>
+        📧 <a href="mailto:jj@di.uminho.pt">jj@di.uminho.pt</a><br>
+        📧 <a href="mailto:alberto.simoes@checkmarx.com">alberto.simoes@checkmarx.com</a><br>
+        </p>
+        </div>
+        </div>
+
+    </section>
+
+{% endif %}
+
+    <!-- JS for theme toggle & autocomplete -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggleButton = document.getElementById('theme-toggle');
+            const body = document.body;
+
+            if (localStorage.getItem('theme') === 'dark') {
+                body.classList.add('dark-mode');
+                toggleButton.textContent = "☀️";
+            }
+
+            toggleButton.addEventListener('click', function () {
+                body.classList.toggle('dark-mode');
+
+                if (body.classList.contains('dark-mode')) {
+                    localStorage.setItem('theme', 'dark');
+                    toggleButton.textContent = "☀️";
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    toggleButton.textContent = "🌙";
+                }
+            });
+        });
+
+        function autocompleteSearch(val) {
+            const box = document.getElementById("autocomplete-box");
+            box.innerHTML = "";
+
+            if (val.length < 2) return;
+
+            fetch(`/autocomplete?q=${val}`)
+                .then(res => res.json())
+                .then(data => {
+                    data.forEach(item => {
+                        const div = document.createElement("div");
+                        div.textContent = item;
+                        div.onclick = function () {
+                            document.getElementById("search-input").value = item;
+                            box.innerHTML = "";
+                        };
+                        box.appendChild(div);
+                    });
+                });
+        }
+    </script>
+</body>
+</html>

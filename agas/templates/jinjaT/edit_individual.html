@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="static/images/logo2.png">
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <script>
+    if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+    }
+    </script>
+
+
+    <!-- Tagify CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" />
+
+    <!-- Tagify JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+
+  
+    <title>Edit {{ name }}</title>
+
+  <style>
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      margin-left:10px;
+    }
+    textarea {
+      width: 95%;
+      padding: 8px;
+      margin-top: 5px;
+      height: 80px;
+    }
+    select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    .btn {
+      padding: 8px 16px;
+      background-color: #e9e9e9;
+      color: black;
+      border: none;
+      border-radius: 4px;
+      text-decoration: none;
+      font-family: sans-serif;
+      font-size: 14px;
+      cursor: pointer;
+  }
+  
+  .btn:hover {
+      background-color: #c1c8e4;
+  }
+  
+    .section {
+      margin-bottom: 25px;
+    }
+
+    .topnav {
+      overflow: hidden;
+      background-color: #e9e9e9;
+  }
+    
+  .topnav a {
+      float: left;
+      display: block;
+      color: black;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+  }
+    
+  .topnav a:hover {
+      background-color: #ddd;
+      color: black;
+  }
+    
+  .topnav a.active {
+      background-color: #2196F3;
+      color: white;
+  }
+    
+  .topnav .search-container {
+      float: right;
+  }
+    
+  .topnav input[type=text] {
+      padding: 6px;
+      margin-top: 8px;
+      font-size: 17px;
+      border: none;
+  }
+    
+  .topnav .search-container button {
+      float: right;
+      padding: 6px 10px;
+      margin-top: 8px;
+      margin-right: 16px;
+      background: #ddd;
+      font-size: 17px;
+      border: none;
+      cursor: pointer;
+  }
+    
+  .topnav .search-container button:hover {
+      background: #ccc;
+  }
+    
+  @media screen and (max-width: 600px) {
+      .topnav .search-container {
+        float: none;
+      }
+      .topnav a, .topnav input[type=text], .topnav .search-container button {
+        float: none;
+        display: block;
+        text-align: left;
+        width: 100%;
+        margin: 0;
+        padding: 14px;
+      }
+      .topnav input[type=text] {
+        border: 1px solid #ccc;  
+      }
+  }
+  </style>
+</head>
+
+<body>
+  <div class="topnav">
+      <a href="/AGAS" class="logo-link">
+            <img src="{{ url_for('static', filename='images/logo2.png') }}" alt="Logo" class="logo-btn">
+        </a>
+      <a href="/">Home</a>
+      <a href="/home">Extra</a>
+      <a href="/resultsBQ">Results</a>
+      <a href="/versions">Versions</a>
+      <a href="/about">About</a>
+      <a href="/contacts">Contact</a>
+      <a id="theme-toggle">🌙</a>
+      {% if session.logged_in %}
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login</a>
+        {% endif %}
+      <div class="search-container">
+          <form action="{{ url_for('search') }}" method="get" autocomplete="off">
+              <input id="search-input" type="text" placeholder="Search.." name="query" oninput="autocompleteSearch(this.value)">
+              <div id="autocomplete-box" class="autocomplete-items"></div>
+              <button class="btn" type="submit"> 🔍 </button>
+          </form>
+      </div>
+  </div>
+
+  <h1>{{ name }}</h1>
+  <form action="{{ url_for('confirm_edit', name=name) }}" method="POST">
+
+    <!-- Class type selection -->
+    <div class="section">
+      <label for="type">Type (Classes):</label>
+      <select name="type" multiple>
+        {% for cls in classes %}
+          <option value="{{ cls }}" {% if cls in current_classes %}selected{% endif %}>{{ cls }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Object properties (autocomplete input list) -->
+    <div class="section">
+      <label>Object Properties:</label><br><br>
+      {% for prop, value in object_values.items() %}
+        <label for="{{ prop }}">{{ prop }}:</label>
+        <input 
+          name="{{ prop }}[]" 
+          id="{{ prop }}" 
+          class="tagify-input"
+          placeholder="Add individuals for {{ prop }}" 
+          autocomplete="off"
+          value='{{ value | tojson }}' />  <!-- 🟢 this sets initial values -->
+        
+        <script>
+          const inputEl_{{ loop.index }} = document.getElementById("{{ prop }}");
+          const tagify_{{ loop.index }} = new Tagify(inputEl_{{ loop.index }}, {
+            whitelist: {{ individuals | tojson }},
+            dropdown: {
+              maxItems: 20,
+              enabled: 0,
+              closeOnSelect: false
+            }
+          });
+        </script>
+      {% endfor %}
+    </div>
+
+    <!-- Data properties (textarea) -->
+    <div class="section">
+      <label>Data Properties:</label><br></br>
+      {% for prop, value in data_values.items() %}
+        <label for="{{ prop }}">{{ prop }}:</label><br></br>
+        <textarea name="{{ prop }}" class="autogrow">{{ value }}</textarea>
+        <br></br>
+      {% endfor %}
+    </div>
+
+    <div id="ghost-div"></div>
+    <script>
+      const ghost = document.getElementById("ghost-div");
+
+      function syncSize(textarea) {
+        ghost.style.width = 'auto'; // Reset
+        ghost.style.font = getComputedStyle(textarea).font;
+        ghost.style.padding = getComputedStyle(textarea).padding;
+        ghost.style.border = getComputedStyle(textarea).border;
+        ghost.style.whiteSpace = 'pre-wrap';
+        ghost.style.wordWrap = 'break-word';
+
+        ghost.textContent = textarea.value + "\n";  // Extra line to ensure room
+        textarea.style.height = 'auto';
+        textarea.style.width = 'auto';
+        textarea.style.height = ghost.scrollHeight + "px";
+        textarea.style.width = Math.min(ghost.scrollWidth + 5, textarea.parentElement.offsetWidth - 20) + "px";
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const textareas = document.querySelectorAll('.autogrow');
+        textareas.forEach(function (ta) {
+          syncSize(ta);
+          ta.addEventListener('input', () => syncSize(ta));
+        });
+      });
+    </script>
+
+    <style>
+      .autogrow {
+        resize: none;
+        overflow: hidden;
+        min-height: 60px;
+        min-width: 200px;
+        max-width: 100%;
+        box-sizing: border-box;
+        transition: all 0.2s ease;
+      }
+
+      /* hidden div used to calculate real size */
+      #ghost-div {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+        visibility: hidden;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+    </style>
+
+
+    <!-- Submit button -->
+    <div class="section">
+      <button class="btn" type="submit">Next >></button>
+    </div>
+
+    <script>
+      function autocompleteSearch(val) {
+          const box = document.getElementById("autocomplete-box");
+          box.innerHTML = "";
+
+          if (val.length < 2) return;
+
+          fetch(`/autocomplete?q=${val}`)
+              .then(res => res.json())
+              .then(data => {
+                  data.forEach(item => {
+                      const div = document.createElement("div");
+                      div.textContent = item;
+                      div.onclick = function () {
+                          document.getElementById("search-input").value = item;
+                          box.innerHTML = "";
+                      };
+                      box.appendChild(div);
+                  });
+              });
+      }
+    </script>
+  </form>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleButton = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Load saved theme
+    if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark-mode');
+        toggleButton.textContent = "☀️";
+    }
+
+    toggleButton.addEventListener('click', function () {
+        body.classList.toggle('dark-mode');
+
+        if (body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            toggleButton.textContent = "☀️";
+        } else {
+            localStorage.setItem('theme', 'light');
+            toggleButton.textContent = "🌙";
+        }
+    });
+});
+</script>
+
+
+</body>
+
+</html>

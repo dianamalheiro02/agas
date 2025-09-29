@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Ontology</title>
+</head-->
+
+<head>
+  <!-- Favicon (logo in browser tab) -->
+    <link rel="icon" type="image/png" href="static/images/logo2.png">
+    <!--link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22256%22 height=%22256%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2250%22 fill=%22%230058ff%22></rect><path fill=%22%23fff%22 d=%22M72.15 21.33L72.15 21.33Q74.49 22.50 74.90 25.02Q75.30 27.54 73.59 29.61L73.59 29.61Q72.42 31.23 70.58 31.41Q68.73 31.59 66.84 30.69L66.84 30.69Q64.68 29.70 62.30 29.16Q59.91 28.62 57.30 28.62L57.30 28.62Q52.44 28.62 48.62 30.15Q44.79 31.68 42.09 34.52Q39.39 37.35 38.00 41.22Q36.60 45.09 36.60 49.77L36.60 49.77Q36.60 55.26 38.18 59.31Q39.75 63.36 42.54 66.06Q45.33 68.76 49.11 70.07Q52.89 71.37 57.30 71.37L57.30 71.37Q59.73 71.37 62.16 70.92Q64.59 70.47 66.84 69.30L66.84 69.30Q68.73 68.40 70.58 68.67Q72.42 68.94 73.68 70.56L73.68 70.56Q75.48 72.81 74.99 75.20Q74.49 77.58 72.24 78.66L72.24 78.66Q69.90 79.83 67.43 80.60Q64.95 81.36 62.43 81.77Q59.91 82.17 57.30 82.17L57.30 82.17Q50.82 82.17 45.02 80.10Q39.21 78.03 34.67 73.98Q30.12 69.93 27.51 63.86Q24.90 57.78 24.90 49.77L24.90 49.77Q24.90 42.84 27.29 36.99Q29.67 31.14 34.04 26.87Q38.40 22.59 44.34 20.21Q50.28 17.82 57.30 17.82L57.30 17.82Q61.26 17.82 65.04 18.72Q68.82 19.62 72.15 21.33Z%22></path></svg>" /-->
+    <meta charset="UTF-8">
+    <meta http-equiv=“Pragma” content=”no-cache”>
+    <meta http-equiv=“Expires” content=”-1″>
+    <meta http-equiv=“CACHE-CONTROL” content=”NO-CACHE”>
+
+
+    <script>
+    if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+    }
+    </script>
+
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <title>AGAS</title>
+</head>
+
+<body>
+   <div class="topnav">
+        <a href="/AGAS" class="active" class="logo-link">
+            <img src="{{ url_for('static', filename='images/logo2.png') }}" alt="Logo" class="logo-btn">
+        </a>
+        <a href="/">Home</a>
+        <a href="/home">Extra</a>
+        <a href="/resultsBQ">Results</a>
+        <a href="/versions">Versions</a>
+        <a href="/about">About</a>
+        <a href="/contacts">Contact</a>
+        <a id="theme-toggle">🌙</a>
+        {% if session.logged_in %}
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login</a>
+        {% endif %}
+        <div class="search-container">
+            <form action="{{ url_for('search') }}" method="get" autocomplete="off">
+                <input id="search-input" type="text" placeholder="Search.." name="query" oninput="autocompleteSearch(this.value)">
+                <div id="autocomplete-box" class="autocomplete-items"></div>
+                <button type="submit"> 🔍 </button>
+            </form>
+            <script>
+                function autocompleteSearch(val) {
+                  const box = document.getElementById("autocomplete-box");
+                  box.innerHTML = "";
+                
+                  if (val.length < 2) return; // wait until at least 2 chars
+                
+                  fetch(`/autocomplete?q=${val}`)
+                    .then(res => res.json())
+                    .then(data => {
+                      data.forEach(item => {
+                        const div = document.createElement("div");
+                        div.textContent = item;
+                        div.onclick = function () {
+                          document.getElementById("search-input").value = item;
+                          box.innerHTML = "";
+                        };
+                        box.appendChild(div);
+                      });
+                    });
+                }
+                </script>                
+        </div>
+    </div>
+
+{% if language == 'EN' %}
+<section>
+  <h2>🌐 What is AGAS?</h2>
+  <p>
+    AGAS — <strong>The Application for Automatic Site Generation</strong> — is a web platform that transforms ontology-driven data into interactive website prototypes, with the help of DSL configurations. It allows users to explore, query, and even edit ontology-based content through a visually intuitive interface.
+  </p>
+</section>
+
+<div class="text-cards">
+<section>
+  <div class="card">
+  <h2>🎯 Why was it built?</h2>
+  <p>
+    AGAS was born from the need to make semantic web technologies more usable and accessible to designers, domain experts, and even the general public. Instead of hand-coding everything or navigating rigid RDF visualizers, AGAS lets you configure, generate, and interact with semantic content — fluidly. Helping to shorten the gap between structured data representation and web visualization, AGAS also represents an effort to streamline workflows, reduce redundancies, and empower developers to create consistent and scalable prototypes with minimal effort.
+  </p>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+  <h2>⚙️ How it works</h2>
+  <ul>
+    <li>Loads ontologies and reads their structure (classes, individuals, properties)</li>
+    <li>Allows site configuration via a domain-specific language (DSL)</li>
+    <li>Uses SPARQL queries to navigate and visualize content like a website</li>
+    <li>Offers BREAD (browse, read, edit, add and delete) tools, source/raw views, and bookmarking features for exploration</li>
+    <li>Final result is a web prototype that allows you to navegate </li>
+  </ul>
+  </div>
+</section>
+</div>
+
+<div class="text-cards">
+<section>
+  <div class="card">
+  <h2>🚀 How to Use It</h2>
+  <ol>
+    <li><strong>Fill</strong> the required parameters of the DSL, including but not exclusive to, the wanted ontology (TTL, RDF or OWL) and Base Queries you want to see results to</li>
+    <li><strong>Upload</strong> When executing the application, pass as an argument the DSL file, e.g. <i>python3.13 agas.py config.txt</i></li>
+    <li><strong>Open</strong> your prototype in the available, local running website</li>
+    <li><strong>Explore</strong> the classes, individuals, and data via pages</li>
+    <li><strong>Edit</strong> content, favorite items, and run SPARQL queries to your hearts content. Remember to LogIn!</li>
+  </ol>
+
+  <p>
+    For a more detailed guide, check out the 
+    <a href="/manual" target="_blank">AGAS User Guide</a> or
+    <a href="https://github.com/your-repo/AGAS" target="_blank">source code on GitHub</a>.
+  </p>
+  </div>
+</section>
+</div>
+
+<section>
+  <h2>📎 Resources</h2>
+  <ul>
+    <li><a href="/static/AGAS_POSTER_FINALDRAFT.pdf" target="_blank">Thesis Summary (PDF)</a></li>
+    <li><a href="https://medium.com/wallscope/constructing-sparql-queries-ca63b8b9ac02">SPARQL Guide</a></li>
+    <li><a href="/resultsBQ">Sample Base Queries</a></li>
+  </ul>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleButton = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Load saved theme
+    if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark-mode');
+        toggleButton.textContent = "☀️";
+    }
+
+    toggleButton.addEventListener('click', function () {
+        body.classList.toggle('dark-mode');
+
+        if (body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            toggleButton.textContent = "☀️";
+        } else {
+            localStorage.setItem('theme', 'light');
+            toggleButton.textContent = "🌙";
+        }
+    });
+});
+</script>
+
+
+<hr class="separator">
+
+<!-- Contact Section -->
+<section>
+<h2>📬 Contact & About the Author</h2>
+
+<p>
+<strong>AGAS</strong> is a master's thesis project designed to bridge the gap between ontological knowledge and interface accessibility. It was developed as a web-based application that allows users to visualize and interact with an ontology's structure and contents through a dynamic, template-based UI generated from a configuration DSL.
+</p>
+
+<p>
+This project was conducted at the University of Minho, in Portugal, under the guidance of <strong>Prof. José João Almeida</strong> and <strong>Prof. Alberto Simões</strong>, and was developed by <strong>Diana Teixeira</strong>, as part of her degree in Software Engineering.
+</p>
+
+<p>Want to help improve the platform? You can contact us or submit issues on <a href="https://github.com/your-repo">GitHub</a>.</p>
+
+
+<div class="text-cards">
+<div class="card">
+<p><strong>Diana Teixeira</strong><br>
+Master's Student in Software Engineering<br>
+University of Minho<br>
+📧 <a href="mailto:pg53766@alunos.uminho.pt">pg53766@alunos.uminho.pt</a><br>
+🔗 <a href="https://github.com/dianamalheiro02" target="_blank">GitHub Profile</a><br>
+<!--🌐 <a href="/static/PORFOLIO/index.html" target="_blank">Portfolio Website</a-->
+</p>
+</div>
+
+<div class="card">
+<p><strong>Advisors</strong><br>
+Professors/Language Engineers<br>
+University of Minho<br>
+📧 <a href="mailto:jj@di.uminho.pt">jj@di.uminho.pt</a><br>
+📧 <a href="mailto:alberto.simoes@checkmarx.com">alberto.simoes@checkmarx.com</a><br>
+</p>
+</div>
+</div>
+</section>
+
+{% elif language == 'PT' %}
+<section>
+  <h2>🌐 O que é o AGAS?</h2>
+  <p>
+    O AGAS — <strong>Aplicação para Geração Automática de Sites</strong> — é uma plataforma web que transforma dados baseados em ontologias em protótipos de sites interativos, com a ajuda de configurações DSL. Permite aos utilizadores explorar, consultar e até editar conteúdo ontológico através de uma interface visualmente intuitiva.
+  </p>
+</section>
+
+<div class="text-cards">
+<section>
+  <div class="card">
+  <h2>🎯 Porque foi criado?</h2>
+  <p>
+    O AGAS nasceu da necessidade de tornar as tecnologias da web semântica mais usáveis e acessíveis para designers, especialistas de domínio e até para o público em geral. Em vez de codificar tudo à mão ou navegar em visualizadores rígidos e técnicos, o AGAS permite configurar, gerar e interagir com conteúdo semântico — de forma fluída. Ajudando a encurtar a distância entre a representação estruturada de dados e a visualização na web, o AGAS representa também um esforço para simplificar fluxos de trabalho, reduzir redundâncias e capacitar programadores a criar protótipos consistentes e escaláveis com o mínimo esforço.
+  </p>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+  <h2>⚙️ Como funciona</h2>
+  <ul>
+    <li>Carrega ontologias e lê a sua estrutura (classes, indivíduos, propriedades)</li>
+    <li>Permite a configuração do site através de uma Domain Specific Language (DSL)</li>
+    <li>Usa consultas SPARQL para navegar e visualizar conteúdo como se fosse um site</li>
+    <li>Oferece ferramentas BREAD (browse, read, edit, add e delete), vistas em bruto/código e funcionalidades de favoritos para exploração</li>
+    <li>O resultado final é um protótipo web que pode ser navegado</li>
+  </ul>
+  </div>
+</section>
+</div>
+
+<div class="text-cards">
+<section>
+  <div class="card">
+  <h2>🚀 Como utilizar</h2>
+  <ol>
+    <li><strong>Preencher</strong> os parâmetros obrigatórios da DSL, incluindo, mas não só, a ontologia desejada (TTL, RDF ou OWL) e as Consultas Base cujos resultados se pretendem ver</li>
+    <li><strong>Executar</strong> Ao lançar a aplicação, passar como argumento o ficheiro DSL, por exemplo: <i>python3.13 agas.py config.txt</i></li>
+    <li><strong>Abrir</strong> o protótipo no website local disponível</li>
+    <li><strong>Explorar</strong> as classes, indivíduos e dados através das páginas</li>
+    <li><strong>Editar</strong> conteúdo, adicionar favoritos e executar consultas SPARQL à vontade. Lembrando de fazer o LogIn para isso!</li>
+  </ol>
+
+  <p>
+    Para um guia mais detalhado, consulte o 
+    <a href="/manual" target="_blank">Manual do Utilizador AGAS</a> ou o
+    <a href="https://github.com/your-repo/AGAS" target="_blank">Código-fonte no GitHub</a>.
+  </p>
+  </div>
+</section>
+</div>
+
+<section>
+  <h2>📎 Recursos</h2>
+  <ul>
+    <li><a href="/static/AGAS_POSTER_FINALDRAFT.pdf" target="_blank">Resumo da Tese (PDF)</a></li>
+    <li><a href="https://medium.com/wallscope/constructing-sparql-queries-ca63b8b9ac02">Guia SPARQL</a></li>
+    <li><a href="/resultsBQ">Base SPARQL Queries</a></li>
+  </ul>
+</section>
+
+<hr class="separator">
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleButton = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Load saved theme
+    if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark-mode');
+        toggleButton.textContent = "☀️";
+    }
+
+    toggleButton.addEventListener('click', function () {
+        body.classList.toggle('dark-mode');
+
+        if (body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            toggleButton.textContent = "☀️";
+        } else {
+            localStorage.setItem('theme', 'light');
+            toggleButton.textContent = "🌙";
+        }
+    });
+});
+</script>
+
+<!-- Contact Section -->
+<section>
+<h2>📬 Contactos & Sobre os autores</h2>
+
+<p>
+<strong>AGAS</strong> é um projeto que tem como objetivo encurtar a distância entre o conhecimento representado em ontologias e uma interface de visualização. Foi desenvolvido como uma aplicalção web-based que permite ao user visualizar e interagir com a estrutura e conteúdos de uma ontologia, usando uma UI dinâmica e com origem num ficheiro de configração DSL.
+</p>
+
+<p>
+Este projeto foi realizado na Universidade do Minho, em Portugal, sob a orientação do <strong>Prof. José João Almeida</strong> e <strong>Prof. Alberto Simões</strong>, e terá sido realizado pela aluna <strong>Diana Teixeira</strong>, como parte da sua Tese no seu Mestrado em Engenharia Informática.
+</p>
+
+<p>Want to help improve the platform? You can contact us or submit issues on <a href="https://github.com/your-repo">GitHub</a>.</p>
+
+
+<div class="text-cards">
+<div class="card">
+<p><strong>Diana Teixeira</strong><br>
+Master's Student in Software Engineering<br>
+University of Minho<br>
+📧 <a href="mailto:pg53766@alunos.uminho.pt">pg53766@alunos.uminho.pt</a><br>
+🔗 <a href="https://github.com/dianamalheiro02" target="_blank">GitHub Profile</a><br>
+<!-- 🌐 <a href="/static/PORFOLIO/index.html" target="_blank">Portfolio Website</a-->
+</p>
+</div>
+
+<div class="card">
+<p><strong>Advisors</strong><br>
+Professors/Language Engineers<br>
+University of Minho<br>
+📧 <a href="mailto:jj@di.uminho.pt">jj@di.uminho.pt</a><br>
+📧 <a href="mailto:alberto.simoes@checkmarx.com">alberto.simoes@checkmarx.com</a><br>
+</p>
+</div>
+</div>
+</section>
+{% endif %}
+
+            
+</body>
+<footer>
+    <p class="copyright-text">© Copyright 24/25 Diana Teixeira </p>
+</footer>
+</html>

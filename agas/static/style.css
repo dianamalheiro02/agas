@@ -1,0 +1,666 @@
+/* ========== BASE LIGHT MODE ========== */
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.topnav {
+    overflow: hidden;
+    background-color: #e9e9e9;
+}
+
+.topnav a {
+    float: left;
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.topnav a.active {
+    background-color: #2196F3;
+    color: white;
+}
+
+.topnav .search-container {
+    float: right;
+}
+
+.topnav input[type=text] {
+    padding: 6px;
+    margin-top: 8px;
+    font-size: 17px;
+    border: none;
+}
+
+.topnav .search-container button {
+    float: right;
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+}
+
+.topnav .search-container button:hover {
+    background: #ccc;
+}
+
+@media screen and (max-width: 600px) {
+    .topnav .search-container {
+        float: none;
+    }
+    .topnav a,
+    .topnav input[type=text],
+    .topnav .search-container button {
+        float: none;
+        display: block;
+        text-align: left;
+        width: 100%;
+        margin: 0;
+        padding: 14px;
+    }
+    .topnav input[type=text] {
+        border: 1px solid #ccc;
+    }
+}
+
+h1 {
+    margin: 5px;
+    margin-top: 10px;
+}
+
+h2 {
+    margin: 10px;
+    margin-top: 10px;
+}
+
+.autocomplete-items {
+    border: 1px solid #ccc;
+    border-top: none;
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    background-color: white;
+    z-index: 1000;
+    width: 200px;
+}
+
+.autocomplete-items div {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.autocomplete-items div:hover {
+    background-color: #e9e9e9;
+}
+
+.rdf {
+    text-align: left;
+    margin-top: 20px;
+}
+
+hr.separator {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, #c1c8e4, #8860d0, #5ab9ea, #c1c8e4);
+    margin: 20px 0;
+}
+
+.sparql {
+    text-align: center;
+}
+
+.btn {
+    padding: 8px 16px;
+    background-color: #e9e9e9;
+    color: black;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-size: 1 em;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #c1c8e4;
+}
+
+
+.text-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0; /* Start hidden */
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: var(--delay);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        }
+
+        .image-container {
+            text-align: left;
+            margin-left: 10px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .story-card {
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+body .sessionLIO{
+    background:#ffe0e0; 
+    padding:10px; 
+    border:1px solid red; 
+    margin-bottom:10px;
+}
+
+/* Default light mode modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  color: black;
+  padding: 20px;
+  border: 2px solid black;
+  z-index: 1000;
+  max-height: 80vh;
+  overflow-y: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.hidden {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+}
+
+.star-btn {
+    align-content: center;
+    background-color: #f5f5f5;
+    color: #000;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+button {
+    padding: 8px 16px;
+    background-color: transparent;
+    border: none;
+    color: #0058ff;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+tr:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
+.spinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ccc;
+    border-top-color: #0058ff;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.editVSC {
+    display: none;
+    position: fixed;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+    background: white;
+    color: black;
+    border: 2px solid #888;
+    z-index: 9999;
+    padding: 20px;
+    overflow: auto;
+    border-radius: 8px;
+}
+
+#monaco-rdf-editor {
+    height: 600px;
+    width: 100%;
+    border: 1px solid #ccc;
+}
+
+/* Light mode */
+pre {
+    background-color: #f9f9f9;
+    color: #111;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.card .ex {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #888;
+}
+
+.card .ex:hover {
+    color: red;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+}
+
+.logo-btn {
+    height: 15px;  /* or 40px, depending on your navbar height */
+    scale: 2.5;
+    width: auto;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.logo-btn:hover {
+    transform: scale(1.1);
+}
+
+
+/* -------- Versions List -------- */
+.version-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.version-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    margin: 5px 0;
+    background: #f9f9f9;   /* light mode base */
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    transition: background 0.3s ease, border 0.3s ease;
+}
+
+.version-name {
+    font-weight: 500;
+    color: #333;
+}
+
+.version-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Buttons */
+.action-btn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: transform 0.2s ease, color 0.2s ease;
+    color: #555;
+}
+
+.action-btn:hover {
+    transform: scale(1.2);
+}
+
+/* Specific hover colors */
+.star-btn:hover {
+    color: #f1c40f; /* gold */
+}
+
+.delete-btn:hover {
+    color: #e74c3c; /* red */
+}
+
+/* -------- Dark Mode -------- */
+.dark-mode .version-item {
+    background: #2a2a2a;
+    border: 1px solid #444;
+}
+
+.dark-mode .version-name {
+    color: #ddd;
+}
+
+.dark-mode .action-btn {
+    color: #bbb;
+}
+
+.dark-mode .star-btn:hover {
+    color: #f39c12; /* warmer gold */
+}
+
+.dark-mode .delete-btn:hover {
+    color: #e74c3c; /* keep red consistent */
+}
+
+
+
+/* ========== DARK MODE ========== */
+
+body.dark-mode .ex {
+  color: #888;
+}
+
+body.dark-mode .ex:hover {
+  color: red;
+}
+
+/* Dark mode */
+body.dark-mode pre {
+    background-color: #1e1e1e;
+    color: #ddd;
+    border: 1px solid #444;
+}
+
+
+html.dark-mode .editVSC,
+body.dark-mode .editVSC {
+    background: #2a2a2a !important;
+    color: #e0e0e0 !important;
+    border: 2px solid #555 !important;
+}
+
+body.dark-mode #monaco-rdf-editor,
+html.dark-mode #monaco-rdf-editor {
+    background-color: #1e1e1e !important;
+    border: 1px solid #444 !important;
+}
+
+
+body.dark-mode {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+body.dark-mode .star-btn{
+    background-color: #1e1e1e;
+    color: #f0f0f0;
+}
+
+/* Dark mode modal */
+body.dark-mode .modal {
+  background: #2a2a2a;
+  color: #e0e0e0;
+  border: 2px solid #555;
+  box-shadow: 0 4px 12px rgba(255,255,255,0.05);
+}
+
+
+body.dark-mode .sessionLIO {
+    background-color:rgb(172, 31, 31); 
+    padding:10px; 
+    border:1px solid #1e1e1e; 
+    margin-bottom:10px;
+    color: #e0e0e0;
+}
+
+body.dark-mode .topnav {
+    background-color: #333;
+}
+
+body.dark-mode .topnav a {
+    color: #e0e0e0;
+}
+
+body.dark-mode .topnav a:hover {
+    background-color: #444;
+    color: white;
+}
+
+body.dark-mode .topnav a.active {
+    background-color: #2196F3;
+    color: white;
+}
+
+body.dark-mode .topnav input[type=text] {
+    background-color: #2a2a2a;
+    color: #ddd;
+    border: 1px solid #555;
+}
+
+body.dark-mode .topnav .search-container button {
+    background: #555;
+    color: #eee;
+}
+
+body.dark-mode .topnav .search-container button:hover,
+body.dark-mode .topnav button:hover {
+    background: #666;
+}
+
+body.dark-mode .btn {
+    background-color: #333;
+    color: white;
+}
+
+body.dark-mode .btn:hover {
+    background-color: #666;
+}
+
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+    background-color: #2a2a2a;
+    color: #ddd;
+    border: 1px solid #555;
+}
+
+body.dark-mode .autocomplete-items {
+    background-color: #2a2a2a;
+    border: 1px solid #555;
+}
+
+body.dark-mode .autocomplete-items div {
+    color: #e0e0e0;
+}
+
+body.dark-mode .autocomplete-items div:hover {
+    background-color: #444;
+}
+
+body.dark-mode section a {
+  color: #2196F3;
+}
+
+body.dark-mode section a:hover {
+  color: #99d6ff;
+}
+
+body.dark-mode a {
+  color: #2196F3;
+}
+
+body.dark-mode a:hover {
+  color: #99d6ff;
+}
+
+/* Dark mode for text cards */
+body.dark-mode .card {
+    background-color: #2a2a2a;
+    color: #f0f0f0;
+    box-shadow: 0 4px 12px rgba(255,255,255,0.05);
+}
+
+body.dark-mode .card:hover {
+    box-shadow: 0 6px 16px rgba(255,255,255,0.1);
+}
+
+/* Dark mode image container */
+body.dark-mode .image-container img {
+    box-shadow: 0 2px 6px rgba(255,255,255,0.08);
+}
+
+/* Dark mode for story card */
+body.dark-mode .story-card {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border: 1px solid #555;
+    box-shadow: 0 2px 6px rgba(255,255,255,0.03);
+}
+
+
+/* Tagify dark mode tweaks */
+body.dark-mode .tagify {
+  background-color: #1e1e1e !important;
+  color: #e0e0e0 !important;
+  border: 1px solid #444 !important;
+}
+
+body.dark-mode .tagify__dropdown {
+  background-color: #2c2c2c !important;
+  color: #eee !important;
+  border-color: #555 !important;
+}
+
+body.dark-mode .tagify__tag {
+  background-color: #3c3c3c !important;
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .tagify__input {
+  background-color: transparent !important;
+  color: #ddd !important;
+}
+
+
+body.dark-mode .hidden {
+    /* Hidden content stays same */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+}
+
+body.dark-mode .star-btn {
+    background-color: #2a2a2a;
+    color: #f0f0f0;
+}
+
+body.dark-mode button {
+    background-color: transparent;
+    border: none;
+    color: #4ea3ff;
+    cursor: pointer;
+    font-size: 1em;
+    padding: 8px 16px;
+}
+
+
+
+body.dark-mode table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+body.dark-mode th, body.dark-mode td {
+    padding: 10px;
+    border: 1px solid #444;
+    text-align: left;
+}
+
+body.dark-mode tr:nth-child(even) {
+    background-color: #2a2a2a;
+}
+
+body.dark-mode .spinner {
+    border: 2px solid #555;
+    border-top-color: #4ea3ff;
+}
+
+
+/*For asthetics only */
+html {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body, .card, .story-card, .topnav, table, th, td, .modal, .btn, input, textarea, select {
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+html {
+    scroll-behavior: smooth;
+}

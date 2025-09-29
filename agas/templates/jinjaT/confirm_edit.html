@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="static/images/logo2.png">
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+
+    <script>
+    if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+    }
+    </script>
+
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <title>{{ name }}</title>
+
+</head>
+
+<body>
+    <div class="topnav">
+        <a href="/AGAS" class="logo-link">
+            <img src="{{ url_for('static', filename='images/logo2.png') }}" alt="Logo" class="logo-btn">
+        </a>
+        <a href="/">Home</a>
+        <a href="/home">Extra</a>
+        <a href="/resultsBQ">Results</a>
+        <a href="/versions">Versions</a>
+        <a href="/about">About</a>
+        <a href="/contacts">Contact</a>
+        <a id="theme-toggle">🌙</a>
+        {% if session.logged_in %}
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login</a>
+        {% endif %}
+        <div class="search-container">
+            <form action="{{ url_for('search') }}" method="get" autocomplete="off">
+                <input id="search-input" type="text" placeholder="Search.." name="query" oninput="autocompleteSearch(this.value)">
+                <div id="autocomplete-box" class="autocomplete-items"></div>
+                <button class="btn" type="submit"> 🔍 </button>
+            </form>
+        </div>
+    </div>
+
+    <h2>Confirm Changes for {{ name }}</h2>
+
+    <table border="1" cellpadding="5">
+      <tr>
+        <th>Property</th>
+        <th>Old Value</th>
+        <th>New Value</th>
+      </tr>
+    
+      <tr>
+        <td>Class</td>
+        <td>{{ old_class.split('/')[-1] }}</td>
+        <td>{{ new_class }}</td>
+      </tr>
+    
+      {% for key in new_data %}
+            {% set clean_key = key.replace('[]', '') %}
+            <tr>
+            <td>{{ clean_key }}</td>
+            <td>{{ old_data.get(clean_key, []) | join(', ') }}</td>
+            <td>{{ new_data[key] | join(', ') }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    
+    <form method="POST" action="{{ url_for('apply_edit', name=name) }}">
+      {% for key, values in new_data.items() %}
+        {% for v in values %}
+          <input type="hidden" name="{{ key }}" value="{{ v }}">
+        {% endfor %}
+      {% endfor %}
+      <input type="hidden" name="class" value="{{ new_class }}">
+      <a href="{{ url_for('edit_individual', name=name) }}" class="btn" style="margin:10px">Cancel</a>
+      <button class="btn" style="margin:10px" type="submit">Confirm</button>
+    </form>
+    
+    <script>
+        function autocompleteSearch(val) {
+            const box = document.getElementById("autocomplete-box");
+            box.innerHTML = "";
+  
+            if (val.length < 2) return;
+  
+            fetch(`/autocomplete?q=${val}`)
+                .then(res => res.json())
+                .then(data => {
+                    data.forEach(item => {
+                        const div = document.createElement("div");
+                        div.textContent = item;
+                        div.onclick = function () {
+                            document.getElementById("search-input").value = item;
+                            box.innerHTML = "";
+                        };
+                        box.appendChild(div);
+                    });
+                });
+        }
+      </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleButton = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Load saved theme
+    if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark-mode');
+        toggleButton.textContent = "☀️";
+    }
+
+    toggleButton.addEventListener('click', function () {
+        body.classList.toggle('dark-mode');
+
+        if (body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            toggleButton.textContent = "☀️";
+        } else {
+            localStorage.setItem('theme', 'light');
+            toggleButton.textContent = "🌙";
+        }
+    });
+});
+</script>
+
+</body>
+</html>

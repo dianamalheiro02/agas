@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Ontology</title>
+</head-->
+
+<head>
+    <link rel="icon" type="image/png" href="static/images/logo2.png">
+    <meta charset="UTF-8">
+    <meta http-equiv=“Pragma” content=”no-cache”>
+    <meta http-equiv=“Expires” content=”-1″>
+    <meta http-equiv=“CACHE-CONTROL” content=”NO-CACHE”>
+
+    <script>
+    if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+    }
+    </script>
+
+
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Tagify CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" />
+
+    <!-- Tagify JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
+
+    <title>Your Ontology</title>
+    
+</head>
+
+<body>
+    <div class="topnav">
+        <a href="/AGAS" class="logo-link">
+            <img src="{{ url_for('static', filename='images/logo2.png') }}" alt="Logo" class="logo-btn">
+        </a>
+        <a href="/">Home</a>
+        <a href="/home">Extra</a>
+        <a href="/resultsBQ">Results</a>
+        <a class="active" href="/versions">Versions</a>
+        <a href="/about">About</a>
+        <a href="/contacts">Contact</a>
+        <a id="theme-toggle">🌙</a>
+        {% if session.logged_in %}
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login</a>
+        {% endif %}
+        <div class="search-container">
+            <form action="{{ url_for('search') }}" method="get" autocomplete="off">
+                <input id="search-input" type="text" placeholder="Search.." name="query" oninput="autocompleteSearch(this.value)">
+                <div id="autocomplete-box" class="autocomplete-items"></div>
+                <button type="submit"> 🔍 </button>
+            </form>
+            <script>
+                function autocompleteSearch(val) {
+                  const box = document.getElementById("autocomplete-box");
+                  box.innerHTML = "";
+                
+                  if (val.length < 2) return;
+                
+                  fetch(`/autocomplete?q=${val}`)
+                    .then(res => res.json())
+                    .then(data => {
+                      data.forEach(item => {
+                        const div = document.createElement("div");
+                        div.textContent = item;
+                        div.onclick = function () {
+                          document.getElementById("search-input").value = item;
+                          box.innerHTML = "";
+                        };
+                        box.appendChild(div);
+                      });
+                    });
+                }
+            </script>                
+        </div>
+    </div>
+
+    {% if language == 'EN' %}
+
+        <h2>Viewing version: {{ ontology_file }}</h2>
+
+        <p>Current file path: {{ ofp }}</p>
+
+        <!-- Button to switch -->
+        <form action="{{ url_for('switch_version', filename=ontology_file) }}" method="POST">
+        <button class="btn" type="submit">Switch to this version</button>
+        </form>
+
+    {% elif language == 'PT' %}
+        <h2>A visualizar: {{ ontology_file }}</h2>
+
+        <p>Versão atual: {{ ofp }}</p>
+
+        <!-- Button to switch -->
+        <form action="{{ url_for('switch_version', filename=ontology_file) }}" method="POST">
+        <button class="btn" type="submit">Trocar para esta versão</button>
+        </form>
+    {% endif %}
+
+
+    <section>
+            <h2>📊 Ontology Statistics</h2>
+            <ul>
+                <li><strong>Total Classes:</strong> {{ stats.classes }}</li>
+                <li><strong>Total Individuals:</strong> {{ stats.individuals }}</li>
+                <li><strong>Data Properties:</strong> {{ stats.data_properties }}</li>
+                <li><strong>Object Properties:</strong> {{ stats.object_properties }}</li>
+                <li><strong>Annotation Properties:</strong> {{ stats.annotation_properties }}</li>
+                <li><strong>Namespaces:</strong> {{ stats.namespaces|length }}</li>
+            </ul>
+        </section>
+
+
+    <div>
+        <div class="topnav">
+            <button href='\sync_ontology' id="B0" class="btn">Full Ontology</button>
+            <button id="B1" class="btn">Classes</button>
+            <button id="B2" class="btn">Data Properties</button>
+            <button id="B3" class="btn">Object Properties</button>
+            <button id="B4" class="btn">Individuals</button>
+        </div>
+
+
+        <div id="monaco-rdf-editor" style="height: 700px; width: 100%; border: 1px solid #ccc;"></div>
+        <input type="hidden" id="rdf" name="rdf">
+    </div>
+  
+
+
+<script>
+// Move this OUTSIDE and AFTER the Monaco require block
+let editor;
+let currentSection = "full";  // default
+
+require.config({ paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor/min/vs' } });
+
+require(['vs/editor/editor.main'], function () {
+    // 1. Register the language
+    monaco.languages.register({ id: 'customTurtle' });
+
+    // 2. Define syntax rules
+    monaco.languages.setMonarchTokensProvider('customTurtle', {
+        defaultToken: 'invalid',
+        tokenizer: {
+            root: [
+                [/##.*/, 'comment.darker'],
+                [/#\S+/, 'notcomment'],
+                [/#\s+.*/, 'comment'],
+                [/prefix/, 'keyword'],
+                [/<[^>]*>/, 'constant.uri'],
+                [/\brdf:[\w\-]+/, 'rdf'],
+                [/\brdfs:[\w\-]+/, 'rdfs'],
+                [/\bowl:[\w\-]+/, 'owl'],
+                [/\"([^"\\]|\\.)*\"/, 'string'],
+                [/\./, 'delimiter'],
+                [/;/, 'delimiter'],
+                [/\b[a-zA-Z_][\w\-]*\b/, 'identifier']
+            ]
+        }
+    });
+
+    // 3. Define the theme with proper colors structure
+    monaco.editor.defineTheme('customDark', {
+        base: 'vs-dark',
+        inherit: true,
+        rules: [
+            { token: 'comment', foreground: '888888', fontStyle: 'italic' },
+            { token: 'notcomment', foreground: 'C586C0', fontStyle: 'italic' },
+            { token: 'comment.darker', foreground: '555555', fontStyle: 'italic' },
+            { token: 'keyword', foreground: '569CD6', fontStyle: 'bold' },
+            { token: 'rdf', foreground: 'C586C0' },
+            { token: 'rdfs', foreground: '9CDCFE' },
+            { token: 'owl', foreground: 'D7BA7D' },
+            { token: 'constant.uri', foreground: '4EC9B0' },
+            { token: 'string', foreground: 'CE9178' },
+            { token: 'delimiter', foreground: 'CCCCCC' },
+            { token: 'identifier', foreground: 'DDDDDD' }
+        ],
+        colors: {
+            'editor.foreground': '#CCCCCC',
+            'editor.background': '#1E1E1E'
+        }
+    });
+
+    monaco.editor.defineTheme('customLight', {
+        base: 'vs',
+        inherit: true,
+        rules: [
+            { token: 'comment', foreground: '008000', fontStyle: 'italic' },
+            { token: 'comment.darker', foreground: '555555', fontStyle: 'italic' },
+            { token: 'keyword', foreground: '0000FF', fontStyle: 'bold' },
+            { token: 'rdf', foreground: '800080' },
+            { token: 'rdfs', foreground: '0070C1' },
+            { token: 'owl', foreground: 'B8860B' },
+            { token: 'constant.uri', foreground: '008080' },
+            { token: 'string', foreground: 'A31515' },
+            { token: 'delimiter', foreground: '000000' },
+            { token: 'identifier', foreground: '000000' }
+        ],
+        colors: {
+            'editor.foreground': '#000000',
+            'editor.background': '#FFFFFF'
+        }
+    });
+
+    // 4. Create the editor with theme detection
+    const currentTheme = document.body.classList.contains('dark-mode') ? 'customDark' : 'customLight';
+    
+    editor = monaco.editor.create(document.getElementById('monaco-rdf-editor'), {
+        value: '',
+        language: 'customTurtle',
+        theme: currentTheme,
+        automaticLayout: true,
+        wordWrap: 'on'
+    });
+
+    // 5. Setup button endpoints INSIDE the require callback
+    const endpoints = {
+        B0: "/get_raw_ontology",
+        B1: "/get_classes_raw",
+        B2: "/get_data_properties_raw",
+        B3: "/get_object_properties_raw",
+        B4: "/get_individuals_raw"
+    };
+
+    Object.keys(endpoints).forEach(id => {
+        document.getElementById(id).addEventListener("click", () => {
+            fetch(endpoints[id])
+                .then(res => res.text())
+                .then(data => {
+                    editor.setValue(data);
+                    document.querySelectorAll(".topnav button").forEach(btn => btn.classList.remove("active"));
+                    document.getElementById(id).classList.add("active");
+                });
+        });
+    });
+
+    // Load full ontology on initial render
+    fetch(endpoints.B0)
+        .then(res => res.text())
+        .then(data => {
+            editor.setValue(data);
+            document.getElementById("B0").classList.add("active");
+        });
+});
+
+// MOVE THESE EVENT LISTENERS OUTSIDE THE REQUIRE BLOCK
+// Wrap in DOMContentLoaded to ensure DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Section tracking - with null checks
+    const b0 = document.getElementById("B0");
+    const b1 = document.getElementById("B1");
+    const b2 = document.getElementById("B2");
+    const b3 = document.getElementById("B3");
+    const b4 = document.getElementById("B4");
+    
+    if (b0) b0.addEventListener("click", () => currentSection = "full");
+    if (b1) b1.addEventListener("click", () => currentSection = "classes");
+    if (b2) b2.addEventListener("click", () => currentSection = "dataproperties");
+    if (b3) b3.addEventListener("click", () => currentSection = "objectproperties");
+    if (b4) b4.addEventListener("click", () => currentSection = "individuals");
+
+    // Save button - check if it exists first (for logged-in users)
+    const saveButton = document.getElementById("saveButton");
+    if (saveButton) {
+        saveButton.addEventListener("click", function() {
+            if (!editor) {
+                alert("Editor not ready yet!");
+                return;
+            }
+            
+            const content = editor.getValue();
+            
+            fetch("/save_ontology", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ 
+                    content: content,
+                    section: currentSection
+                })
+            })
+            .then(res => {
+                if (res.ok) {
+                    alert("Ontology saved successfully!");
+                    location.reload();
+                } else {
+                    alert("Failed to save ontology.");
+                }
+            });
+        });
+    }
+});
+</script>
+
+
+        <script>
+            function autocompleteSearchC(val) {
+                const box = document.getElementById("autocomplete-box-classes");
+                box.innerHTML = "";
+            
+                if (val.length < 2) return;
+            
+                fetch(`/autocompleteClasses?q=${val}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        data.forEach(item => {
+                            const div = document.createElement("div");
+                            div.textContent = item;
+                            div.style.cursor = "pointer";
+                            div.onclick = function () {
+                                document.getElementById("individual-class").value = item;
+                                box.innerHTML = "";
+                                loadClassParameters(item);  // Load properties dynamically
+                            };
+                            box.appendChild(div);
+                        });
+                    });
+            }
+
+            function autocompleteSearchDOP(val) {
+                const box = document.getElementById("autocomplete-box-dop");
+                box.innerHTML = "";
+            
+                if (val.length < 2) return;
+            
+                fetch(`autocompleteDOP?q=${val}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        data.forEach(item => {
+                            const div = document.createElement("div");
+                            div.textContent = item;
+                            div.style.cursor = "pointer";
+                            div.onclick = function () {
+                                document.getElementById("class-dop").value = item;
+                                box.innerHTML = "";
+                            };
+                            box.appendChild(div);
+                        });
+                    });
+            }
+        
+
+            function loadClassParameters(className) {
+                  const paramBox = document.getElementById("class-parameters");
+                  paramBox.innerHTML = "";  // Clear previous
+                
+                  fetch(`/get_class_properties?class=${className}`)
+                    .then(res => res.json())
+                    .then(data => {
+                      if (data.data_properties.length === 0 && data.object_properties.length === 0) {
+                        paramBox.innerHTML = "<i>No properties defined for this class.</i>";
+                        return;
+                      }
+                
+                      // DATA PROPERTIES
+                      data.data_properties.forEach(prop => {
+                        const label = document.createElement("label");
+                        label.setAttribute("for", prop);
+                        label.innerText = prop + ":";
+                
+                        const input = document.createElement("input");
+                        input.setAttribute("name", prop);
+                        input.setAttribute("id", prop);
+                        input.setAttribute("autocomplete", "off");
+                        input.required = true;
+                
+                        paramBox.appendChild(label);
+                        paramBox.appendChild(document.createElement("br"));
+                        paramBox.appendChild(input);
+                        paramBox.appendChild(document.createElement("br"));
+                        paramBox.appendChild(document.createElement("br"));
+                      });
+                
+                      // OBJECT PROPERTIES — build selects
+                      data.object_properties.forEach(prop => {
+                        const label = document.createElement("label");
+                        label.setAttribute("for", prop);
+                        label.innerText = prop + ":";
+                
+                        /*const select = document.createElement("select");
+                        select.setAttribute("name", prop);
+                        select.setAttribute("id", prop);
+                        select.multiple = true;
+                        select.required = false;
+                
+                        // Fill in options from your individuals
+                        fetch(`/get_individuals`)  // Need to create this
+                          .then(res => res.json())
+                          .then(indivs => {
+                            const noneOption = document.createElement("option");
+                            noneOption.value = "";
+                            noneOption.text = "(none)";
+                            select.appendChild(noneOption);
+                
+                            indivs.forEach(ind => {
+                              const opt = document.createElement("option");
+                              opt.value = ind;
+                              opt.text = ind;
+                              select.appendChild(opt);
+                            });
+                          });
+                
+                        paramBox.appendChild(label);
+                        paramBox.appendChild(document.createElement("br"));
+                        paramBox.appendChild(select);
+                        paramBox.appendChild(document.createElement("br"));
+                        paramBox.appendChild(document.createElement("br"));
+                      });
+                    });*/
+
+                        const input = document.createElement("input");
+                        input.setAttribute("name", prop + "[]");  // important for multi
+                        input.setAttribute("id", prop);
+                        input.setAttribute("autocomplete", "off");
+                        input.classList.add("tagify-input");
+
+                        paramBox.appendChild(label);
+                        paramBox.appendChild(document.createElement("br"));
+                        paramBox.appendChild(input);
+                        paramBox.appendChild(document.createElement("br"));
+                        paramBox.appendChild(document.createElement("br"));
+
+                        // fetch individuals and init Tagify
+                        fetch(`/get_individuals`)
+                            .then(res => res.json())
+                            .then(indivs => {
+                                const tagifyC = new Tagify(input, {
+                                    whitelist: indivs,
+                                    dropdown: {
+                                    maxItems: 20,
+                                    enabled: 0,
+                                    closeOnSelect: false
+                                    }
+                            });
+                        });
+                    });
+                });}                
+        </script>
+            
+    
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleButton = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Load saved theme
+    if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark-mode');
+        toggleButton.textContent = "☀️";
+    }
+
+    toggleButton.addEventListener('click', function () {
+        body.classList.toggle('dark-mode');
+
+        if (body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            toggleButton.textContent = "☀️";
+        } else {
+            localStorage.setItem('theme', 'light');
+            toggleButton.textContent = "🌙";
+        }
+    });
+});
+</script>
+
+</body>
+</html>

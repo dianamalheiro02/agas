@@ -1,0 +1,529 @@
+@prefix : <http://rpcw.di.uminho.pt/2025/typec/> .
+@prefix ns: <http://rpcw.di.uminho.pt/2025/typec/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://rpcw.di.uminho.pt/2025/typec/> .
+
+<http://rpcw.di.uminho.pt/2025/typec> rdf:type owl:Ontology .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.co-ode.org/ontologies/ont.owl#hasAuthor
+:hasAuthor rdf:type owl:ObjectProperty ;
+                                                     rdfs:domain :Text ;
+                                                     rdfs:range :Author .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#hasTopic
+:hasTopic rdf:type owl:ObjectProperty ;
+                                                    rdfs:domain :Text ;
+                                                    rdfs:range :Topic .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.co-ode.org/ontologies/ont.owl#auth_name
+:auth_name rdf:type owl:DatatypeProperty ;
+                                                     rdfs:domain :Author ;
+                                                     rdfs:range xsd:string .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#subject
+:subject rdf:type owl:DatatypeProperty ;
+                                                   rdfs:domain :Topic ;
+                                                   rdfs:range xsd:string .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#title
+:title rdf:type owl:DatatypeProperty ;
+                                                 rdfs:domain :Text ;
+                                                 rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.co-ode.org/ontologies/ont.owl#Author
+:Author rdf:type owl:Class ;
+                                                  rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                    owl:onProperty :auth_name ;
+                                                                    owl:someValuesFrom xsd:string
+                                                                  ] .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Text
+:Text rdf:type owl:Class ;
+                                                owl:equivalentClass [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty :hasAuthor ;
+                                                                      owl:someValuesFrom :Author
+                                                                    ] ,
+                                                                    [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty :hasTopic ;
+                                                                      owl:someValuesFrom :Topic
+                                                                    ] ,
+                                                                    [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty :title ;
+                                                                      owl:someValuesFrom xsd:string
+                                                                    ] .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Topic
+:Topic rdf:type owl:Class ;
+                                                 rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty :subject ;
+                                                                   owl:someValuesFrom xsd:string
+                                                                 ] .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.co-ode.org/ontologies/ont.owl#Author1
+:Author1 rdf:type :Author ;
+                                                   :auth_name "Diana Teixeira" .
+
+###  http://www.co-ode.org/ontologies/ont.owl#Author2
+:Author2 rdf:type :Author ;
+                                                   :auth_name "Alan Turing" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Topic1
+:Topic1 rdf:type :Topic ;
+                                                  :subject "Artificial Intelligence" .
+
+###  http://www.co-ode.org/ontologies/ont.owl#Topic2
+:Topic2 rdf:type :Topic ;
+                                                  :subject "Ethical AI" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Text1
+:Text1 rdf:type :Text ;
+                                                 :title "The Ethics of AI Development" ;
+                                                 :hasAuthor :Author1 ;
+                                                 :hasTopic :Topic2 .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Text2
+:Text2 rdf:type :Text ;
+                                                 :title "Computing Machinery and Intelligence" ;
+                                                 :hasAuthor :Author2 ;
+                                                 :hasTopic :Topic1 .
+
+
+
+:Author_75815bff rdf:type :Author ; 
+	:auth_name "M. R. Zanone" .
+
+:Topic_4bd3bdab rdf:type :Topic ; 
+	:subject "Flash Fiction. A delightful childrens story by Michele Ruby Zanone, with focus on Christmas in Sicily." .
+
+:Text_278415ae rdf:type :Text ; 
+	:title "Christmas in Sicily" ; :hasAuthor :Author_75815bff ; :hasTopic :Topic_4bd3bdab .
+
+:Author_5974e338 rdf:type :Author ; 
+	:auth_name "Kelvin Bueckert" .
+
+:Topic_385ea959 rdf:type :Topic ; 
+	:subject "Romance. Christmas was in the air! However, Adam, a young doctor, was struggling with an illness. Specifically, love-sickness. He had long wanted to ask Evelyn, a local schoolteacher, to court him. Which was alright, since Evelyn had long dreamed of the day when he would summon up the courage to ask her. However, Adam was much too shy to make the first move. Anxious to see these two fine folks get it together, Simon, a local farmer, tried his hand as a matchmaker. For a while it seemed that these two people would be brought together through his homespun wisdom. However, at the very moment of triumph, a tribe of vigilant citizens revealed a sordid secret that sent everything crashing down. Literally. Would this Christmas be a happy one...for anyone in Gladstone?" .
+
+:Text_0db5519e rdf:type :Text ; 
+	:title "Rumors of Christmas" ; :hasAuthor :Author_5974e338 ; :hasTopic :Topic_385ea959 .
+
+:Author_9c9a7bce rdf:type :Author ; 
+	:auth_name "Martha Darpino" .
+
+:Topic_d3e91465 rdf:type :Topic ; 
+	:subject "Miscellaneous. Tips & Ideas on Christmas Shopping, Decorating, Kids Crafts, and More" .
+
+:Text_3c98829d rdf:type :Text ; 
+	:title "Creating A Stress-Free Christmas" ; :hasAuthor :Author_9c9a7bce ; :hasTopic :Topic_d3e91465 .
+
+:Author_b7fbd233 rdf:type :Author ; 
+	:auth_name "Glenn Pease" .
+
+:Topic_dc853878 rdf:type :Topic ; 
+	:subject "Religious. 1 AN ATMOSPHERE OF AMAZEMENT, 2 THE ANGELIC ANTHEM, 3 CHRISTMAS ANIMALS, 4 THE APPROACHABLE GOD, 5 CHRISTMAS BABIES, 6 THE COMPLEXITY OF CHRISTMAS, 7 CHRISTMAS IS CONTAGIOUS, 8 THE ENJOYMENT OF GOD ." .
+
+:Text_f7c9ff97 rdf:type :Text ; 
+	:title "Christmas with Dr. Luke" ; :hasAuthor :Author_b7fbd233 ; :hasTopic :Topic_dc853878 .
+
+:Author_509644eb rdf:type :Author ; 
+	:auth_name "Michael Spoula" .
+
+:Topic_fac981a8 rdf:type :Topic ; 
+	:subject "Flash Fiction. A short story about how a young angel helped during the first Christmas. Download it now!" .
+
+:Text_91b83504 rdf:type :Text ; 
+	:title "The Littlest Christmas Angel" ; :hasAuthor :Author_509644eb ; :hasTopic :Topic_fac981a8 .
+
+:Author_dd6b2313 rdf:type :Author ; 
+	:auth_name "Charles Dickens" .
+
+:Topic_ec2c3b6c rdf:type :Topic ; 
+	:subject "Misc Classics. The classic book, A Christmas Carol in Prose. Being a Ghost Story of Christmas, by Charles Dickens." .
+
+:Text_476ca83b rdf:type :Text ; 
+	:title "A Christmas Carol in Prose. Being a Ghost Story of Christmas" ; :hasAuthor :Author_dd6b2313 ; :hasTopic :Topic_ec2c3b6c .
+
+:Author_5500b9f4 rdf:type :Author ; 
+	:auth_name "David Wing" .
+
+:Topic_e326ad8d rdf:type :Topic ; 
+	:subject "Youth. When Santas reindeer fall foul of the common cold, its down to Blitzen to take a rag tag bunch of Llamas and whip them into shape to save Christmas for all the boys and girls of the world. The Day The Llamas Saved Christmas is a seasonal tale following the unexpected occurrence of an outbreak of the common cold in the North Pole and the resulting lack of reindeer to pull Santas sleigh one Christmas. Beginning with an Elf, barging into Santas office- most perturbed and informing Santa that the vast majority of his team are laid low with the sniffles, Santa rushes to his friends sides, only to hear sneezing and coughing, resulting in the drafting of a substitute reindeer- Gerald (an over-eager youngster) to replace the stalwart Dasher and the rest of the deer having to make do and try their hardest to make the entire journey around the world in one night." .
+
+:Text_ec67f7ca rdf:type :Text ; 
+	:title "The Night the Llama Saved Christmas" ; :hasAuthor :Author_5500b9f4 ; :hasTopic :Topic_e326ad8d .
+
+:Author_a37b6851 rdf:type :Author ; 
+	:auth_name "Ryan Jolly (Editor)" .
+
+:Topic_b30cdf26 rdf:type :Topic ; 
+	:subject "Short Stories. A collection of Classic Christmas Tales." .
+
+:Text_8e291229 rdf:type :Text ; 
+	:title "The Big Book of Classic Christmas Tales" ; :hasAuthor :Author_a37b6851 ; :hasTopic :Topic_b30cdf26 .
+
+:Author_dd6b2313 rdf:type :Author ; 
+	:auth_name "Charles Dickens" .
+
+:Topic_c572ff59 rdf:type :Topic ; 
+	:subject "Fiction Classics. Scrooge, Tiny Tim and the Ghost of Christmas past in this classic Christmas tale." .
+
+:Text_7ef48cce rdf:type :Text ; 
+	:title "A Christmas Carol" ; :hasAuthor :Author_dd6b2313 ; :hasTopic :Topic_c572ff59 .
+
+:Author_9f33dd04 rdf:type :Author ; 
+	:auth_name "Casshd" .
+
+:Topic_510264cf rdf:type :Topic ; 
+	:subject "Marketplace. Its that time of the year again! Time to get out the tree, stockings and mistletoe! Dont know where to begin? 101 Christmas Decorating Ideas can help!" .
+
+:Text_98d6032f rdf:type :Text ; 
+	:title "101 Christmas Decorating Ideas" ; :hasAuthor :Author_9f33dd04 ; :hasTopic :Topic_510264cf .
+
+:Author_3e569517 rdf:type :Author ; 
+	:auth_name "Ceci Lopez" .
+
+:Topic_14c00a2e rdf:type :Topic ; 
+	:subject "Health. This ebook will tell you HOW YOU CAN LOSE WEIGHT by Christmas, and not only would you lose weight, but will end up healthier than ever. Dont make another failed New Years resolution. ACT NOW! Look good at the office Christmas party. You just need to know how and you just need to take that step." .
+
+:Text_5f99dc42 rdf:type :Text ; 
+	:title "Detox to Lose Weight by Christmas" ; :hasAuthor :Author_3e569517 ; :hasTopic :Topic_14c00a2e .
+
+:Author_0a093b1a rdf:type :Author ; 
+	:auth_name "Ivan Parvov" .
+
+:Topic_1a2cc681 rdf:type :Topic ; 
+	:subject "Youth. It is almost Christmas, and the little fox Bubu is eagerly waiting for Santa Claus. When something unusual falls from the sky, all Christmas gifts are put in danger. Bubu goes on a lonely nighttime adventure to save Christmas, and by accident, he will find the best Christmas gift." .
+
+:Text_49238f8c rdf:type :Text ; 
+	:title "The Best Christmas Gift" ; :hasAuthor :Author_0a093b1a ; :hasTopic :Topic_1a2cc681 .
+
+:Author_5f0d8237 rdf:type :Author ; 
+	:auth_name "Fabian Bell" .
+
+:Topic_905e3515 rdf:type :Topic ; 
+	:subject "Romance. A believable 19th century love story set in the early gold mining days of the new colony of New Zealand." .
+
+:Text_a8c43c96 rdf:type :Text ; 
+	:title "One Christmas Morn" ; :hasAuthor :Author_5f0d8237 ; :hasTopic :Topic_905e3515 .
+
+:Author_b1e6b7e9 rdf:type :Author ; 
+	:auth_name "Jerome K. Jerome" .
+
+:Topic_30e7e47e rdf:type :Topic ; 
+	:subject "Short Stories Classics. Christmas Eve is the ghosts great gala night. On Christmas Eve they hold their annual fete. On Christmas Eve everybody in Ghostland who IS anybody--or rather, speaking of ghosts, one should say, I suppose, every nobody who IS any nobody--comes out to show himself or herself, to see and to be seen, to promenade about and display their winding-sheets and grave-clothes to each other, to criticise one anothers style, and sneer at one anothers complexion." .
+
+:Text_736836c9 rdf:type :Text ; 
+	:title "Told After Supper" ; :hasAuthor :Author_b1e6b7e9 ; :hasTopic :Topic_30e7e47e .
+
+:Author_af88953d rdf:type :Author ; 
+	:auth_name "Bridget Ratidzo" .
+
+:Topic_1d0acdb5 rdf:type :Topic ; 
+	:subject "Romance. Heather finds herself in this scene. The family is confined in one house for Christmas, plots and secrets are made and others make hard decisions" .
+
+:Text_27d9a737 rdf:type :Text ; 
+	:title "Dawn" ; :hasAuthor :Author_af88953d ; :hasTopic :Topic_1d0acdb5 .
+
+:Author_cbe5e931 rdf:type :Author ; 
+	:auth_name "Barbara Marquardt" .
+
+:Topic_d721a25e rdf:type :Topic ; 
+	:subject "Fiction. As school closes for Christmas, a teacher doing her best in a failing and chaotic high school is knocked down by an abusive student and locked into a biology storage area. As the small room has a sink and some food stored for lunches and prep periods, she is only in danger of spending two horrible weeks dieting in a cold room with no toilet or bed or much else beyond obsolete books and broken equipment. Waiting and hoping for rescue, she creates order and routines, trying to make the best of her time and solitude. As she ponders her life and career, which are about to change drastically, she does not realize that the student will tell a different story in which she was to blame." .
+
+:Text_d20180b9 rdf:type :Text ; 
+	:title "Bashed" ; :hasAuthor :Author_cbe5e931 ; :hasTopic :Topic_d721a25e .
+
+:Author_bee1f85a rdf:type :Author ; 
+	:auth_name "Matt Langford" .
+
+:Topic_aa2f1d02 rdf:type :Topic ; 
+	:subject "Fiction. The Watchman tells the story of Adam. A young man with a learning difficulty. Through Adams eyes, we follow him and his family through the struggles, upheavals and the ultimate breakdown of both the family and his unit. Adam has simple tastes and simple needs. He loves nothing more than a cup of tea and a window to watch for. His encounters include an unforgettable Christmas with his groin, a brother and a sister who grow older and moved away, a father who is loving yet distant and a mother who holds everything together despite hoping for a lot more out of life. The story ends in tragedy as Adams worst fears are realized. His family disbands and is gone forever. Unable to cope with this simple progression, he endures a horrific breakdown which destroys his entire world." .
+
+:Text_dfb0ee22 rdf:type :Text ; 
+	:title "The Watchman" ; :hasAuthor :Author_bee1f85a ; :hasTopic :Topic_aa2f1d02 .
+
+:Author_3c43e9f6 rdf:type :Author ; 
+	:auth_name "Elvira Frankenheim" .
+
+:Topic_7f63f0b6 rdf:type :Topic ; 
+	:subject "Travel. The author, Dieter, grown little older then appreciated and his young girlfriend, wished for nothing but peace and chill out times in Spain, when they booked an all-inclusive trip to Mallorca. But an invasive horde of Czech cellists did actually devastate the hotel rooms in the peaceful little village, and that meant a lot of work for Sarah Sackmann. The sexy tour guide was taking care of the utter bliss and happiness of the holiday guests—with a little more focus on the male side. Download this FREE e-Book today!" .
+
+:Text_ad4191cd rdf:type :Text ; 
+	:title "Seven Days Spain" ; :hasAuthor :Author_3c43e9f6 ; :hasTopic :Topic_7f63f0b6 .
+
+:Author_1da8c259 rdf:type :Author ; 
+	:auth_name "H. G. Wells" .
+
+:Topic_de985f6e rdf:type :Topic ; 
+	:subject "Fiction Classics. Two scientists devise a compound that produces enormous plants, animals — and humans! The chilling results are disastrous." .
+
+:Text_11ca792e rdf:type :Text ; 
+	:title "The Food of the Gods and How It Came to Earth" ; :hasAuthor :Author_1da8c259 ; :hasTopic :Topic_de985f6e .
+
+:Author_6886894f rdf:type :Author ; 
+	:auth_name "John Williams" .
+
+:Topic_8f861b8f rdf:type :Topic ; 
+	:subject "Educational. Some day each of us will be called upon to stand up and Say A Few Words. Maybe its already happened to you. Unless you were fortunate enough to be born with the natural talent of an orator, your first experience in public speaking probably sent chills of sheer, unadulterated terror throughout your entire body. Isnt it amazing how even the most prolific gabber, who can carry on a one-sided conversation for hours on end, can turn into a mumbling, bumbling bowl of jelly when called upon to speak up in front of a crowd? Well, it really neednt be that way. Now, we arent promising that you will become as skilled as the captain of your school debate team, but follow the simple rules outlined in Say A Few Words and you will be amazed at what talent lies behind those rusty vocal chords." .
+
+:Text_b7237558 rdf:type :Text ; 
+	:title "Say a few Words" ; :hasAuthor :Author_6886894f ; :hasTopic :Topic_8f861b8f .
+
+:Author_f7fa5bd3 rdf:type :Author ; 
+	:auth_name "J. Jackson Bentley" .
+
+:Topic_a7cd1d9e rdf:type :Topic ; 
+	:subject "Fiction. “If you don’t pay me £250,000.00 in the next 48 Hours you will die”. The text on Josh Hammond’s BlackBerry was blunt and chilling. Surely it must be a joke, but when Josh is attacked in broad daylight and people around him start to die he knows that his blackmailer is deadly serious. Can Josh raise the money? Can his attractive new bodyguard protect him? Who is blackmailing him and why? He has 48 hours to find out. The first novel in the acclaimed City of London Thriller series is a hit which will enthrall everyone who knows and loves its London settings. Rich in detail and truly evocative it is a real page turner, told in around 100,000 words." .
+
+:Text_762799f5 rdf:type :Text ; 
+	:title "48 Hours in London" ; :hasAuthor :Author_f7fa5bd3 ; :hasTopic :Topic_a7cd1d9e .
+
+:Author_9a9fc4d6 rdf:type :Author ; 
+	:auth_name "Scott Zavoda" .
+
+:Topic_2d2761a8 rdf:type :Topic ; 
+	:subject "Horror-Gothic. -This will awaken your worst nightmare.- Horror fans - do not pass up, because this chilling, short story will scare you to death! Have you ever worried that something is hiding beneath the sand? What if something brushed your foot one night on the beach? Would you run? Could you? - Character driven! - Suspenseful! - Horrifying! Now that surfing, dating, and every aspect of a California retirement is off limits, he paints and pretends the beach isnt so close. Things might have been okay, too, if he hadnt found the new pile of sand in his house or thought so hard about the accidents. He tries to do what they trained him back in his Vietnam days - focus ahead, but never behind, but its hard to ignore what tickles and scrapes your feet, what whispers to you in the dead of night." .
+
+:Text_6aa4c94b rdf:type :Text ; 
+	:title "Beneath the Sand" ; :hasAuthor :Author_9a9fc4d6 ; :hasTopic :Topic_2d2761a8 .
+
+:Author_ba5da628 rdf:type :Author ; 
+	:auth_name "Rigby Taylor" .
+
+:Topic_a4db176b rdf:type :Topic ; 
+	:subject "Fiction. The tale begins with a chilling peek into the near future, when Sebastian and Jarek, now in their eighties, confront a particularly vile religious autocrat, whose reign of terror has led to the destruction of their laboratories, but not their secret weapon. We then take a thousand year leap to a future city-state in which the human aptitude for duplicitous and unjust social schemes has reached its logical culmination in Oasis, a flesh-crawlingly evil dystopia ruled by the most unpleasant gang of conmen and women youre ever likely to encounter. A couple of young scientists who have recently invented a new means of transport, begin to question the morality of the Oasis social order, and decide to do something about it. Meanwhile, back in the forest, Sebastian and Jareks secret weapon are waiting." .
+
+:Text_9aea7456 rdf:type :Text ; 
+	:title "NumbaCruncha" ; :hasAuthor :Author_ba5da628 ; :hasTopic :Topic_a4db176b .
+
+:Author_92277408 rdf:type :Author ; 
+	:auth_name "Christa" .
+
+:Topic_b96f734c rdf:type :Topic ; 
+	:subject "Mystery. Hard hitting and shocking - a Thriller you will not forget quickly. The simple matter of being in the wrong place at the wrong time turns into a terrifying nightmare. A Sheriff who is past his prime, an inexperienced Deputy and a temporary one who knows all about deadly dangers. Advertising Executive Jason Hadley’s wonderful life is plummeting into an abyss. Will he and his beautiful wife Shelby be able to overcome their problems despite all the horrifying obstacles in their way?Throw in the mix a ruthless, savage rapist/killer and you have a spine-chilling thriller and suspense novella you will not be able to put down. Not suitable for readers under 18." .
+
+:Text_8f8ac6ee rdf:type :Text ; 
+	:title "Rivulets of Blood" ; :hasAuthor :Author_92277408 ; :hasTopic :Topic_b96f734c .
+
+:Author_631a312b rdf:type :Author ; 
+	:auth_name "Scott Donnelly" .
+
+:Topic_5555f489 rdf:type :Topic ; 
+	:subject "Mystery. Inspired by the whodunnits of Agatha Christie and modern day slasher films, October Runs Red (Book 1 in The October Trilogy) tells the gruesome tale of The Harvest Slasher, a serial killer stalking the cold October nights in Stewart Hollow, Oregon. On the first of the month, the local Sheriffs Department receives a bone-chilling poem in the mail, forecasting a month-long killing spree. The Harvest Slasher doesnt disappoint. Can you put the clues together?" .
+
+:Text_5af34a20 rdf:type :Text ; 
+	:title "October Runs Red" ; :hasAuthor :Author_631a312b ; :hasTopic :Topic_5555f489 .
+
+:Author_80b17fc0 rdf:type :Author ; 
+	:auth_name "Ray N. Kuili" .
+
+:Topic_854d6e35 rdf:type :Topic ; 
+	:subject "Free Previews. Episode 1 of a new Sci-Fi mystery, Eden Can Wait. A young Boston reporter Ryan West finds himself unemployed and his reputation damaged as a result of an unsanctioned journalistic investigation. He starts looking for alternative ways to pay his bills. Soon his search takes him into a strange world of a mysterious scientific experiment conducted by a secretive organization. Hired to play an odd character 24x7, Ryan doesn’t know that he is about to discover one of the most daring experiments ever conducted and the chilling truth behind it." .
+
+:Text_1ab13ecd rdf:type :Text ; 
+	:title "Eden Can Wait, Episode 1: Down the Rabbit Hole" ; :hasAuthor :Author_80b17fc0 ; :hasTopic :Topic_854d6e35 .
+
+:Author_80b17fc0 rdf:type :Author ; 
+	:auth_name "Ray N. Kuili" .
+
+:Topic_ab509232 rdf:type :Topic ; 
+	:subject "Free Previews. Episode 2 of a new Sci-Fi mystery Eden Can Wait. A young Boston reporter Ryan West finds himself unemployed and his reputation damaged as a result of an unsanctioned journalistic investigation. He starts looking for alternative ways to pay his bills. Soon his search takes him into a strange world of a mysterious scientific experiment conducted by a secretive organization. Hired to play an odd character 24x7, Ryan doesn’t know that he is about to discover one of the most daring experiments ever conducted and the chilling truth behind it. Episode 2: Welcome to the Hotel California. The decision made in Episode 1 leads Ryan to the strangest place he has ever been to and makes him question his choice. It could be heaven, it could be hell, or it could be anything in-between." .
+
+:Text_3aa7691e rdf:type :Text ; 
+	:title "Eden Can Wait, Episode 2: Welcome to the Hotel California" ; :hasAuthor :Author_80b17fc0 ; :hasTopic :Topic_ab509232 .
+
+:Author_982faa07 rdf:type :Author ; 
+	:auth_name "George Larson" .
+
+:Topic_f5c09916 rdf:type :Topic ; 
+	:subject "Horror-Gothic. Four eclectic horror stories to chill the soul!" .
+
+:Text_aafa2f8f rdf:type :Text ; 
+	:title "Macabre Memories" ; :hasAuthor :Author_982faa07 ; :hasTopic :Topic_f5c09916 .
+
+:Author_b6e94215 rdf:type :Author ; 
+	:auth_name "Thomas P. Tiernan" .
+
+:Topic_ca6fa60c rdf:type :Topic ; 
+	:subject "Short Stories. Put your feet up and take a little walk into the darker side of Life. Here you find a small collection of stories designed to send a chill up your spine as you check to make sure all of the doors are locked. A word or two of warning. There are Monsters about, and they dont like to be disturbed. be careful as you read about them and be happy you dont live anywhere near them. For starters, theres the less than perfect family in Snoogs, in which we find a husband finding a unique way to deal with a new wife whos not working out to his expectations. A father tells his youngest daughter why they dont go out after sundown in In The Teeth Of The Night. A severe drought on a hot day brings a man face to face with something deadly in And Not A Drop To Drink. Enjoy!" .
+
+:Text_f14fefeb rdf:type :Text ; 
+	:title "Dwellers In The Shadows" ; :hasAuthor :Author_b6e94215 ; :hasTopic :Topic_ca6fa60c .
+
+:Author_a1bab91a rdf:type :Author ; 
+	:auth_name "Robin Dee" .
+
+:Topic_c167fe06 rdf:type :Topic ; 
+	:subject "Drama. Forced into a drug deal when the only drug you know is an aspirin . . . landing a helicopter on an oil platform for the first time . . . finding true love in middle age. The most unlikely sequence of events for anyone to find in a spine-chilling romantic thriller, with a slight hint of comedy thrown in!" .
+
+:Text_33196090 rdf:type :Text ; 
+	:title "Run For the Money" ; :hasAuthor :Author_a1bab91a ; :hasTopic :Topic_c167fe06 .
+
+:Author_0ff2ae03 rdf:type :Author ; 
+	:auth_name "OGU BABAFEMI OKECHUKWU" .
+
+:Topic_c8f89553 rdf:type :Topic ; 
+	:subject "Free Previews. Welcome to Becoming Your Best Self, a guide to unlocking your full potential and achieving your dreams. In this book, you will discover practical strategies and tools to help you overcome obstacles, cultivate positive habits, and create a life that aligns with your values and aspirations. Whether you\re seeking personal growth, career success, or greater fulfillment in your relationships, this book will provide you with the knowledge and inspiration you need to take your life to the next level. Becoming Your Best Self offers a roadmap for transforming your life and realizing your full potential. The book consists of 10 chapters that will guide on how you can discover the best version of yourself!" .
+
+:Text_628ec5da rdf:type :Text ; 
+	:title "Becoming Your Best Self" ; :hasAuthor :Author_0ff2ae03 ; :hasTopic :Topic_c8f89553 .
+
+:Author_cd75c717 rdf:type :Author ; 
+	:auth_name "John Life" .
+
+:Topic_67565acd rdf:type :Topic ; 
+	:subject "Self-Improvement. Are you under-confident and shy? Do you feel tongue-tied while interacting with your boss? Does setting professional and personal goals feel like a herculean task? You too can have a challenging career and lead a balanced life! Humans all have formed our own definitions of happiness right from childhood. A lot of these perceptions are because of conditioned development example they are a part of our habits due to repetitive inculcation by parents, teachers and the society in general. That is why, none of us has actually pondered about what exactly makes us feel happy! This feeling has been left to our sub-conscience and we simply feel the happiness according to the situation we are in." .
+
+:Text_114b2ca4 rdf:type :Text ; 
+	:title "Self Improvement and Motivation For Success" ; :hasAuthor :Author_cd75c717 ; :hasTopic :Topic_67565acd .
+
+:Author_86cceb60 rdf:type :Author ; 
+	:auth_name "Bob Bastian" .
+
+:Topic_347ef3f9 rdf:type :Topic ; 
+	:subject "Beauty & Fashion. Just one of the 404 self-improvement tips in this FREE, ready-for download eBook will help you save more money, improve a relationship, get a healthier body, and create success in life and business!" .
+
+:Text_c127a90e rdf:type :Text ; 
+	:title "404 Self-Improvement Tips" ; :hasAuthor :Author_86cceb60 ; :hasTopic :Topic_347ef3f9 .
+
+:Author_37fb543b rdf:type :Author ; 
+	:auth_name "Fraser J. Hay" .
+
+:Topic_ee66230c rdf:type :Topic ; 
+	:subject "Self-Improvement. The acronym, P.O.C.K.E.T. M.E.N.T.O.R., is used as a basis throughout this FREE eBook to explain the formula for achieving self improvement and success in life. Download it today!" .
+
+:Text_c77d51e3 rdf:type :Text ; 
+	:title "Pocket Mentor Formula" ; :hasAuthor :Author_37fb543b ; :hasTopic :Topic_ee66230c .
+
+:Author_4a522e18 rdf:type :Author ; 
+	:auth_name "Mark Pettinelli" .
+
+:Topic_79cf7807 rdf:type :Topic ; 
+	:subject "Psychology & Culture. This book is about the understanding of deep psychological factors that might be needed to understand motivation in social interaction." .
+
+:Text_33393933 rdf:type :Text ; 
+	:title "A Self Help and Improvement Book: Useful Psychology Information" ; :hasAuthor :Author_4a522e18 ; :hasTopic :Topic_79cf7807 .
+
+:Author_4793bf91 rdf:type :Author ; 
+	:auth_name "Ambrose A Hardy" .
+
+:Topic_5d226234 rdf:type :Topic ; 
+	:subject "Self-Improvement. Change Your Life In Ten Weeks [Second Ed. 2014] is a free step-by-step introduction and workbook to help you change your life for the better. It introduces the Phoenix Self-Help Life Plan which requires you to carry out a current lifestyle evaluation and then draw up a set of personally chosen self-improvement goals aimed at transforming your lifestyle in the way YOU want. Once your goals are chosen and broken down into weekly targets, you work on implementing your Plan for a timeframe you choose, usually up to eight weeks. The ebook is linked to a dedicated web site which provides the reader with additional self-development resources and support. Documentation is included to make easy the tasks of recording goals and targets and to monitor your weekly progress. No purchases necessary." .
+
+:Text_79e1a2a2 rdf:type :Text ; 
+	:title "Change Your Life In Ten Weeks" ; :hasAuthor :Author_4793bf91 ; :hasTopic :Topic_5d226234 .
+
+:Author_6aaeb9fd rdf:type :Author ; 
+	:auth_name "Universal Prayther" .
+
+:Topic_2cc306b5 rdf:type :Topic ; 
+	:subject "Self-Improvement. This is chapter 1 of our memes in dreams collection. We have created over 200 unique, different memes which focus on self-development or self-improvement. Please join our collection created into a book titled 8 Habits towards leadership. Join us as we overcome inertia and create leaders for the future." .
+
+:Text_132fe034 rdf:type :Text ; 
+	:title "8 Habits Towards Leadership" ; :hasAuthor :Author_6aaeb9fd ; :hasTopic :Topic_2cc306b5 .
+
+:Author_83ef6aab rdf:type :Author ; 
+	:auth_name "Lisa Roy" .
+
+:Topic_b2c40677 rdf:type :Topic ; 
+	:subject "Self-Improvement. Improve your life with the self-improvement techniques detailed in this book. Learn how to force the universe to give you what you want while also becoming the best version of yourself. Empty your mind, unlock your potential, and attract your true calling by harnessing the Universal Truth of Attraction. Includes sections on self-improvement, wealth, health, and relationships. Even if youve tried the Law of Attraction before and couldnt get it to work, this book can help you!" .
+
+:Text_3dd0073c rdf:type :Text ; 
+	:title "How To Improve Your Life with Attraction Secrets" ; :hasAuthor :Author_83ef6aab ; :hasTopic :Topic_b2c40677 .
+
+:Author_ff60b3b3 rdf:type :Author ; 
+	:auth_name "Taylor K. Daniels" .
+
+:Topic_16d718e5 rdf:type :Topic ; 
+	:subject "Self-Improvement. Self Help Lessons By Best Sellers is a synopsis is meant to provide you with self help lessons from various best-selling books that will be very helpful for anyone who aims to improve his or her self. Gain more knowledge about self-improvement and have an in-depth understanding about the corners of it. This book is a compilation of the content that discusses everything about self-help. Discover new and exciting ways to reach goals, improve skills in your area of expertise, become more learned, etc. Success comes in all forms, and this book which references works by various authors will help provide you with tools and options to success." .
+
+:Text_b84b4dd6 rdf:type :Text ; 
+	:title "Self Help Lessons By Best Sellers" ; :hasAuthor :Author_ff60b3b3 ; :hasTopic :Topic_16d718e5 .
+
+:Author_db96ea32 rdf:type :Author ; 
+	:auth_name "unisdess" .
+
+:Topic_59f55e1b rdf:type :Topic ; 
+	:subject "Psychology. Gratitude is one of the most overlooked factors in our quest for self-improvement and personal well-being.While not an external skill that can be learned, gratitude is an innate quality, a potential state of mind that exists within each of us. It can be awakened and developed to drastically change your perspective - and transform your life in ways you never imagined.So discover this exceptional book" .
+
+:Text_cfa0b25a rdf:type :Text ; 
+	:title "The 7 Day Gratitude Challenge That Can Change Your Life" ; :hasAuthor :Author_db96ea32 ; :hasTopic :Topic_59f55e1b .
+
+:Author_9a167526 rdf:type :Author ; 
+	:auth_name "Angelia Griffith" .
+
+:Topic_654e9b66 rdf:type :Topic ; 
+	:subject "Self-Improvement. Manifestation is the process of bringing your desires and intentions into physical reality. It is based on the understanding that our thoughts, emotions, and beliefs have a direct influence on the circumstances and experiences we attract. By aligning your thoughts and energy with your desires, you can manifest them into your reality." .
+
+:Text_a50c5a94 rdf:type :Text ; 
+	:title "The Art of Manifesting Reality: Harnessing Metaphysical Principles for Success" ; :hasAuthor :Author_9a167526 ; :hasTopic :Topic_654e9b66 .
+
+:Author_9bd74fc5 rdf:type :Author ; 
+	:auth_name "Vasudev Soni" .
+
+:Topic_34755552 rdf:type :Topic ; 
+	:subject "Self-Improvement. Are you feeling stuck or in need of some motivation? Do you need a reminder of the power of the human spirit? Look no further than Inspiration Found: Motivational Short Stories to Empower your Spirit. This book features a collection of heartwarming and relatable short stories. Each story offers a unique perspective on resilience, determination, and triumph over adversity, reminding us that anything is possible with the right mindset and attitude.Whether youre dealing with a setback in your personal or professional life, or simply need a quick pick-me-up, Inspiration Found has something for everyone. The stories are short and easy to read, making them perfect for busy individuals who need a little boost of motivation and positivity." .
+
+:Text_4bd6c458 rdf:type :Text ; 
+	:title "Inspiration Found: Motivational Short Stories to Empower your Spirit" ; :hasAuthor :Author_9bd74fc5 ; :hasTopic :Topic_34755552 .
+
+:Author_e98fad1b rdf:type :Author ; 
+	:auth_name "AZMIMA" .
+
+:Topic_a0b7778e rdf:type :Topic ; 
+	:subject "Self-Improvement. Is Your Confidence and Shyness a Problem? Do You Get Stuck in Your Tongue When You Talk to Your Boss? Is It Difficult to Set Professional and Personal Goals? Isnt it possible to have a rewarding career and a balanced life?From an early age, each of us has developed our own personal concept of what it means to be happy. As a result of repeated instillation by parents and teachers and the broader population, many of these notions have become part of our daily routines.As a result, none of us has ever stopped to consider what it is that truly brings us joy. This emotion has been relegated to our subconscious, and we only experience happy when it is appropriate to our current circumstances.There are many tiny things that can bring us joy. When we think about shopping or spending money," .
+
+:Text_d469386a rdf:type :Text ; 
+	:title "Reset Your Mindset -Motivate Yourself For Success" ; :hasAuthor :Author_e98fad1b ; :hasTopic :Topic_a0b7778e .
+
+:Author_e2a9e33d rdf:type :Author ; 
+	:auth_name "FLASH STAR" .
+
+:Topic_61d36cb0 rdf:type :Topic ; 
+	:subject "Self-Improvement. The Seven Laws of Seduction is a simple, step-by-step guide that gives men everything they need to know about how to attract, seduce and sleep with multiple women." .
+
+:Text_3c47fbc1 rdf:type :Text ; 
+	:title "The Seven Laws of Seduction: How to Attract Beautiful Women and Enjoy a Supercharged Sex Life" ; :hasAuthor :Author_e2a9e33d ; :hasTopic :Topic_61d36cb0 .
+
+:Author_0eec30f1 rdf:type :Author ; 
+	:auth_name "Esther And Jerry Hicks" .
+
+:Topic_e3184c9e rdf:type :Topic ; 
+	:subject "Self-Improvement. Do you ever wonder whether the Universe is deliberately making your life a living misery for the sole purpose of amusement? Dont put it down to the mercury retrograde just yet! If you read Ask and It Is Given, youll learn that all of your negative thoughts could be the source of your annoyances. What happens in the outside world reflects what is going on inside your head. This book was authored by Esther Hicks, who channeled Abraham, a non-physical being. Its objective is to spread the message that the world is an illusion and that we have the power to change our physical experiences with our thoughts. Ask and It Is Given is a book for those who are fascinated by vibrations, positive thinking, and the law of attraction." .
+
+:Text_8a8f5591 rdf:type :Text ; 
+	:title "Ask And It Is Given - Learning To Manifest Your Desires" ; :hasAuthor :Author_0eec30f1 ; :hasTopic :Topic_e3184c9e .
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi

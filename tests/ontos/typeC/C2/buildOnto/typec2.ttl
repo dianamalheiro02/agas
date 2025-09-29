@@ -1,0 +1,123 @@
+@prefix : <http://rpcw.di.uminho.pt/2025/typec/> .
+@prefix ns: <http://rpcw.di.uminho.pt/2025/typec/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://rpcw.di.uminho.pt/2025/typec/> .
+
+<http://rpcw.di.uminho.pt/2025/typec> rdf:type owl:Ontology .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.co-ode.org/ontologies/ont.owl#hasAuthor
+:hasAuthor rdf:type owl:ObjectProperty ;
+                                                     rdfs:domain :Text ;
+                                                     rdfs:range :Author .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#hasTopic
+:hasTopic rdf:type owl:ObjectProperty ;
+                                                    rdfs:domain :Text ;
+                                                    rdfs:range :Topic .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.co-ode.org/ontologies/ont.owl#auth_name
+:auth_name rdf:type owl:DatatypeProperty ;
+                                                     rdfs:domain :Author ;
+                                                     rdfs:range xsd:string .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#subject
+:subject rdf:type owl:DatatypeProperty ;
+                                                   rdfs:domain :Topic ;
+                                                   rdfs:range xsd:string .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#title
+:title rdf:type owl:DatatypeProperty ;
+                                                 rdfs:domain :Text ;
+                                                 rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.co-ode.org/ontologies/ont.owl#Author
+:Author rdf:type owl:Class ;
+                                                  rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                    owl:onProperty :auth_name ;
+                                                                    owl:someValuesFrom xsd:string
+                                                                  ] .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Text
+:Text rdf:type owl:Class ;
+                                                owl:equivalentClass [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty :hasAuthor ;
+                                                                      owl:someValuesFrom :Author
+                                                                    ] ,
+                                                                    [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty :hasTopic ;
+                                                                      owl:someValuesFrom :Topic
+                                                                    ] ,
+                                                                    [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty :title ;
+                                                                      owl:someValuesFrom xsd:string
+                                                                    ] .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Topic
+:Topic rdf:type owl:Class ;
+                                                 rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty :subject ;
+                                                                   owl:someValuesFrom xsd:string
+                                                                 ] .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.co-ode.org/ontologies/ont.owl#Author1
+:Author1 rdf:type :Author ;
+                                                   :auth_name "Diana Teixeira" .
+
+###  http://www.co-ode.org/ontologies/ont.owl#Author2
+:Author2 rdf:type :Author ;
+                                                   :auth_name "Alan Turing" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Topic1
+:Topic1 rdf:type :Topic ;
+                                                  :subject "Artificial Intelligence" .
+
+###  http://www.co-ode.org/ontologies/ont.owl#Topic2
+:Topic2 rdf:type :Topic ;
+                                                  :subject "Ethical AI" .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Text1
+:Text1 rdf:type :Text ;
+                                                 :title "The Ethics of AI Development" ;
+                                                 :hasAuthor :Author1 ;
+                                                 :hasTopic :Topic2 .
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#Text2
+:Text2 rdf:type :Text ;
+                                                 :title "Computing Machinery and Intelligence" ;
+                                                 :hasAuthor :Author2 ;
+                                                 :hasTopic :Topic1 .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="static/images/logo2.png">
+    <meta charset="UTF-8">
+    <title>SPARQL Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <script>
+    if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+    }
+    </script>
+
+
+    <!-- Tagify CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" />
+
+    <!-- Tagify JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+    
+
+    <style>
+
+        textarea{
+            background-color: #f9f9f9; 
+            padding: 10px; 
+            border-radius: 8px; 
+            white-space: pre-wrap; 
+            word-break: break-word; 
+            border: 1px solid #ddd;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        tr:nth-child(even) {
+            background-color: #f5f5f5;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #ccc;
+            border-top-color: #0058ff;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-left: 8px;
+            vertical-align: middle;
+          }
+          
+          @keyframes spin {
+            to {
+              transform: rotate(360deg);
+            }
+          }
+          
+    </style>
+
+</head>
+<body>
+
+    <div class="topnav">
+        <a href="/AGAS" class="logo-link">
+            <img src="{{ url_for('static', filename='images/logo2.png') }}" alt="Logo" class="logo-btn">
+        </a>
+        <a href="/">Home</a>
+        <a href="/home">Extra</a>
+        <a class="active" href="/resultsBQ">Results</a>
+        <a href="/versions">Versions</a>
+        <a href="/about">About</a>
+        <a href="/contacts">Contact</a>
+        <a id="theme-toggle">🌙</a>
+        {% if session.logged_in %}
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login</a>
+        {% endif %}
+        <div class="search-container">
+            <form action="{{ url_for('search') }}" method="get" autocomplete="off">
+                <input id="search-input" type="text" placeholder="Search.." name="query" oninput="autocompleteSearch(this.value)">
+                <div id="autocomplete-box" class="autocomplete-items"></div>
+                <button type="submit"> 🔍 </button>
+            </form>
+            <script>
+                function autocompleteSearch(val) {
+                  const box = document.getElementById("autocomplete-box");
+                  box.innerHTML = "";
+                
+                  if (val.length < 2) return; // wait until at least 2 chars
+                
+                  fetch(`/autocomplete?q=${val}`)
+                    .then(res => res.json())
+                    .then(data => {
+                      data.forEach(item => {
+                        const div = document.createElement("div");
+                        div.textContent = item;
+                        div.onclick = function () {
+                          document.getElementById("search-input").value = item;
+                          box.innerHTML = "";
+                        };
+                        box.appendChild(div);
+                      });
+                    });
+                }
+                </script>                
+        </div>
+    </div>
+
+<h1>SPARQL Base Queries</h1>
+
+<!--br> NOT GONNA INCLUDE!!!
+<a href='/ask' class='btn' style="margin:10px">Ask questions here!</a>
+</br-->
+
+<br>
+</br>
+<h2>Base Queries Available</h2>
+{% if not session.logged_in %}
+<div class="sessionLIO">
+    {% if language == 'EN' %}
+        <strong>Read-only mode:</strong> Login to enable editing features.
+    {% elif language == 'PT' %}
+        <strong>Read-only mode:</strong> Dá Login para editar a ontologia.
+    {% endif %}
+</div>
+{% endif %}
+        
+
+<div style="padding-left: 20px;">
+    {% for name, query, placeholders in queries_with_placeholders %}
+        {% if u_type == "EXP" %}
+            <div style="margin-bottom: 20px;">
+                <h3> {{ name }} </h3>
+                {% if not session.logged_in %}
+                    {% if placeholders != [] %}
+                        <form method="POST" action="{{ url_for('show_bq', index=start_index + loop.index0) }}">
+                            
+                            <pre>{{ query }}</pre>
+                            <br>
+                            
+                            {% for placeholder in placeholders %}
+                                <label for="tagify-{{ placeholder }}">{{ placeholder }}: </label>
+                                <input 
+                                    name="placeholder_{{ placeholder }}" 
+                                    id="tagify-{{ placeholder }}" 
+                                    class="tagify-input"
+                                    placeholder="Fill in {{ placeholder }}..." 
+                                    autocomplete="off" />
+
+                                <script>
+                                    const input{{ placeholder }} = document.getElementById("tagify-{{ placeholder }}");
+                                    new Tagify(input{{ placeholder }}, {
+                                        whitelist: {{ things | tojson }},
+                                        dropdown: {
+                                            maxItems: 20,
+                                            enabled: 0,
+                                            closeOnSelect: false
+                                        }
+                                    });
+                                </script>
+                                <br>
+                            {% endfor %}
+
+                            <button class="btn" type="submit">Execute BQ{{ start_index + loop.index }}</button>
+                        
+                        </form>
+                    {% else %}
+                        <pre> {{ query }}</pre>
+                        <a href="{{ url_for('show_bq', index=start_index + loop.index0) }}">
+                            <button class="btn">Execute BQ{{ start_index + loop.index }}</button>
+                        </a>
+                    {% endif %}
+
+                {% elif session.logged_in %}
+                    <form method="POST" action="{{ url_for('show_bq', index=start_index + loop.index0) }}">
+                        <textarea name="edited_query" cols="65" rows="10" minlength="10" maxlength="500" required>
+                    {{ query }}</textarea><br>
+                        <button class="btn" type="submit">Execute BQ{{ start_index + loop.index }}</button>
+                    </form>
+                {% endif %}
+        
+            </div>
+        {% endif %}
+        {% if u_type == "NONEXP" %}
+            <div style="margin-bottom: 20px;">
+                <h3> {{ name }} </h3>
+
+                <a href="{{ url_for('show_bq', index=start_index + loop.index0) }}">
+                    <button class="btn">Execute BQ{{ start_index + loop.index }}</button>
+                </a>
+                
+                <button class="btn" onclick="toggleVisibility('say-when-{{ loop.index0 }}')">View BQ{{ start_index + loop.index }}</button>
+
+                <div class="say-when" id="say-when-{{ loop.index0 }}" style="display: none; margin-top: 10px;"> 
+                    {% if not session.logged_in %}
+                    <pre style="padding: 10px; border-radius: 8px; white-space: pre-wrap; word-break: break-word; border: 1px solid #ddd;"> {{ query }} </pre>
+
+                    {% elif session.logged_in %}
+                    <form method="POST" action="{{ url_for('show_bq', index=start_index + loop.index0) }}">
+                        <textarea name="edited_query" cols="65" rows="10" minlength="10" maxlength="500" required
+                                style="padding: 10px; border-radius: 8px; white-space: pre-wrap; word-break: break-word; border: 1px solid #ddd;">
+                    {{ query }}</textarea><br>
+                        <button class="btn" type="submit">Execute Changed BQ{{ start_index + loop.index }}</button>
+                    </form>
+                    {% endif %}
+                </div>
+
+            </div>
+
+            <script>
+                function toggleVisibility(id) {
+                    const div = document.getElementById(id);
+                    if (div.style.display === "none") {
+                        div.style.display = "block";
+                    } else {
+                        div.style.display = "none";
+                    }
+                }
+            </script>
+
+        {% endif %}
+    {% endfor %}
+</div>
+
+<!-- Pagination Controls -->
+<div style="text-align: center; margin-top: 20px;">
+    {% if page > 1 %}
+        <a href="{{ url_for('results_page', page=page - 1) }}">← Prev</a>
+    {% endif %}
+    Page {{ page }} of {{ total_pages }}
+    {% if page < total_pages %}
+        <a href="{{ url_for('results_page', page=page + 1) }}">Next →</a>
+    {% endif %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleButton = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Load saved theme
+    if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark-mode');
+        toggleButton.textContent = "☀️";
+    }
+
+    toggleButton.addEventListener('click', function () {
+        body.classList.toggle('dark-mode');
+
+        if (body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            toggleButton.textContent = "☀️";
+        } else {
+            localStorage.setItem('theme', 'light');
+            toggleButton.textContent = "🌙";
+        }
+    });
+});
+</script>
+
+</body>
+
+
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Ontology</title>
+</head-->
+
+<head>
+    <link rel="icon" type="image/png" href="static/images/logo2.png">
+    <meta charset="UTF-8">
+    <meta http-equiv=“Pragma” content=”no-cache”>
+    <meta http-equiv=“Expires” content=”-1″>
+    <meta http-equiv=“CACHE-CONTROL” content=”NO-CACHE”>
+
+    <script>
+    if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+    }
+    </script>
+
+
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Tagify CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" />
+
+    <!-- Tagify JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+    
+    <title>Your Ontology</title>
+    
+</head>
+
+<body>
+    <div class="topnav">
+        <a href="/AGAS" class="logo-link">
+            <img src="{{ url_for('static', filename='images/logo2.png') }}" alt="Logo" class="logo-btn">
+        </a>
+        <a href="/">Home</a>
+        <a href="/home">Extra</a>
+        <a href="/resultsBQ">Results</a>
+        <a class="active" href="/versions">Versions</a>
+        <a href="/about">About</a>
+        <a href="/contacts">Contact</a>
+        <a id="theme-toggle">🌙</a>
+        {% if session.logged_in %}
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login</a>
+        {% endif %}
+        <div class="search-container">
+            <form action="{{ url_for('search') }}" method="get" autocomplete="off">
+                <input id="search-input" type="text" placeholder="Search.." name="query" oninput="autocompleteSearch(this.value)">
+                <div id="autocomplete-box" class="autocomplete-items"></div>
+                <button type="submit"> 🔍 </button>
+            </form>
+            <script>
+                function autocompleteSearch(val) {
+                  const box = document.getElementById("autocomplete-box");
+                  box.innerHTML = "";
+                
+                  if (val.length < 2) return;
+                
+                  fetch(`/autocomplete?q=${val}`)
+                    .then(res => res.json())
+                    .then(data => {
+                      data.forEach(item => {
+                        const div = document.createElement("div");
+                        div.textContent = item;
+                        div.onclick = function () {
+                          document.getElementById("search-input").value = item;
+                          box.innerHTML = "";
+                        };
+                        box.appendChild(div);
+                      });
+                    });
+                }
+            </script>                
+        </div>
+    </div>
+
+    {% if language == 'EN' %}
+        <h1>Ontology History</h1>
+
+        <p>Current file path: {{ ofp }}</p>
+
+        <ul class="version-list">
+            {% for file in files %}
+            <li class="version-item">
+                <span class="version-name">{{ file }}</span>
+
+                <div class="version-actions">
+                    <!-- Switch (star) -->
+                    <form action="{{ url_for('switch_version', filename=file) }}" method="post" style="display:inline;">
+                        <button type="submit" title="Switch to this version" class="action-btn star-btn">⭐</button>
+                    </form>
+
+                    <!-- Delete (trash) -->
+                    <form action="{{ url_for('delete_version', filename=file) }}" method="post" style="display:inline;">
+                        <button type="submit" title="Delete this version" class="action-btn delete-btn">🗑️</button>
+                    </form>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+
+
+        <form action="{{ url_for('clear_versions') }}" method="post" style="margin-top:20px;">
+        <button type="submit" 
+                style="padding:10px 15px; border:none; border-radius:5px; background:#e74c3c; color:white; cursor:pointer;">
+            🧹 Clear old versions (keep first & latest)
+        </button>
+        </form>
+
+    {% elif language == 'PT' %}
+        <h1>Histórico da Ontologia</h1>
+
+        <p>Versão atual: {{ ofp }}</p>
+
+        <ul class="version-list">
+            {% for file in files %}
+            <li class="version-item">
+                <!--span class="version-name">{{ file }}</span-->
+                <a href="{{ url_for('view_version', filename=file) }}">{{ file }}</a>
+
+                <div class="version-actions">
+                    <!-- Switch (star) -->
+                    <form action="{{ url_for('switch_version', filename=file) }}" method="post" style="display:inline;">
+                        <button type="submit" title="Switch to this version" class="action-btn star-btn">⭐</button>
+                    </form>
+
+                    <!-- Delete (trash) -->
+                    <form action="{{ url_for('delete_version', filename=file) }}" method="post" style="display:inline;">
+                        <button type="submit" title="Delete this version" class="action-btn delete-btn">🗑️</button>
+                    </form>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+
+
+        <form action="{{ url_for('clear_versions') }}" method="post" style="margin-top:20px;">
+        <button type="submit" 
+                style="padding:10px 15px; border:none; border-radius:5px; background:#e74c3c; color:white; cursor:pointer;">
+            🧹 Limpar versões antigas (mantém a primeira & última)
+        </button>
+        </form>
+
+    {% endif %}
+
+  
+
+        <script>
+            function autocompleteSearchC(val) {
+                const box = document.getElementById("autocomplete-box-classes");
+                box.innerHTML = "";
+            
+                if (val.length < 2) return;
+            
+                fetch(`/autocompleteClasses?q=${val}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        data.forEach(item => {
+                            const div = document.createElement("div");
+                            div.textContent = item;
+                            div.style.cursor = "pointer";
+                            div.onclick = function () {
+                                document.getElementById("individual-class").value = item;
+                                box.innerHTML = "";
+                                loadClassParameters(item);  // Load properties dynamically
+                            };
+                            box.appendChild(div);
+                        });
+                    });
+            }
+
+            function autocompleteSearchDOP(val) {
+                const box = document.getElementById("autocomplete-box-dop");
+                box.innerHTML = "";
+            
+                if (val.length < 2) return;
+            
+                fetch(`autocompleteDOP?q=${val}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        data.forEach(item => {
+                            const div = document.createElement("div");
+                            div.textContent = item;
+                            div.style.cursor = "pointer";
+                            div.onclick = function () {
+                                document.getElementById("class-dop").value = item;
+                                box.innerHTML = "";
+                            };
+                            box.appendChild(div);
+                        });
+                    });
+            }
+        
+
+            function loadClassParameters(className) {
+                  const paramBox = document.getElementById("class-parameters");
+                  paramBox.innerHTML = "";  // Clear previous
+                
+                  fetch(`/get_class_properties?class=${className}`)
+                    .then(res => res.json())
+                    .then(data => {
+                      if (data.data_properties.length === 0 && data.object_properties.length === 0) {
+                        paramBox.innerHTML = "<i>No properties defined for this class.</i>";
+                        return;
+                      }
+                
+                      // DATA PROPERTIES
+                      data.data_properties.forEach(prop => {
+                        const label = document.createElement("label");
+                        label.setAttribute("for", prop);
+                        label.innerText = prop + ":";
+                
+                        const input = document.createElement("input");
+                        input.setAttribute("name", prop);
+                        input.setAttribute("id", prop);
+                        input.setAttribute("autocomplete", "off");
+                        input.required = true;
+                
+                        paramBox.appendChild(label);
+                        paramBox.appendChild(document.createElement("br"));
+                        paramBox.appendChild(input);
+                        paramBox.appendChild(document.createElement("br"));
+                        paramBox.appendChild(document.createElement("br"));
+                      });
+                
+                      // OBJECT PROPERTIES — build selects
+                      data.object_properties.forEach(prop => {
+                        const label = document.createElement("label");
+                        label.setAttribute("for", prop);
+                        label.innerText = prop + ":";
+                
+                        /*const select = document.createElement("select");
+                        select.setAttribute("name", prop);
+                        select.setAttribute("id", prop);
+                        select.multiple = true;
+                        select.required = false;
+                
+                        // Fill in options from your individuals
+                        fetch(`/get_individuals`)  // Need to create this
+                          .then(res => res.json())
+                          .then(indivs => {
+                            const noneOption = document.createElement("option");
+                            noneOption.value = "";
+                            noneOption.text = "(none)";
+                            select.appendChild(noneOption);
+                
+                            indivs.forEach(ind => {
+                              const opt = document.createElement("option");
+                              opt.value = ind;
+                              opt.text = ind;
+                              select.appendChild(opt);
+                            });
+                          });
+                
+                        paramBox.appendChild(label);
+                        paramBox.appendChild(document.createElement("br"));
+                        paramBox.appendChild(select);
+                        paramBox.appendChild(document.createElement("br"));
+                        paramBox.appendChild(document.createElement("br"));
+                      });
+                    });*/
+
+                        const input = document.createElement("input");
+                        input.setAttribute("name", prop + "[]");  // important for multi
+                        input.setAttribute("id", prop);
+                        input.setAttribute("autocomplete", "off");
+                        input.classList.add("tagify-input");
+
+                        paramBox.appendChild(label);
+                        paramBox.appendChild(document.createElement("br"));
+                        paramBox.appendChild(input);
+                        paramBox.appendChild(document.createElement("br"));
+                        paramBox.appendChild(document.createElement("br"));
+
+                        // fetch individuals and init Tagify
+                        fetch(`/get_individuals`)
+                            .then(res => res.json())
+                            .then(indivs => {
+                                const tagifyC = new Tagify(input, {
+                                    whitelist: indivs,
+                                    dropdown: {
+                                    maxItems: 20,
+                                    enabled: 0,
+                                    closeOnSelect: false
+                                    }
+                            });
+                        });
+                    });
+                });}                
+        </script>
+            
+    
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleButton = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Load saved theme
+    if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark-mode');
+        toggleButton.textContent = "☀️";
+    }
+
+    toggleButton.addEventListener('click', function () {
+        body.classList.toggle('dark-mode');
+
+        if (body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            toggleButton.textContent = "☀️";
+        } else {
+            localStorage.setItem('theme', 'light');
+            toggleButton.textContent = "🌙";
+        }
+    });
+});
+</script>
+
+</body>
+</html>

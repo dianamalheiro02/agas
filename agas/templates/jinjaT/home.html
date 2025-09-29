@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Ontology</title>
+</head-->
+
+<head>
+    <!--link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22256%22 height=%22256%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2250%22 fill=%22%230058ff%22></rect><path fill=%22%23fff%22 d=%22M72.15 21.33L72.15 21.33Q74.49 22.50 74.90 25.02Q75.30 27.54 73.59 29.61L73.59 29.61Q72.42 31.23 70.58 31.41Q68.73 31.59 66.84 30.69L66.84 30.69Q64.68 29.70 62.30 29.16Q59.91 28.62 57.30 28.62L57.30 28.62Q52.44 28.62 48.62 30.15Q44.79 31.68 42.09 34.52Q39.39 37.35 38.00 41.22Q36.60 45.09 36.60 49.77L36.60 49.77Q36.60 55.26 38.18 59.31Q39.75 63.36 42.54 66.06Q45.33 68.76 49.11 70.07Q52.89 71.37 57.30 71.37L57.30 71.37Q59.73 71.37 62.16 70.92Q64.59 70.47 66.84 69.30L66.84 69.30Q68.73 68.40 70.58 68.67Q72.42 68.94 73.68 70.56L73.68 70.56Q75.48 72.81 74.99 75.20Q74.49 77.58 72.24 78.66L72.24 78.66Q69.90 79.83 67.43 80.60Q64.95 81.36 62.43 81.77Q59.91 82.17 57.30 82.17L57.30 82.17Q50.82 82.17 45.02 80.10Q39.21 78.03 34.67 73.98Q30.12 69.93 27.51 63.86Q24.90 57.78 24.90 49.77L24.90 49.77Q24.90 42.84 27.29 36.99Q29.67 31.14 34.04 26.87Q38.40 22.59 44.34 20.21Q50.28 17.82 57.30 17.82L57.30 17.82Q61.26 17.82 65.04 18.72Q68.82 19.62 72.15 21.33Z%22></path></svg>" /-->
+    <link rel="icon" type="image/png" href="static/images/logo2.png">
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+
+
+    <script>
+    if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+    }
+    </script>
+
+
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Tagify CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" />
+
+    <!-- Tagify JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+
+    <!-- jQuery (required for jqWidgets) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- jQWidgets -->
+    <link rel="stylesheet" href="https://jqwidgets.com/public/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <script type="text/javascript" src="https://jqwidgets.com/public/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="https://jqwidgets.com/public/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="https://jqwidgets.com/public/jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="https://jqwidgets.com/public/jqwidgets/jqxpanel.js"></script>
+    <script type="text/javascript" src="https://jqwidgets.com/public/jqwidgets/jqxtree.js"></script>
+
+    <style>
+    .tree-container {
+        color: black; 
+        padding: 10px;
+        border-radius: 12px;
+        font-family: inherit;
+        font-size: 14px;
+    }
+
+    /* Make jqxTree items match the cards style */
+    .jqx-tree-item {
+        color: inherit !important;
+    }
+
+    .jqx-tree-item:hover {
+        background: rgba(255, 255, 255, 0.1); /* subtle hover */
+        border-radius: 6px;
+    }
+
+    /* Links inside the tree */
+    .jqx-tree-item a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .jqx-tree-item a:hover {
+        text-decoration: underline;
+    }
+</style>
+    
+    <title>Your Ontology</title>
+    
+</head>
+
+<body>
+    <div class="topnav">
+        <a href="/AGAS" class="logo-link">
+            <img src="{{ url_for('static', filename='images/logo2.png') }}" alt="Logo" class="logo-btn">
+        </a>
+        {% if u_type == "EXP"%}
+            <a href="/">Home</a>
+            <a class="active" href="/home">Extra</a>
+        {% else %}
+            <a class="active" href="/">Home</a>
+            <a href="/home">Extra</a>
+        {% endif %} 
+        <a href="/resultsBQ">Results</a>
+        <a href="/versions">Versions</a>
+        <a href="/about">About</a>
+        <a href="/contacts">Contact</a>
+        <a id="theme-toggle">🌙</a>
+        {% if session.logged_in %}
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login</a>
+        {% endif %}
+        <div class="search-container">
+            <form action="{{ url_for('search') }}" method="get" autocomplete="off">
+                <input id="search-input" type="text" placeholder="Search.." name="query" oninput="autocompleteSearch(this.value)">
+                <div id="autocomplete-box" class="autocomplete-items"></div>
+                <button type="submit"> 🔍 </button>
+            </form>
+            <script>
+                function autocompleteSearch(val) {
+                  const box = document.getElementById("autocomplete-box");
+                  box.innerHTML = "";
+                
+                  if (val.length < 2) return;
+                
+                  fetch(`/autocomplete?q=${val}`)
+                    .then(res => res.json())
+                    .then(data => {
+                      data.forEach(item => {
+                        const div = document.createElement("div");
+                        div.textContent = item;
+                        div.onclick = function () {
+                          document.getElementById("search-input").value = item;
+                          box.innerHTML = "";
+                        };
+                        box.appendChild(div);
+                      });
+                    });
+                }
+            </script>                
+        </div>
+    </div>
+
+    {% if name and name != "None" %}
+    <h1>{{ name }}</h1>
+    {% else %}
+    <h1>Your Ontology</h1>
+    {% endif %}
+
+    {% if session.logged_in %}
+
+        {% if language == 'EN' %}    
+            <button class="btn" style="margin:10px" onclick="showAddClass()">Add Class</button>
+        {% elif language == 'PT' %}
+            <button class="btn" style="margin:10px" onclick="showAddClass()">Adicionar Classe</button>
+        {% endif %}
+        <!-- Modal Container -->
+        <div id="modal-container1" class="modal">    
+            <h3 id="modal-title1">Add New Class</h3>
+            
+            <form id="modal-form1" method="POST">
+                <!-- Name Input -->
+                <label for="class-name">Name:</label>
+                <input id="class-name" name="name" required autocomplete="off"><br><br>
+
+                <!-- Class Selection with Autocomplete -->
+                <div id="class-selection1">
+                    <label for="class-dop">Properties:</label>
+                    <!--input id="class-dop" name="class" oninput="autocompleteSearchDOP(this.value)" autocomplete="off">
+                    <div id="autocomplete-box-dop" class="autocomplete-items" style="border:1px solid #ccc;"></div>
+                    
+                    <br><br-->
+                    <input 
+                    name="Properties: " 
+                    id="Properties" 
+                    class="tagify-input"
+                    placeholder="Add properties..." 
+                    autocomplete="off" />
+                    
+                    <!-- Store list of options as JSON -->
+                    <script>
+                    const dopInputEl = document.getElementById("Properties");
+                    const dopTagify = new Tagify(dopInputEl, {
+                        whitelist: {{ dop | tojson}},
+                        dropdown: {
+                        maxItems: 20,
+                        enabled: 0,
+                        closeOnSelect: false
+                        }
+                    });
+                    </script> 
+                    
+                    <br>
+                    <br>
+                
+                    <label for="class-indivs">Individuals:</label>
+                    
+                    <input 
+                    name="Individuals: " 
+                    id="Individuals" 
+                    class="tagify-input"
+                    placeholder="Add individuals..." 
+                    autocomplete="off" />
+                    
+                    <!-- Store list of options as JSON -->
+                    <script>
+                    const indivInputEl = document.getElementById("Individuals");
+                    const indivTagify = new Tagify(indivInputEl, {
+                        whitelist: {{ individuals | tojson}},
+                        dropdown: {
+                        maxItems: 20,
+                        enabled: 0,
+                        closeOnSelect: false
+                        }
+                    });
+                    </script>
+                </div>
+                <br>
+
+                <!-- Submit Button + Cancel -->
+                <button type="submit" class="btn">Save Class</button>
+                <button class="btn" type="button" onclick="closeModal()">Cancel</button>
+            </form>
+        </div>
+
+
+
+        <!-- ===== Add Property Modal ===== -->
+        {% if language == 'EN' %}    
+            <button class="btn" onclick="showAddProp()">Add Property</button>
+        {% elif language == 'PT' %}
+            <button class="btn" onclick="showAddProp()">Adicionar Prop.</button>
+        {% endif %}
+        <div id="prop-modal" class="modal"> 
+        <form id="prop-form" action="/add_property" method="POST">
+            <h3>Add New Property</h3>
+
+            <!-- Name -->
+            <label for="prop-name">Name:</label>
+            <input id="prop-name" name="name" required><br><br>
+
+            <!-- Type -->
+            <label>Type:</label>
+            <label><input type="radio" name="ptype" value="data" checked> Data</label>
+            <label><input type="radio" name="ptype" value="object"> Object</label>
+            <br><br>
+
+            <!-- Domain -->
+            <label for="prop-domain">Domain (Class):</label>
+            <input id="prop-domain" name="domain" autocomplete="off" oninput="acClasses(this.value, 'autocomplete-dom')">
+            <div id="autocomplete-dom" class="autocomplete-items"></div>
+            <br><br>
+
+            <!-- Range: we’ll swap these two in JS based on ptype -->
+            <div id="range-data">
+            <label for="prop-range-data">Range (XSD type):</label>
+            <select id="prop-range-data" name="range_data">
+                <option value="string">xsd:string</option>
+                <option value="integer">xsd:integer</option>
+                <option value="boolean">xsd:boolean</option>
+                <!-- add others as needed -->
+            </select>
+            </div>
+
+            <div id="range-obj" style="display:none;">
+            <label for="prop-range-obj">Range (Class):</label>
+            <input id="prop-range-obj" name="range_obj" autocomplete="off" oninput="acClasses(this.value, 'autocomplete-rng')">
+            <div id="autocomplete-rng" class="autocomplete-items"></div>
+            </div>
+            <br>
+
+            <button type="submit" class="btn">Save Property</button>
+            <button type="button" class="btn" onclick="closePropModal()">Cancel</button>
+        </form>
+        </div>
+
+        <script>
+        function showAddProp() {
+            document.getElementById('prop-modal').style.display = 'block';
+        }
+
+        function closePropModal() {
+            document.getElementById('prop-modal').style.display = 'none';
+        }
+
+        // Toggle range inputs when type changes
+        document.querySelectorAll('input[name="ptype"]').forEach(radio => {
+            radio.addEventListener('change', () => {
+            const isData = radio.value === 'data';
+            document.getElementById('range-data').style.display = isData ? 'block' : 'none';
+            document.getElementById('range-obj').style.display  = isData ? 'none'  : 'block';
+            });
+        });
+
+        // Simple autocomplete against your classes
+        function acClasses(val, boxId) {
+            const box = document.getElementById(boxId);
+            box.innerHTML = '';
+            if (val.length < 2) return;
+            fetch(`/autocompleteClasses?q=${encodeURIComponent(val)}`)
+            .then(r=>r.json()).then(list=>{
+                list.forEach(item => {
+                const div = document.createElement('div');
+                div.textContent = item;
+                div.onclick = () => {
+                    const input = boxId==='autocomplete-dom'
+                    ? document.getElementById('prop-domain')
+                    : document.getElementById('prop-range-obj');
+                    input.value = item;
+                    box.innerHTML = '';
+                };
+                box.appendChild(div);
+                });
+            });
+        }
+        </script>
+
+
+
+        {% if language == 'EN' %}    
+            <button class="btn" style="margin:10px" onclick="showAddModal()">Add Individual</button>
+        {% elif language == 'PT' %}
+            <button class="btn" style="margin:10px" onclick="showAddModal()">Adicionar Indiv.</button>
+        {% endif %}
+
+        <!-- Modal Container -->
+        <div id="modal-container" class="modal">    
+            <h3 id="modal-title">Add New Individual</h3>
+            
+            <form id="modal-form" method="POST">
+                <!-- Name Input -->
+                <label for="individual-name">Name:</label>
+                <input id="individual-name" name="name" required autocomplete="off"><br><br>
+
+                <!-- Class Selection with Autocomplete -->
+                <div id="class-selection">
+                    <label for="individual-class">Class:</label>
+                    <input id="individual-class" name="class" oninput="autocompleteSearchC(this.value)" autocomplete="off">
+                    <div id="autocomplete-box-classes" class="autocomplete-items" style="border:1px solid #ccc;"></div>
+                </div>
+                <br>
+
+                <!-- Dynamic Parameters Based on Class -->
+                <div id="class-parameters"></div>
+
+                <!-- Submit Button + Cancel -->
+                <button type="submit" class="btn">Save Individual</button>
+                <button class="btn" type="button" onclick="closeModal()">Cancel</button>
+            </form>
+        </div>
+
+    {% elif not session.logged_in %}
+        <div class="sessionLIO">
+            {% if language == 'EN' %}
+                <strong>Read-only mode:</strong> Login to enable editing features.
+            {% elif language == 'PT' %}
+                <strong>Read-only mode:</strong> Dá Login para editar a ontologia.
+            {% endif %}
+        </div>
+    {% endif %}
+
+
+
+    <div class="text-cards">
+        {% set delay = 0 %}
+
+        {% if view_classes != "TREE" %}
+            <div class="card" style="--delay: {{ delay }}s;">
+                {% if language == 'EN' %}
+                    <h2>Taxonomy</h2>
+                {% elif language == 'PT' %}
+                    <h2>Taxonomia</h2>
+                {% endif %}
+                
+                <ul>
+                {% for cls in taxonomy %}
+                    {% if cls.split("#")[0].isalpha() %}
+                        <li style="display: block; align-items: center;">
+                            {% if view_classes == "STARS" %}
+                                <button class="star-btn" data-type="class" data-name="{{ cls.split("#")[-1] }}" style="margin-left: 10px;">☆</button>
+                            {% endif %}
+                            <a href="{{ url_for('show_class', cls=cls.split("#")[-1]) }}">{{ cls.split("#")[-1] }}</a>
+                        </li>
+                    
+                    {% elif "." in cls.split("#")[0] or "_" in cls.split("#")[0] %}
+                        <li style="display: block; align-items: center;">
+                            {% if view_classes == "STARS" %}
+                                <button class="star-btn" data-type="class" data-name="{{ cls.split("#")[-1] }}" style="margin-left: 10px;">☆</button>
+                            {% endif %}
+                            <a href="{{ url_for('show_class', cls=cls.split("#")[-1]) }}">{{ cls.split("#")[-1] }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                </ul>
+            </div>
+
+            {% set delay = delay + 0.1 %}
+            <div class="card" style="--delay: {{ delay }}s;">
+                {% if language == 'EN' %}
+                    <h2>Favorite Classes</h2>
+                {% elif language == 'PT' %}
+                    <h2>Favoritos - Classes</h2>
+                {% endif %}
+
+                <ul id="favorite-classes-list">
+                {% if view_classes != "ALL" and view_classes != "STARS" %}
+                    {% for cls in view_classes %}
+                        <li><a href="{{ url_for('show_class', cls=cls.split("#")[-1]) }}">{{ cls.split("#")[-1] }}</a></li>
+                    {% endfor %}
+                {% endif %}
+                </ul>
+                {% if language == 'EN' %}
+                    <div style="text-align: left; margin-bottom: 20px;">
+                        <button id="clear-favoriteC-btn" class="btn">🧹 Clear</button>
+                    </div> 
+                {% elif language == 'PT' %}
+                    <div style="text-align: left; margin-bottom: 20px;">
+                        <button id="clear-favoriteC-btn" class="btn">🧹 Limpar</button>
+                    </div> 
+                {% endif %}
+            </div>
+        
+            {% set delay = delay + 0.1 %}
+            <div class="card" style="--delay: {{ delay }}s;">
+                {% if language == 'EN' %}
+                    <h2>Favorite Individuals</h2>
+                {% elif language == 'PT' %}
+                    <h2>Favoritos - Individuals</h2>
+                {% endif %}
+                        
+                <ul id="favorite-individuals-list">
+                {% if specific_pages != "STARS" %}
+                    {% for indiv in specific_pages %}
+                        <li><a href="{{ url_for('show_deity', name=indiv.split("#")[-1]) }}">{{ indiv.split("#")[-1] }}</a></li>
+                    {% endfor %}
+                {% endif %}
+                {% if specific_pages == "STARS" %}
+                    <!-- Empty at first, JS fills it -->
+                {% endif %}
+                </ul>
+                
+                {% if language == 'EN' %}
+                    <div style="text-align: left; margin-bottom: 20px;">
+                        <button id="clear-favoriteI-btn" class="btn">🧹 Clear</button>
+                    </div> 
+                {% elif language == 'PT' %}
+                    <div style="text-align: left; margin-bottom: 20px;">
+                        <button id="clear-favoriteI-btn" class="btn">🧹 Limpar</button>
+                    </div> 
+                {% endif %}
+            </div>
+
+        {% elif view_classes == "TREE" %}
+            <div class="card" style="--delay: {{ delay }}s;">
+                <!-- Classes Tree -->
+                {% if language == 'EN' %}
+                    <h2>Taxonomy</h2>
+                {% elif language == 'PT' %}
+                    <h2>Taxonomia</h2>
+                {% endif %}
+
+                <div id="taxonomyTree" class="tree-container"></div>
+
+                <script>
+                    let taxonomyData = {{ taxonomy_json|safe }};
+                    $('#taxonomyTree').jqxTree({ source: taxonomyData, width: '400px' });
+                </script>
+                
+            </div>
+        
+            {% set delay = delay + 0.1 %}
+            <div class="card" style="--delay: {{ delay }}s;">
+                {% if language == 'EN' %}
+                    <h2>Favorite Individuals</h2>
+                {% elif language == 'PT' %}
+                    <h2>Favoritos - Individuals</h2>
+                {% endif %}
+                        
+                <ul id="favorite-individuals-list">
+                {% if specific_pages != "STARS" and specific_pages != "TREE" %}
+                    {% for indiv in specific_pages %}
+                        <li><a href="{{ url_for('show_deity', name=indiv.split("#")[-1]) }}">{{ indiv.split("#")[-1] }}</a></li>
+                    {% endfor %}
+                {% endif %}
+                {% if specific_pages == "STARS" %}
+                    <!-- Empty at first, JS fills it -->
+                {% endif %}
+                </ul>
+                
+                {% if language == 'EN' %}
+                    <div style="text-align: left; margin-bottom: 20px;">
+                        <button id="clear-favoriteI-btn" class="btn">🧹 Clear</button>
+                    </div> 
+                {% elif language == 'PT' %}
+                    <div style="text-align: left; margin-bottom: 20px;">
+                        <button id="clear-favoriteI-btn" class="btn">🧹 Limpar</button>
+                    </div> 
+                {% endif %}
+            </div>
+        {% endif %}        
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const favorites = JSON.parse(localStorage.getItem("favorites") || "{}");
+    
+            const view_classes = "{{ view_classes }}";
+            const specific_pages = "{{ specific_pages }}";
+    
+            function setFavorites(type, list) {
+                localStorage.setItem(`favorites_${type}`, JSON.stringify(list));
+            }
+
+            function updateStars() {
+                document.querySelectorAll(".star-btn").forEach(btn => {
+                    const type = btn.dataset.type;
+                    const name = btn.dataset.name;
+                    const isFav = favorites[type]?.includes(name);
+                    btn.textContent = isFav ? "★" : "☆";
+                });
+    
+                // Dynamically populate Requested Classes (if using STARS)
+                const favClassList = document.getElementById("favorite-classes-list");
+                if (view_classes === "STARS" && favClassList) {
+                    favClassList.innerHTML = "";
+                    (favorites["class"] || []).forEach(name => {
+                        const li = document.createElement("li");
+                        li.style.display = "flex";
+                        li.style.justifyContent = "space-between";
+                        const a = document.createElement("a");
+                        a.href = `/class/${name}`;
+                        a.textContent = name;
+                        li.appendChild(a);
+                        favClassList.appendChild(li);
+                    });
+                }
+    
+                // Dynamically populate Requested Individuals (if using STARS)
+                const favIndivList = document.getElementById("favorite-individuals-list");
+                if (specific_pages === "STARS" && favIndivList) {
+                    favIndivList.innerHTML = "";
+                    (favorites["individual"] || []).forEach(name => {
+                        const li = document.createElement("li");
+                        li.style.display = "flex";
+                        li.style.justifyContent = "space-between";
+                        const a = document.createElement("a");
+                        a.href = `/individual/${name}`;
+                        a.textContent = name;
+                        li.appendChild(a);
+                        favIndivList.appendChild(li);
+                    });
+                }
+            }
+    
+            // Star click handlers
+            document.querySelectorAll(".star-btn").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const type = btn.dataset.type;
+                    const name = btn.dataset.name;
+
+                    console.log(type);
+    
+                    if (!favorites[type]) favorites[type] = [];
+    
+                    const index = favorites[type].indexOf(name);
+                    if (index > -1) {
+                        favorites[type].splice(index, 1);
+                    } else {
+                        favorites[type].push(name);
+                    }
+    
+                    localStorage.setItem("favorites", JSON.stringify(favorites));
+                    updateStars();
+                });
+            });
+    
+            // Clear favorites -> ORIGINAL
+            //const clearBtn = document.getElementById("clear-favorites-btn");
+            //if (clearBtn) {
+            //    clearBtn.addEventListener("click", () => {
+            //        localStorage.removeItem("favorites");
+            //        window.location.reload();
+            //    });
+            //}
+
+            const clearCBtn = document.getElementById("clear-favoriteC-btn");
+            if (clearCBtn) {
+                clearCBtn.addEventListener("click", () => {
+                    let fav = JSON.parse(localStorage.getItem("favorites"));
+                    delete fav.class;
+                    localStorage.setItem("favorites", JSON.stringify(fav));
+                            
+                    //console.log(localStorage)
+                    window.location.reload();
+                });
+            }
+
+            const clearIBtn = document.getElementById("clear-favoriteI-btn");
+            if (clearIBtn) {
+                clearIBtn.addEventListener("click", () => {
+                    let fav = JSON.parse(localStorage.getItem("favorites"));
+                    delete fav.individual;
+                    localStorage.setItem("favorites", JSON.stringify(fav));
+                            
+                    //console.log(localStorage)
+                    window.location.reload();
+                });
+            }
+            
+            /*
+            const clearBtn = document.getElementById("clear-favorites-btn");
+            if (clearBtn) {
+                clearBtn.addEventListener("click", () => {
+                    const parent = clearBtn.closest('.card');
+                    if (parent.querySelector('#favorite-classes-list')) {
+                        let fav = JSON.parse(localStorage.getItem("favorites"));
+                        delete fav.class;
+                        localStorage.setItem("favorites", JSON.stringify(fav));
+                        
+                        console.log(localStorage)
+                        window.location.reload();
+                    }
+                    if (parent.querySelector('#favorite-individuals-list')) {
+                        let fav = JSON.parse(localStorage.getItem("favorites"));
+                        delete fav.individual;
+                        localStorage.setItem("favorites", JSON.stringify(fav));
+                        
+                        console.log(localStorage)
+                        window.location.reload();
+                    }
+                });
+            }*/
+
+            updateStars();
+        });
+    </script>
+    
+    <script>
+        function showAddModal() {
+            document.getElementById('modal-title').innerText = "Add New Individual";
+            document.getElementById('modal-form').action = "/add_individual";
+            document.getElementById('class-selection').style.display = "block";
+            document.getElementById('modal-container').style.display = "block";
+        }
+        function showAddClass() {
+            document.getElementById('modal-title1').innerText = "Add New Class";
+            document.getElementById('modal-form1').action = "/add_class";
+            document.getElementById('class-selection1').style.display = "block";
+            document.getElementById('modal-container1').style.display = "block";
+        }
+        
+        function closeModal() {
+            document.getElementById('modal-container').style.display = "none";
+            document.getElementById('modal-container1').style.display = "none";
+        }
+        
+        
+        </script>
+
+        <script>
+            function autocompleteSearchC(val) {
+                const box = document.getElementById("autocomplete-box-classes");
+                box.innerHTML = "";
+            
+                if (val.length < 2) return;
+            
+                fetch(`/autocompleteClasses?q=${val}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        data.forEach(item => {
+                            const div = document.createElement("div");
+                            div.textContent = item;
+                            div.style.cursor = "pointer";
+                            div.onclick = function () {
+                                document.getElementById("individual-class").value = item;
+                                box.innerHTML = "";
+                                loadClassParameters(item);  // Load properties dynamically
+                            };
+                            box.appendChild(div);
+                        });
+                    });
+            }
+
+            function autocompleteSearchDOP(val) {
+                const box = document.getElementById("autocomplete-box-dop");
+                box.innerHTML = "";
+            
+                if (val.length < 2) return;
+            
+                fetch(`autocompleteDOP?q=${val}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        data.forEach(item => {
+                            const div = document.createElement("div");
+                            div.textContent = item;
+                            div.style.cursor = "pointer";
+                            div.onclick = function () {
+                                document.getElementById("class-dop").value = item;
+                                box.innerHTML = "";
+                            };
+                            box.appendChild(div);
+                        });
+                    });
+            }
+        
+
+            function loadClassParameters(className) {
+                  const paramBox = document.getElementById("class-parameters");
+                  paramBox.innerHTML = "";  // Clear previous
+                
+                  fetch(`/get_class_properties?class=${className}`)
+                    .then(res => res.json())
+                    .then(data => {
+                      if (data.data_properties.length === 0 && data.object_properties.length === 0) {
+                        paramBox.innerHTML = "<i>No properties defined for this class.</i>";
+                        return;
+                      }
+                
+                      // DATA PROPERTIES
+                      data.data_properties.forEach(prop => {
+                        const label = document.createElement("label");
+                        label.setAttribute("for", prop);
+                        label.innerText = prop + ":";
+                
+                        const input = document.createElement("input");
+                        input.setAttribute("name", prop);
+                        input.setAttribute("id", prop);
+                        input.setAttribute("autocomplete", "off");
+                        input.required = true;
+                
+                        paramBox.appendChild(label);
+                        paramBox.appendChild(document.createElement("br"));
+                        paramBox.appendChild(input);
+                        paramBox.appendChild(document.createElement("br"));
+                        paramBox.appendChild(document.createElement("br"));
+                      });
+                
+                      // OBJECT PROPERTIES — build selects
+                      data.object_properties.forEach(prop => {
+                        const label = document.createElement("label");
+                        label.setAttribute("for", prop);
+                        label.innerText = prop + ":";
+                
+                        /*const select = document.createElement("select");
+                        select.setAttribute("name", prop);
+                        select.setAttribute("id", prop);
+                        select.multiple = true;
+                        select.required = false;
+                
+                        // Fill in options from your individuals
+                        fetch(`/get_individuals`)  // Need to create this
+                          .then(res => res.json())
+                          .then(indivs => {
+                            const noneOption = document.createElement("option");
+                            noneOption.value = "";
+                            noneOption.text = "(none)";
+                            select.appendChild(noneOption);
+                
+                            indivs.forEach(ind => {
+                              const opt = document.createElement("option");
+                              opt.value = ind;
+                              opt.text = ind;
+                              select.appendChild(opt);
+                            });
+                          });
+                
+                        paramBox.appendChild(label);
+                        paramBox.appendChild(document.createElement("br"));
+                        paramBox.appendChild(select);
+                        paramBox.appendChild(document.createElement("br"));
+                        paramBox.appendChild(document.createElement("br"));
+                      });
+                    });*/
+
+                        const input = document.createElement("input");
+                        input.setAttribute("name", prop + "[]");  // important for multi
+                        input.setAttribute("id", prop);
+                        input.setAttribute("autocomplete", "off");
+                        input.classList.add("tagify-input");
+
+                        paramBox.appendChild(label);
+                        paramBox.appendChild(document.createElement("br"));
+                        paramBox.appendChild(input);
+                        paramBox.appendChild(document.createElement("br"));
+                        paramBox.appendChild(document.createElement("br"));
+
+                        // fetch individuals and init Tagify
+                        fetch(`/get_individuals`)
+                            .then(res => res.json())
+                            .then(indivs => {
+                                const tagifyC = new Tagify(input, {
+                                    whitelist: indivs,
+                                    dropdown: {
+                                    maxItems: 20,
+                                    enabled: 0,
+                                    closeOnSelect: false
+                                    }
+                            });
+                        });
+                    });
+                });}                
+        </script>
+            
+    
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleButton = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Load saved theme
+    if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark-mode');
+        toggleButton.textContent = "☀️";
+    }
+
+    toggleButton.addEventListener('click', function () {
+        body.classList.toggle('dark-mode');
+
+        if (body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            toggleButton.textContent = "☀️";
+        } else {
+            localStorage.setItem('theme', 'light');
+            toggleButton.textContent = "🌙";
+        }
+    });
+});
+</script>
+
+</body>
+</html>

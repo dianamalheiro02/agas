@@ -1,0 +1,15 @@
+// Ontology Graph
+digraph {
+	rankdir=LR size="8,5"
+	Deity [color=lightblue shape=ellipse style=filled]
+	Story [color=lightblue shape=ellipse style=filled]
+	Humans [color=lightblue shape=ellipse style=filled]
+	Nature [color=lightblue shape=ellipse style=filled]
+	Humans -> Deity [label=subClassOf]
+	Nature -> Deity [label=subClassOf]
+	Deity -> Deity [label=hasChild style=dashed]
+	Deity -> Deity [label=hasFather style=dashed]
+	Deity -> Deity [label=hasLover style=dashed]
+	Deity -> Deity [label=hasMother style=dashed]
+	Deity -> Story [label=hasStory style=dashed]
+}

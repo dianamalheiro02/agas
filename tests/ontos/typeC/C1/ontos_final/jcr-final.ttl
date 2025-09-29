@@ -1,0 +1,1720 @@
+@prefix : <http://prc.di.uminho.pt/2021/myfamily#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://prc.di.uminho.pt/2021/myfamily> .
+
+<http://prc.di.uminho.pt/2021/myfamily> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://prc.di.uminho.pt/2021/myfamily#eMaeDe
+:eMaeDe rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf :eProgenitorDe ;
+        owl:inverseOf :temMae .
+
+
+###  http://prc.di.uminho.pt/2021/myfamily#ePaide
+:ePaide rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf :eProgenitorDe ;
+        owl:inverseOf :temPai .
+
+
+###  http://prc.di.uminho.pt/2021/myfamily#eProgenitorDe
+:eProgenitorDe rdf:type owl:ObjectProperty ;
+               owl:inverseOf :temProgenitor .
+
+
+###  http://prc.di.uminho.pt/2021/myfamily#temMae
+:temMae rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf :temProgenitor ;
+        rdf:type owl:FunctionalProperty ;
+        rdfs:domain :Pessoa .
+
+
+###  http://prc.di.uminho.pt/2021/myfamily#temPai
+:temPai rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf :temProgenitor ;
+        rdfs:domain :Pessoa .
+
+
+###  http://prc.di.uminho.pt/2021/myfamily#temProgenitor
+:temProgenitor rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf owl:topObjectProperty ;
+               rdfs:domain :Pessoa ;
+               rdfs:range :Pessoa .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://prc.di.uminho.pt/2021/myfamily#Pessoa
+:Pessoa rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+:I_1500003 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "José Carlos Ramalho" ;
+     :temMae :I_1500002 ;
+     :temPai :I_1500014 ;
+     :dataNasc "1 de fevereiro de 1967" ;
+     :localNasc "Viana do Castelo, Portugal" .
+
+:I_1500013 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Leonardo Lopes Ramalho" ;
+     :temMae :I_1500009 ;
+     :temPai :I_1500003 ;
+     :dataNasc "11 de março de 1999" ;
+     :localNasc "Braga, Portugal" .
+
+:I_1500014 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "David José Lopes Ramalho" ;
+     :temMae :I_1500009 ;
+     :temPai :I_1500003 ;
+     :dataNasc "3 de novembro de 1994" ;
+     :localNasc "Viana do Castelo, Portugal" .
+
+:I_1500001 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "José Santos Ramalho" ;
+     :temMae :I_1500023 ;
+     :temPai :I_1500022 ;
+     :dataNasc "2 de junho de 1942" ;
+     :localNasc "" .
+
+:I_1500002 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria Flora dos Santos Ramalho" ;
+     :temMae :I_1500004 ;
+     :temPai :I_1500005 ;
+     :dataNasc "4 de fevereiro de 1941" ;
+     :localNasc "S. Salvador, Arcos de Valdevez" .
+
+:I_1500015 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria Helena Leite Ramalho" ;
+     :temMae :I_1500002 ;
+     :temPai :I_1500001 ;
+     :dataNasc "20 de agosto de 1968" ;
+     :localNasc "Viana do Castelo, Portugal" .
+
+:I_1500009 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Carmen Maria João da Rocha Lopes" ;
+     :temMae :I_1500017 ;
+     :temPai :I_1500016 ;
+     :dataNasc "24 de junho de 1963" ;
+     :localNasc "Lourenço Marques, Moçambique" .
+
+:I_1500022 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "António da Silva Ramalho" ;
+     :temMae :I_1500028 ;
+     :temPai :I_1500029 ;
+     :dataNasc "1904" ;
+     :localNasc "" .
+
+:I_1500023 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria Alves dos Santos" ;
+     :temMae :I_1500036 ;
+     :temPai :I_1500035 ;
+     :dataNasc "1906" ;
+     :localNasc "" .
+
+:I_1500005 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Marçal Aristides Costa Leite" ;
+     :temMae :I_1500030 ;
+     :temPai :I_1500267 ;
+     :dataNasc "18 de julho de 1909" ;
+     :localNasc "Santa Maria Maior, Viana do Castelo, Portugal" .
+
+:I_1500004 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria Esteves de Araújo" ;
+     :temMae :I_1500041 ;
+     :temPai :I_1500040 ;
+     :dataNasc "25 de novembro de 1912" ;
+     :localNasc "São Salvador, Arcos de Valdevez, Portugal" .
+
+:I_1500300 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Helena Isabel Ramalho Vasconcelos Araújo" ;
+     :temMae :I_1500015 ;
+     :temPai :I_ ;
+     :dataNasc "7 de junho de 1994" ;
+     :localNasc "Santa Maria Maior, Viana do Castelo, Portugal" .
+
+:I_1500302 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Francisca Ramalho Araújo" ;
+     :temMae :I_1500015 ;
+     :temPai :I_ ;
+     :dataNasc "13 de agosto de 1999" ;
+     :localNasc "" .
+
+:I_1500025 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Manuel Fernando dos Santos Ramalho" ;
+     :temMae :I_1500023 ;
+     :temPai :I_1500022 ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500026 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Manuel Carlos dos Santos Ramalho" ;
+     :temMae :I_1500023 ;
+     :temPai :I_1500022 ;
+     :dataNasc "" ;
+     :localNasc "Labruge, Vila do Conde" .
+
+:I_1500024 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria Flora dos Santos Ramalho" ;
+     :temMae :I_1500023 ;
+     :temPai :I_1500022 ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500027 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Ilda dos Santos Ramalho" ;
+     :temMae :I_1500023 ;
+     :temPai :I_1500022 ;
+     :dataNasc "27 de outubro de 1949" ;
+     :localNasc "Labruge, Vila do Conde" .
+
+:I_1500038 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Henrique Marçal de Araújo Leite" ;
+     :temMae :I_1500004 ;
+     :temPai :I_1500005 ;
+     :dataNasc "16 de janeiro de 1943" ;
+     :localNasc "S. Salvador, Arcos de Valdevez" .
+
+:I_1500039 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Rui Alberto de Araújo Leite" ;
+     :temMae :I_1500004 ;
+     :temPai :I_1500005 ;
+     :dataNasc "26 de janeiro de 1948" ;
+     :localNasc "S. Salvador, Arcos de Valdevez" .
+
+:I_1500016 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "José Bernardino da Rocha Lopes" ;
+     :temMae :I_1500067 ;
+     :temPai :I_1500066 ;
+     :dataNasc "20 de maio de 1931" ;
+     :localNasc "Damão, India" .
+
+:I_1500017 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria Edith Rocha Lopes" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "29 de setembro de 1934" ;
+     :localNasc "Lourenço Marques, Moçambique" .
+
+:I_1500018 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "José Mateus da Rocha Lopes" ;
+     :temMae :I_1500017 ;
+     :temPai :I_1500016 ;
+     :dataNasc "30 de novembro de 1966" ;
+     :localNasc "Lisboa, Portugal" .
+
+:I_1500029 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Manuel da Silva Ramalho" ;
+     :temMae :I_1500081 ;
+     :temPai :I_1500080 ;
+     :dataNasc "1866" ;
+     :localNasc "Labruge, Vila do Conde" .
+
+:I_1500028 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Custódia Gonçalves de Azevedo" ;
+     :temMae :I_1500082 ;
+     :temPai :I_1500083 ;
+     :dataNasc "5 de janeiro de 1867" ;
+     :localNasc "Vila Chã, Vila do Conde, Portugal" .
+
+:I_1500035 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Jozé da Silva Santos" ;
+     :temMae :I_1500065 ;
+     :temPai :I_1500082 ;
+     :dataNasc "16 de novembro de 1879" ;
+     :localNasc "Freixieiro, Perafita, Matosinhos, Portugal" .
+
+:I_1500036 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Christina Rosa Silva Santos" ;
+     :temMae :I_1500117 ;
+     :temPai :I_1500116 ;
+     :dataNasc "1879" ;
+     :localNasc "Pedras Rubras, Moreira, Maia, Portugal" .
+
+:I_1500267 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Marçal da Costa Leite" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500030 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Flora Castilho do Couto Leite" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500040 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Henrique Luiz de Araújo" ;
+     :temMae :I_1500102 ;
+     :temPai :I_1500101 ;
+     :dataNasc "24 de setembro de 1867" ;
+     :localNasc "S. Paio, Arcos de Valdevez" .
+
+:I_1500041 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria Araújo" ;
+     :temMae :I_1500104 ;
+     :temPai :I_1500103 ;
+     :dataNasc "24 de julho de 1884" ;
+     :localNasc "S. Salvador, Arcos de Valdevez" .
+
+:I_1500289 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Carla Maria Petejo Ramalho" ;
+     :temMae :I_1500290 ;
+     :temPai :I_1500026 ;
+     :dataNasc "27 de setembro de 1976" ;
+     :localNasc "" .
+
+:I_1500293 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Cristina Maria Moutinho" ;
+     :temMae :I_1500290 ;
+     :temPai :I_1500026 ;
+     :dataNasc "28 de junho de 1981" ;
+     :localNasc "" .
+
+:I_1500298 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Vítor José dos Santos Ramalho" ;
+     :temMae :I_1500024 ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "Labruge, Vila do Conde" .
+
+:I_1500031 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Ezequiel da Silva Ramalho" ;
+     :temMae :I_1500028 ;
+     :temPai :I_1500029 ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500032 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Abílio da Silva Ramalho" ;
+     :temMae :I_1500028 ;
+     :temPai :I_1500029 ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500033 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Ana da Silva Ramalho" ;
+     :temMae :I_1500028 ;
+     :temPai :I_1500029 ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500034 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Arminda da Silva Ramalho" ;
+     :temMae :I_1500028 ;
+     :temPai :I_1500029 ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500079 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Generosa da Silva Ramalho" ;
+     :temMae :I_1500028 ;
+     :temPai :I_1500029 ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500297 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Albina da Silva Ramalho da Silva Ramalho" ;
+     :temMae :I_1500028 ;
+     :temPai :I_1500029 ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500037 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Florinda Alves dos Santos" ;
+     :temMae :I_1500065 ;
+     :temPai :I_1500082 ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500057 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Henrique Miguel Cabrita de Araújo Leite" ;
+     :temMae :I_1500056 ;
+     :temPai :I_1500038 ;
+     :dataNasc "18 de junho de 1971" ;
+     :localNasc "Nampula, Moçambique" .
+
+:I_1500058 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Isabel Maria Cabrita de Araújo Leite" ;
+     :temMae :I_1500056 ;
+     :temPai :I_1500038 ;
+     :dataNasc "11 de março de 1973" ;
+     :localNasc "" .
+
+:I_1500077 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Ana Margarida Ribeiro Leite" ;
+     :temMae :I_1500076 ;
+     :temPai :I_1500039 ;
+     :dataNasc "24 de setembro de 1980" ;
+     :localNasc "Portugal" .
+
+:I_1500078 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Teresa Maria Ribeiro Leite" ;
+     :temMae :I_1500076 ;
+     :temPai :I_1500039 ;
+     :dataNasc "28 de setembro de 1985" ;
+     :localNasc "Porto" .
+
+:I_1500050 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Domingos Couto Leite" ;
+     :temMae :I_1500030 ;
+     :temPai :I_1500267 ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500051 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Gilberto Couto Leite" ;
+     :temMae :I_1500030 ;
+     :temPai :I_1500267 ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500052 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "João Bernardo Couto Leite" ;
+     :temMae :I_1500030 ;
+     :temPai :I_1500267 ;
+     :dataNasc "14 de março de 1916" ;
+     :localNasc "" .
+
+:I_1500053 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Orlando Couto Leite" ;
+     :temMae :I_1500030 ;
+     :temPai :I_1500267 ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500054 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Rosa Couto Leite" ;
+     :temMae :I_1500030 ;
+     :temPai :I_1500267 ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500055 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Helena Couto Leite" ;
+     :temMae :I_1500030 ;
+     :temPai :I_1500267 ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500047 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "José Emílio Esteves de Araújo" ;
+     :temMae :I_1500102 ;
+     :temPai :I_1500101 ;
+     :dataNasc "21 de dezembro de 1916" ;
+     :localNasc "S. Salvador, Arcos de Valdevez" .
+
+:I_1500048 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Luís Esteves de Araújo" ;
+     :temMae :I_1500102 ;
+     :temPai :I_1500101 ;
+     :dataNasc "15 de junho de 1918" ;
+     :localNasc "S. Salvador, Arcos de Valdevez" .
+
+:I_1500049 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Henrique Luís Esteves de Araújo" ;
+     :temMae :I_1500102 ;
+     :temPai :I_1500101 ;
+     :dataNasc "25 de junho de 1924" ;
+     :localNasc "S. Salvador, Arcos de Valdevez" .
+
+:I_1500042 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Emília Esteves de Araújo" ;
+     :temMae :I_1500102 ;
+     :temPai :I_1500101 ;
+     :dataNasc "20 de julho de 1908" ;
+     :localNasc "S. Salvador, Arcos de Valdevez" .
+
+:I_1500043 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Albina Esteves de Araújo" ;
+     :temMae :I_1500102 ;
+     :temPai :I_1500101 ;
+     :dataNasc "1 de setembro de 1910" ;
+     :localNasc "" .
+
+:I_1500044 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Sara Esteves de Araújo" ;
+     :temMae :I_1500102 ;
+     :temPai :I_1500101 ;
+     :dataNasc "11 de fevereiro de 1914" ;
+     :localNasc "S. Salvador, Arcos de Valdevez" .
+
+:I_1500046 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Filomena Esteves de Araújo" ;
+     :temMae :I_1500102 ;
+     :temPai :I_1500101 ;
+     :dataNasc "23 de junho de 1927" ;
+     :localNasc "S. Salvador, Arcos de Valdevez" .
+
+:I_1500268 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Virginia Cachado" ;
+     :temMae :I_1500102 ;
+     :temPai :I_1500101 ;
+     :dataNasc "12 de junho de 1921" ;
+     :localNasc "S. Salvador, Arcos de Valdevez" .
+
+:I_1500066 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "José Francisco Lopes" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "25 de maio de 1905" ;
+     :localNasc "Damão, India" .
+
+:I_1500067 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Olinda Francisca Lopes" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "2 de junho de 1905" ;
+     :localNasc "Damão, India" .
+
+:I_1500303 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Dr. Manuel Eduardo Araújo Vasconcelos" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500019 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "José Paulo Alexandrino Lopes" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "27 de novembro de 2002" ;
+     :localNasc "Braga, Portugal" .
+
+:I_1500021 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Rita Sofia Alexandrino Lopes" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "30 de junho de 2007" ;
+     :localNasc "Braga, Portugal" .
+
+:I_1500068 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Washington da Rocha Lopes" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "3 de março de 1933" ;
+     :localNasc "Damão, India" .
+
+:I_1500069 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Francisco Xavier da Rocha Lopes" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "30 de novembro de 1948" ;
+     :localNasc "Damão, India" .
+
+:I_1500070 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Eufêmia Maria Júlia Lopes" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "3 de julho de 1929" ;
+     :localNasc "" .
+
+:I_1500071 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria Antónia Leontina Colaço" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "3 de janeiro de 1935" ;
+     :localNasc "" .
+
+:I_1500072 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Filomena Ana Lopes" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "29 de setembro de 1937" ;
+     :localNasc "" .
+
+:I_1500073 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Henriqueta Margarida Colaço" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "20 de julho de 1939" ;
+     :localNasc "Bombaim, Índia" .
+
+:I_1500074 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Wilhemina Divina Lopes" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "17 de outubro de 1940" ;
+     :localNasc "Damão, India" .
+
+:I_1500075 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria da Graça Lopes" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "18 de julho de 1942" ;
+     :localNasc "Damão, India" .
+
+:I_1500290 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Ana Maria Ramalho" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500299 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Desconhecido" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500056 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria Otília Araújo Leite" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "22 de junho de 1944" ;
+     :localNasc "Loulé, Portugal" .
+
+:I_1500076 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria Margarida Ribeiro" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "15 de setembro de 1954" ;
+     :localNasc "Portugal" .
+
+:I_1500020 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Paula Alexandrino" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "5 de outubro de 1967" ;
+     :localNasc "Lisboa, Portugal" .
+
+:I_1500080 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "António da Silva Ramalho" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500081 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria Dias dos Reis" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "Labruge, Vila do Conde" .
+
+:I_1500083 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "José Francisco Ramos Mouco" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "Vila Chã, Vila do Conde, Portugal" .
+
+:I_1500082 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria Gonçalves de Azevedo" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "Vila Chã, Vila do Conde, Portugal" .
+
+:I_1500064 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "António da Silva Santos" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "25 de dezembro de 1839" ;
+     :localNasc "Freixieiro, Perafita, Matosinhos, Portugal" .
+
+:I_1500065 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Claudina Silva Santos" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "15 de agosto de 1841" ;
+     :localNasc "Freixieiro, Perafita, Matosinhos, Portugal" .
+
+:I_1500116 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Jozé Ferreira d'Andrade" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "1853" ;
+     :localNasc "" .
+
+:I_1500117 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria Alves Ferreira d'Andrade" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "1846" ;
+     :localNasc "" .
+
+:I_1500101 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "José Emílio de Araújo" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "S. Salvador, Arcos de Valdevez" .
+
+:I_1500102 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria das Dores Fernandes de Brito" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "Paredes de Coura" .
+
+:I_1500103 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "José Maria Esteves" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500104 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Emília Esteves" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500292 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Carlos André Ramalho Santos" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "22 de fevereiro de 2007" ;
+     :localNasc "" .
+
+:I_1500296 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "António Pedro Ramalho Moutinho" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "24 de abril de 2011" ;
+     :localNasc "" .
+
+:I_1500295 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Leonor Ramalho Moutinho" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "26 de dezembro de 2005" ;
+     :localNasc "" .
+
+:I_1500169 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Joaquina" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500170 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Albina" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500171 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500172 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Florinda" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500173 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Carolina" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500059 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Gabriela Leite" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "10 de março de 2001" ;
+     :localNasc "Lisboa, Portugal" .
+
+:I_1500063 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Gonçalo" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "26 de dezembro de 2006" ;
+     :localNasc "" .
+
+:I_1500088 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Pedro Leite Cordeiro" ;
+     :temMae :I_1500077 ;
+     :temPai :I_1500086 ;
+     :dataNasc "19 de janeiro de 2014" ;
+     :localNasc "Porto" .
+
+:I_1500061 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Margarida" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "15 de novembro de 2003" ;
+     :localNasc "" .
+
+:I_1500310 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Clara Leite Carvalho" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "2 de junho de 2022" ;
+     :localNasc "" .
+
+:I_1500272 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Jerónimo Araújo" ;
+     :temMae :I_1500102 ;
+     :temPai :I_1500101 ;
+     :dataNasc "21 de setembro de 1856" ;
+     :localNasc "S. Paio, Arcos de Valdevez" .
+
+:I_1500274 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "José Maria Araújo" ;
+     :temMae :I_1500102 ;
+     :temPai :I_1500101 ;
+     :dataNasc "4 de dezembro de 1854" ;
+     :localNasc "S. Paio, Arcos de Valdevez" .
+
+:I_1500273 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria Araújo" ;
+     :temMae :I_1500102 ;
+     :temPai :I_1500101 ;
+     :dataNasc "24 de maio de 1859" ;
+     :localNasc "S. Paio, Arcos de Valdevez" .
+
+:I_1500090 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Gonçalo José Lopes Colaço" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "26 de outubro de 1966" ;
+     :localNasc "Macau" .
+
+:I_1500091 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Rui Manuel Lopes Colaço" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "27 de dezembro de 1967" ;
+     :localNasc "Macau" .
+
+:I_1500092 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Olinda Conceição do Amaral" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "30 de setembro de 1970" ;
+     :localNasc "Macau" .
+
+:I_1500291 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Júlio André Azevedo Santos" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "3 de março de 1982" ;
+     :localNasc "" .
+
+:I_1500294 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Manuel António Bessa Moutinho" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "19 de novembro de 1980" ;
+     :localNasc "" .
+
+:I_1500062 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Jorge Trancoso Santos Silva" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "29 de maio de 1972" ;
+     :localNasc "Lourenço Marques, Moçambique" .
+
+:I_1500086 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Paulo Cordeiro" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "3 de junho de 1980" ;
+     :localNasc "Porto" .
+
+:I_1500087 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "José Carvalho" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "19 de março de 1985" ;
+     :localNasc "" .
+
+:I_1500276 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Jorge Ribeiro" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500282 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "António Sousa Cabrita" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500275 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria Margarida Gomes de Carvalho" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "Portugal" .
+
+:I_1500281 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Julieta Sousa Cabrita" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "26 de abril de 1920" ;
+     :localNasc "" .
+
+:I_1500060 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Ana Patrícia Malta Dias" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "23 de maio de 1974" ;
+     :localNasc "Lisboa, Portugal" .
+
+:I_1500089 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "José Maria de Jesus Colaço" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "10 de junho de 1931" ;
+     :localNasc "Damão, India" .
+
+:I_1500283 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "José Francisco Ramos" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500284 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria Antónia" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500285 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "António de Azevedo" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500286 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Custódia Gonçalves" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500112 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Manuel da Silva Santos" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500113 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Joaquina Maria" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500114 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "António Francisco da Silva" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500115 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Anna da Silva" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500120 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Joaquim José Ferreira d'Andrade" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500121 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Joaquina Ferreira d'Andrade" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "1821" ;
+     :localNasc "" .
+
+:I_1500118 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Jozé Alves Moreira" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "1801" ;
+     :localNasc "" .
+
+:I_1500119 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Margarida de Alves Moreira" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "1807" ;
+     :localNasc "" .
+
+:I_1500269 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Victoria Joaquina de Barros" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500270 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Manuel José Fernandes" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500271 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Rosa Clara de Brito Marinho" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500163 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Pedro Esteves" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500164 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria Joaquina Esteves" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500165 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Constantino José Luiz do Lago" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500166 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria Anna Affonso" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500097 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Xavier Marcão Colaço" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "2 de dezembro de 2008" ;
+     :localNasc "Lisboa, Portugal" .
+
+:I_1500099 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Guilherme Manuel Mendes Colaço" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "4 de novembro de 1998" ;
+     :localNasc "Macau" .
+
+:I_1500100 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Ana Beatriz Mendes Colaço" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "30 de agosto de 2006" ;
+     :localNasc "Macau" .
+
+:I_1500094 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "João Gonçalo Colaço do Amaral" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "21 de outubro de 1997" ;
+     :localNasc "Macau" .
+
+:I_1500095 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Rui Gonçalo Colaço do Amaral" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "19 de dezembro de 1999" ;
+     :localNasc "" .
+
+:I_1500309 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "José Manuel Santos Silva" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500308 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Carla Trancoso" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500280 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Desconhecido Ribeiro" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500279 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Belmira Santos" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500278 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Cândido Carvalho" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500277 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria de Lurdes Gomes" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500096 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Isabel Rute da Costa Santos" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "9 de dezembro de 1967" ;
+     :localNasc "Santo Antão do Tojal" .
+
+:I_1500098 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Ana Luisa Colaço" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "19 de maio de 1969" ;
+     :localNasc "Funchal, Madeira" .
+
+:I_1500093 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Rui Pedro de Carvalho Peres do Amaral" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "24 de setembro de 1968" ;
+     :localNasc "Luanda, Angola" .
+
+:I_1500105 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Gonçalo Francisco Colaço" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "10 de junho de 1876" ;
+     :localNasc "Damão, India" .
+
+:I_1500106 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Conceição Felícia Colaço" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "23 de março de 1890" ;
+     :localNasc "Diu, Índia" .
+
+:I_1500107 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Renato Francisco Colaço" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "12 de novembro de 1925" ;
+     :localNasc "Damão, India" .
+
+:I_1500108 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Ismael Francisco de Jesus Colaço" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "22 de junho de 1923" ;
+     :localNasc "Damão, India" .
+
+:I_1500111 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Francisco Matias do Rosário Colaço" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "24 de fevereiro de 1921" ;
+     :localNasc "Damão, India" .
+
+:I_1500109 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Eulália Maria Colaço" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "1 de maio de 1922" ;
+     :localNasc "Damão, India" .
+
+:I_1500110 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Matildes Rosa de Perpétuo Socorro Colaço" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "4 de novembro de 1929" ;
+     :localNasc "Damão, India" .
+
+:I_1500122 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Manoel José d'Andrade" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500123 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Delfina d'Andrade" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500124 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "António d'Andrade" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500125 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Marianna Andrade" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500126 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Bernardino Francisco Moreira" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "1805" ;
+     :localNasc "" .
+
+:I_1500127 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Anna Moreira" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "1792" ;
+     :localNasc "" .
+
+:I_1500128 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "António Francisco Moreira" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500129 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Isabel Maria da Moreira" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "1769" ;
+     :localNasc "" .
+
+:I_1500130 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Jozé Francisco Moreyra" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500131 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria do Espírito Santo Moreira" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500132 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Manoel Moreira" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500133 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Luiza Francisca Moreira" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500134 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Manoel dos Santos" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500135 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Ignacia Santos" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500136 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Raymundo da Sylva" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "31 de agosto de 1742" ;
+     :localNasc "" .
+
+:I_1500137 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Vincencia Maria da Sylva" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "1734" ;
+     :localNasc "" .
+
+:I_1500138 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Joam Antonio dos Santos" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "2 de junho de 1710" ;
+     :localNasc "Gemunde, Maia, Portugal" .
+
+:I_1500139 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Antonia dos Santos" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "1717" ;
+     :localNasc "" .
+
+:I_1500140 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Manoel da Cruz" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500141 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Izabel Cruz" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "18 de março de 1700" ;
+     :localNasc "" .
+
+:I_1500142 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Joam Thome" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "3 de janeiro de 1681" ;
+     :localNasc "Mosteiró, Vila do Conde, Portugal" .
+
+:I_1500143 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Dorotea Duarte" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "1683" ;
+     :localNasc "" .
+
+:I_1500144 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Thome da Sylva" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "1662" ;
+     :localNasc "" .
+
+:I_1500145 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Luiza Sylva" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "1682" ;
+     :localNasc "" .
+
+:I_1500146 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Pedro Dias" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "8 de maio de 1662" ;
+     :localNasc "Vilar do Pinheiro, Vila do Conde, Portugal" .
+
+:I_1500147 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Izabel Dias" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500148 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Luís João" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "Vilar do Pinheiro, Vila do Conde, Portugal" .
+
+:I_1500149 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Izabell Dias" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "Vilar do Pinheiro, Vila do Conde, Portugal" .
+
+:I_1500150 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Antonio Duarte" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "1631" ;
+     :localNasc "" .
+
+:I_1500151 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Catherina Duarte" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "1635" ;
+     :localNasc "" .
+
+:I_1500152 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Pedro Duarte" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "1588" ;
+     :localNasc "" .
+
+:I_1500153 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria Antonia" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "1587" ;
+     :localNasc "" .
+
+:I_1500154 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Pedro Duarte" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "1565" ;
+     :localNasc "" .
+
+:I_1500155 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Catarina Antonia" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "1565" ;
+     :localNasc "" .
+
+:I_1500156 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Pedro Domingues" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "1540" ;
+     :localNasc "" .
+
+:I_1500157 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria Domingues" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "1540" ;
+     :localNasc "" .
+
+:I_1500158 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Antonio Gonçalves" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "1540" ;
+     :localNasc "Gemunde, Maia, Portugal" .
+
+:I_1500159 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Domingos Francisco da Silva" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "Santa Cruz do Bispo, Matosinhos, Portugal" .
+
+:I_1500160 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Francisca da Silva" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "Santa Cruz do Bispo, Matosinhos, Portugal" .
+
+:I_1500161 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Domingos António Jacinto" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "Perafita, Matosinhos, Portugal" .
+
+:I_1500162 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Maria Francisca da Silva" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "Perafita, Matosinhos, Portugal" .
+
+:I_1500167 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Manoel Moreira" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "Santa Cruz do Bispo, Matosinhos, Portugal" .
+
+:I_1500168 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Anna Faria Moreira" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "Santa Cruz do Bispo, Matosinhos, Portugal" .
+
+:I_1500287 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "José da Silva Santos" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500288 rdf:type owl:NamedIndividual ;
+     :sexo "F" ;
+     :nome "Custódia Pereira" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "" ;
+     :localNasc "" .
+
+:I_1500304 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Sebastião Joze Dias da Cruz" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "20 de janeiro de 1732" ;
+     :localNasc "Igreja, Villar de Pinheiro, Villa do Conde, Portugal" .
+
+:I_1500305 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Francisca Dias da Cruz" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "10 de outubro de 1737" ;
+     :localNasc "Igreja, Villar de Pinheiro, Villa do Conde, Portugal" .
+
+:I_1500306 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Miguel Dias da Cruz" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "11 de setembro de 1726" ;
+     :localNasc "Igreja, Villar de Pinheiro, Villa do Conde, Portugal" .
+
+:I_1500307 rdf:type owl:NamedIndividual ;
+     :sexo "M" ;
+     :nome "Jozeph Dias da Cruz" ;
+     :temMae :I_ ;
+     :temPai :I_ ;
+     :dataNasc "5 de fevereiro de 1729" ;
+     :localNasc "Igreja, Villar de Pinheiro, Villa do Conde, Portugal" .
+
+

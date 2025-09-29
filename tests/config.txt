@@ -1,0 +1,168 @@
+# DSL de configuração será responsável por: diálogo, templates, processamento (resumos, estatísticas)
+# Configuration for PWGAS platform
+
+# Specify the path to your ontology file and Protégé executable
+ONTOLOGY_FILE = '/home/diana-teixeira/Desktop/AGAS/ontos/typeC/C1/ontos_final/greek_deities_ontology_complete.ttl'
+PROTEGE_PATH = '/home/diana-teixeira/Desktop/Thesis/Protege-5.6.4-linux/Protege-5.6.4/protege'
+
+#Specify the type of ontology you have:
+# A: table-like, more homegenic
+# B: AGROVOC-like, heavy and more complex
+# C1: Arquival, but with extra media (like images, etc)
+# C2: Arquival, but no extra media
+ONTOLOGY_TYPE = 'C1'
+
+#Specify if ontology has images that are from your own pc ('NONE' if not), if it does, please give the path to the folder you have them in
+ONTOLOGY_IMAGES = '/home/diana-teixeira/Desktop/Thesis_Writing/images'
+
+#Specify who can edit the ontology -> 'ALL' or 'LOGIN' are the options
+ONTOLOGY_EDIT = 'LOGIN'
+
+#Specify the type of user for a custom experience -> pode ser subed pelo login!! (EXP/NONEXP)
+USER_TYPE = 'EXP'
+
+#Direct to templates you want to use -> 'NONE' if you want to use the base ones 
+TEMPLATES = 'NONE'
+
+#Define what language you want to use: 'PT'/'EN'
+LANGUAGE = 'PT'
+
+#What you want to see in the RDF, which classes -> PLACE DOWN 'ALL' IF YOU WANT THEM ALL SHOWN
+RDF_VIEW = ['Nature', 'Humans', 'Story'] 
+
+#Specify things you'd like to see in the pages -> PLACE DOWN 'ALL' IF YOU WANT THEM ALL SHOWN -> PLACE DOWN 'STARS' IF YOU WANT TO USE STAR SYSTEM -> PLACE DOWN 'TREE' IF YOU WANT JQUERY SYSTEM
+VIEW_CLASSES = 'TREE'
+
+#Specify specific pages you'd like to have, like about a specific individual -> PLACE DOWN 'STARS' IF YOU WANT TO USE STAR SYSTEM
+SPECIFIC_PAGES = 'STARS'
+
+#Specify which properties you'd like to 'prettify' and give them their own card
+MAKE_PRETTY = ['hasImage', 'hasFather', 'hasMother', 'hasStory']
+
+#Specify which properties you'd like to see a list of individuals for (leave empty if you don't want any)
+SEE_PROPERTIES = ['hasFather']
+
+#To specify the order of the cards in the page, do 'NONE' if you don't want any priority
+GIVE_PRIORITY = 'NONE'
+
+#List of sparql queries that are going to be executed as a base for this to work
+BASE_QUERIES = {
+    'Get Classes': '
+    SELECT ?class WHERE { 
+        ?class a owl:Class .
+    }
+    ',
+    'Get Deity List from Specific Class(es)': '
+    SELECT ?individual WHERE {
+        ?individual a :<ClassName> .
+    }
+    ORDER BY ASC(STR(?individual))
+    ',
+    'Get Deity List': '
+    SELECT ?individual WHERE {
+        ?individual a :Deity .
+    }
+    ',
+    'Get Deity List from Specific Properties': '
+    SELECT ?subject WHERE {
+      ?subject :<PropertyName> :<TargetEntity> .
+    }
+    ORDER BY ASC(STR(?subject))
+    ',
+    'Get Story List': '
+    SELECT ?individual WHERE {
+        ?individual a :Story .
+    }
+    ',
+    'Get Obj Properties': '
+    SELECT ?property WHERE { 
+        ?property a owl:ObjectProperty .
+    }
+    ',
+    'Get Data Properties with range too': '
+    SELECT ?prop ?domain ?range WHERE {
+        ?prop a owl:DatatypeProperty ;
+                rdfs:domain ?domain ;
+                rdfs:range ?range .
+    }
+    ',
+    'Get Deity Description': '
+    SELECT ?s ?desc WHERE {
+        ?s :hasDescription ?desc .
+    }
+    ORDER BY ASC(?s)
+    ',
+    'Get Power List': '
+    SELECT ?individual ?power WHERE {
+        ?individual :hasPower ?power .
+    }
+    ',
+    'Get Deity + Stories associated': '
+    SELECT ?deity ?title ?abstract WHERE {
+        ?deity :hasStory ?story .
+        ?story :hasTitle ?title ;
+               :hasAbstract ?abstract .
+    }
+    ',
+    'Get all data property values for a given individual':'
+    SELECT ?prop ?value WHERE {
+        :<EntityName> ?prop ?value .
+        FILTER(datatype(?value) != rdf:XMLLiteral)  # only literals
+    }
+    ORDER BY ASC(STR(?prop))
+    ',
+    'Search individuals whose has power':'
+    SELECT ?individual ?power WHERE {
+        ?individual :hasPower ?power .
+        FILTER(CONTAINS(LCASE(STR(?power)), LCASE("sky")))
+    }
+    '
+}
+
+
+# METADADOS focused variables:
+#name
+AGAS_NAME = 'Greek Gods and Goddesses'
+
+#How to show a list 'up' or 'side'
+L_DISPOSITION = 'side'
+
+#Not to be shown -> classes + individuals + info
+NOT_SHOW = ['Hermes', 'Foreign', 'hasMother']
+
+#Want to see information expanded - module type, like Story is
+MODULES = 'NONE'
+
+#About information
+ABOUT = 'NONE'
+
+#ontology source -> url/link of where you got it from, if made please use url from the AGAS platform
+ONTOLOGY_SOURCE = 'https://natura.di.uminho.pt/~jj/Diana/cwr.owl'
+
+
+#USER DATA for the contact page
+#username
+USERNAME = 'diana-teixeira'
+
+#user email
+USER_EMAIL = 'dianaf.malheiro@hotmail.com'
+
+#user github
+USER_GITHUB = 'diana-teixeira'
+
+#user socials
+USER_SOCIALS = {
+  'LinkedIn': 'diana-teixeira@linkIn',
+  'Instagram': 'diana@insta',
+  'Portfolio': 'personal@website.com'
+}
+
+
+#STYLE OF PAGE -> Blog or not
+#If you want it in blog format or normal pages ('BLOG'/'PAGES')
+AGAS_PAGES = 'PAGES'
+
+#If you want to put a personal background on the app, mostly common on blogs, but can be used in the normal pages too
+AGAS_BACKGROUNG = 'NONE'
+
+
