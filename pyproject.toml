@@ -13,6 +13,7 @@ dependencies = [
     "jinja2",
     "graphviz",
     "dotenv",
+    "markdown"
 ]
 requires-python = ">=3.10"
 authors = [
