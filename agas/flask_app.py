@@ -1097,7 +1097,7 @@ def create_app(info):
                 g.add(triple)
 
             # Save the full updated graph TODO -> Nothing, this works fine, so far
-            #g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/saved_ontology.ttl", format="turtle")
+            #g.serialize(destination="~/Desktop/AGAS_FILES/saved_ontology.ttl", format="turtle")
             g.serialize(destination=app.config["ONTOLOGY_FILE"])
             
             app.config["ONTOLOGY_FILE"] = save_new_version(g)
@@ -1106,17 +1106,26 @@ def create_app(info):
             if app.config["ONTOLOGY_FILE"].endswith('.rdf'):
                 g.parse(app.config["ONTOLOGY_FILE"], format="xml")  # Assuming the input file is in RDF/XML format
                 # Serialize the graph to RDF/XML
-                g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output.rdf", format="xml")
+                output_path = os.path.expanduser("~/agas/output.rdf")
+                # Make sure directory exists
+                os.makedirs(os.path.dirname(output_path), exist_ok=True)
+                g.serialize(destination=output_path, format="xml")
 
             elif app.config["ONTOLOGY_FILE"].endswith('.ttl'):
                 g.parse(app.config["ONTOLOGY_FILE"], format="turtle")
                 # Serialize the graph to Turtle format
-                g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output_file.ttl", format="turtle")
+                output_path = os.path.expanduser("~/agas/output_file.ttl")
+                # Make sure directory exists
+                os.makedirs(os.path.dirname(output_path), exist_ok=True)
+                g.serialize(destination=output_path, format="turtle")
 
             elif app.config["ONTOLOGY_FILE"].endswith('.owl'):
                 g.parse(app.config["ONTOLOGY_FILE"], format="xml")
                 # Serialize to OWL/XML
-                g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output_file.owl", format="xml")
+                output_path = os.path.expanduser("~/agas/output_file.owl")
+                # Make sure directory exists
+                os.makedirs(os.path.dirname(output_path), exist_ok=True)
+                g.serialize(destination=output_path, format="xml")
 
             return jsonify({"success": True})
         
@@ -1296,45 +1305,59 @@ def create_app(info):
                 g.parse(app.config["ONTOLOGY_FILE"], format="xml")  # Assuming the input file is in RDF/XML format
 
                 # Serialize the graph to Turtle format
-                g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output_file.ttl", format="turtle")
-                app.config["ONTOLOGY_FILE"] = "/home/diana-teixeira/Desktop/AGAS/output_file.ttl"
+                #g.serialize(destination="~/Desktop/AGAS_FILES/output_file.ttl", format="turtle")
+                output_path = os.path.expanduser("~/agas/output_file.ttl")
+                # Make sure directory exists
+                os.makedirs(os.path.dirname(output_path), exist_ok=True)
+                g.serialize(destination=output_path, format="ttl")
+                
+                app.config["ONTOLOGY_FILE"] = output_path
                 conversions.append(app.config["ONTOLOGY_FILE"])
 
             elif app.config["ONTOLOGY_FILE"].endswith('.ttl'):
                 g.parse(app.config["ONTOLOGY_FILE"], format="turtle")
 
-                    # Serialize to OWL/XML
-                g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output_file.owl", format="xml")
-                app.config["ONTOLOGY_FILE"] = "/home/diana-teixeira/Desktop/AGAS/output_file.owl"
+                # Serialize to OWL/XML
+                output_path = os.path.expanduser("~/agas/output_file.owl")
+                # Make sure directory exists
+                os.makedirs(os.path.dirname(output_path), exist_ok=True)
+                g.serialize(destination=output_path, format="xml")
+                app.config["ONTOLOGY_FILE"] = output_path
                 conversions.append(app.config["ONTOLOGY_FILE"])
 
             elif app.config["ONTOLOGY_FILE"].endswith('.owl'):
                 g.parse(app.config["ONTOLOGY_FILE"], format="xml")
 
                 # Serialize the graph to RDF/XML
-                g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output.rdf", format="xml")
-                app.config["ONTOLOGY_FILE"] = "/home/diana-teixeira/Desktop/AGAS/output.rdf"
+                output_path = os.path.expanduser("~/agas/output.rdf")
+                # Make sure directory exists
+                os.makedirs(os.path.dirname(output_path), exist_ok=True)
+                g.serialize(destination=output_path, format="xml")
+                app.config["ONTOLOGY_FILE"] = output_path
                 conversions.append(app.config["ONTOLOGY_FILE"])
         else:
             if app.config["ONTOLOGY_FILE"].endswith('.rdf'):
                 for conversion in conversions:
                     if conversion.endswith('.ttl'):
                         # Serialize the graph to Turtle format
-                        g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output_file.ttl", format="turtle")
+                        output_path = os.path.expanduser("~/agas/output_file.ttl")
+                        g.serialize(destination=output_path, format="ttl")
                         app.config["ONTOLOGY_FILE"] = conversion
 
             elif app.config["ONTOLOGY_FILE"].endswith('.ttl'):
                 for conversion in conversions:
                     if conversion.endswith('.owl'):
                         # Serialize to OWL/XML
-                        g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output_file.owl", format="xml")
+                        output_path = os.path.expanduser("~/agas/output_file.owl")
+                        g.serialize(destination=output_path, format="xml")
                         app.config["ONTOLOGY_FILE"] = conversion
 
             elif app.config["ONTOLOGY_FILE"].endswith('.owl'):
                 for conversion in conversions:
                     if conversion.endswith('.rdf'):
                         # Serialize the graph to RDF/XML
-                        g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output.rdf", format="xml")
+                        output_path = os.path.expanduser("~/agas/output.rdf")
+                        g.serialize(destination=output_path, format="xml")
                         app.config["ONTOLOGY_FILE"] = conversion
         
         print(app.config["ONTOLOGY_FILE"])
@@ -1575,11 +1598,20 @@ def create_app(info):
             save_new_version(g)
             
             if app.config["ONTOLOGY_FILE"].endswith('.rdf'):
-                g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output.rdf", format="xml")
+                output_path = os.path.expanduser("~/agas/output.rdf")
+                # Make sure directory exists
+                os.makedirs(os.path.dirname(output_path), exist_ok=True)
+                g.serialize(destination=output_path, format="xml")
             elif app.config["ONTOLOGY_FILE"].endswith('.ttl'):
-                g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output_file.ttl", format="turtle")
+                output_path = os.path.expanduser("~/agas/output_file.ttl")
+                # Make sure directory exists
+                os.makedirs(os.path.dirname(output_path), exist_ok=True)
+                g.serialize(destination=output_path, format="ttl")
             elif app.config["ONTOLOGY_FILE"].endswith('.owl'):
-                g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output_file.owl", format="xml")
+                output_path = os.path.expanduser("~/agas/output_file.owl")
+                # Make sure directory exists
+                os.makedirs(os.path.dirname(output_path), exist_ok=True)
+                g.serialize(destination=output_path, format="xml")
 
             return jsonify({"success": True}), 200
 
@@ -1637,11 +1669,20 @@ def create_app(info):
         save_new_version(g)
         
         if app.config["ONTOLOGY_FILE"].endswith('.rdf'):
-            g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output.rdf", format="xml")
+            output_path = os.path.expanduser("~/agas/output.rdf")
+            # Make sure directory exists
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+            g.serialize(destination=output_path, format="xml")
         elif app.config["ONTOLOGY_FILE"].endswith('.ttl'):
-            g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output_file.ttl", format="turtle")
+            output_path = os.path.expanduser("~/agas/output_file.ttl")
+            # Make sure directory exists
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+            g.serialize(destination=output_path, format="ttl")
         elif app.config["ONTOLOGY_FILE"].endswith('.owl'):
-            g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output_file.owl", format="xml")
+            output_path = os.path.expanduser("~/agas/output_file.owl")
+            # Make sure directory exists
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+            g.serialize(destination=output_path, format="xml")
 
         
         return jsonify({"success": True}), 200
@@ -2009,7 +2050,7 @@ def create_app(info):
                     g.add((ind_uri, RDF.type, class_uri))
 
             # Save updated ontology (adjust this to your save mechanism)
-            #testLocal="/home/diana-teixeira/Desktop/AGAS/testClass.ttl"
+            #testLocal="~/Desktop/AGAS_FILES/testClass.ttl"
             #g.serialize(destination=testLocal, format="ttl")
             
             app.config["ONTOLOGY_FILE"] = save_new_version(g)
@@ -2018,17 +2059,26 @@ def create_app(info):
             if app.config["ONTOLOGY_FILE"].endswith('.rdf'):
                 g.parse(app.config["ONTOLOGY_FILE"], format="xml")  # Assuming the input file is in RDF/XML format
                 # Serialize the graph to RDF/XML
-                g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output.rdf", format="xml")
+                output_path = os.path.expanduser("~/agas/output.rdf")
+                # Make sure directory exists
+                os.makedirs(os.path.dirname(output_path), exist_ok=True)
+                g.serialize(destination=output_path, format="xml")
 
             elif app.config["ONTOLOGY_FILE"].endswith('.ttl'):
                 g.parse(app.config["ONTOLOGY_FILE"], format="turtle")
                 # Serialize the graph to Turtle format
-                g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output_file.ttl", format="turtle")
+                output_path = os.path.expanduser("~/agas/output_file.ttl")
+                # Make sure directory exists
+                os.makedirs(os.path.dirname(output_path), exist_ok=True)
+                g.serialize(destination=output_path, format="ttl")
 
             elif app.config["ONTOLOGY_FILE"].endswith('.owl'):
                 g.parse(app.config["ONTOLOGY_FILE"], format="xml")
                 # Serialize to OWL/XML
-                g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output_file.owl", format="xml")
+                output_path = os.path.expanduser("~/agas/output_file.owl")
+                # Make sure directory exists
+                os.makedirs(os.path.dirname(output_path), exist_ok=True)
+                g.serialize(destination=output_path, format="xml")
                 
 
             return redirect(url_for('home'))
@@ -2061,7 +2111,7 @@ def create_app(info):
         g.add((prop_uri, RDFS.range, range_uri))
 
         # Persist and feedback
-        #testLocal="/home/diana-teixeira/Desktop/AGAS/testProperties.ttl"
+        #testLocal="~/Desktop/AGAS_FILES/testProperties.ttl"
         #g.serialize(destination=testLocal, format='turtle')
         app.config["ONTOLOGY_FILE"] = save_new_version(g)
         #g.parse(app.config["ONTOLOGY_FILE"])
@@ -2069,17 +2119,26 @@ def create_app(info):
         if app.config["ONTOLOGY_FILE"].endswith('.rdf'):
             g.parse(app.config["ONTOLOGY_FILE"], format="xml")  # Assuming the input file is in RDF/XML format
             # Serialize the graph to RDF/XML
-            g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output.rdf", format="xml")
+            output_path = os.path.expanduser("~/agas/output.rdf")
+            # Make sure directory exists
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+            g.serialize(destination=output_path, format="xml")
 
         elif app.config["ONTOLOGY_FILE"].endswith('.ttl'):
             g.parse(app.config["ONTOLOGY_FILE"], format="turtle")
             # Serialize the graph to Turtle format
-            g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output_file.ttl", format="turtle")
+            output_path = os.path.expanduser("~/agas/output_file.ttl")
+            # Make sure directory exists
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+            g.serialize(destination=output_path, format="ttl")
 
         elif app.config["ONTOLOGY_FILE"].endswith('.owl'):
             g.parse(app.config["ONTOLOGY_FILE"], format="xml")
             # Serialize to OWL/XML
-            g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output_file.owl", format="xml")
+            output_path = os.path.expanduser("~/agas/output_file.owl")
+            # Make sure directory exists
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+            g.serialize(destination=output_path, format="xml")
             
               
         flash(f"Property {name} added as a {ptype} property.", "success")
@@ -2093,7 +2152,7 @@ def create_app(info):
 
         # Step 1: Define safe working copy
         #original_path = app.config["ONTOLOGY_FILE"]
-        #working_path = "/home/diana-teixeira/Desktop/AGAS/testAddInd.ttl"
+        #working_path = "~/Desktop/AGAS_FILES/testAddInd.ttl"
 
         #if original_path != working_path:
             # Step 2: Copy original ontology to working file if it doesn't exist yet
@@ -2213,7 +2272,7 @@ def create_app(info):
                     
                     print(f"{uri} -> {NS[op]} -> {other_uri}")
 
-        #working_path = "/home/diana-teixeira/Desktop/AGAS/testAddInd.ttl"
+        #working_path = "~/Desktop/AGAS_FILES/testAddInd.ttl"
         # Step 5: Save updates only to working copy
         #g.serialize(destination=working_path, format="turtle")
 
@@ -2223,17 +2282,26 @@ def create_app(info):
         if app.config["ONTOLOGY_FILE"].endswith('.rdf'):
             g.parse(app.config["ONTOLOGY_FILE"], format="xml")  # Assuming the input file is in RDF/XML format
             # Serialize the graph to RDF/XML
-            g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output.rdf", format="xml")
+            output_path = os.path.expanduser("~/agas/output.rdf")
+            # Make sure directory exists
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+            g.serialize(destination=output_path, format="xml")
 
         elif app.config["ONTOLOGY_FILE"].endswith('.ttl'):
             g.parse(app.config["ONTOLOGY_FILE"], format="turtle")
             # Serialize the graph to Turtle format
-            g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output_file.ttl", format="turtle")
+            output_path = os.path.expanduser("~/agas/output_file.ttl")
+            # Make sure directory exists
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+            g.serialize(destination=output_path, format="ttl")
 
         elif app.config["ONTOLOGY_FILE"].endswith('.owl'):
             g.parse(app.config["ONTOLOGY_FILE"], format="xml")
             # Serialize to OWL/XML
-            g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output_file.owl", format="xml")
+            output_path = os.path.expanduser("~/agas/output_file.owl")
+            # Make sure directory exists
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+            g.serialize(destination=output_path, format="xml")
                    
         flash(f"Added individual {name} as {class_name} to working copy.", "success")
         return redirect(url_for('home'))
@@ -2442,7 +2510,7 @@ def create_app(info):
                     print(val)
                     g.add((uri, NS[clean_key], Literal(val)))  # Data property
 
-        #working_path = "/home/diana-teixeira/Desktop/AGAS/testEdit.ttl"
+        #working_path = "~/Desktop/AGAS_FILES/testEdit.ttl"
         #g.serialize(destination=working_path, format="turtle")
         app.config["ONTOLOGY_FILE"] = save_new_version(g)
         #g.parse(app.config["ONTOLOGY_FILE"])
@@ -2450,17 +2518,25 @@ def create_app(info):
         if app.config["ONTOLOGY_FILE"].endswith('.rdf'):
             g.parse(app.config["ONTOLOGY_FILE"], format="xml")  # Assuming the input file is in RDF/XML format
             # Serialize the graph to RDF/XML
-            g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output.rdf", format="xml")
+            output_path = os.path.expanduser("~/agas/output.rdf")
+            # Make sure directory exists
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+            g.serialize(destination=output_path, format="xml")
 
         elif app.config["ONTOLOGY_FILE"].endswith('.ttl'):
             g.parse(app.config["ONTOLOGY_FILE"], format="turtle")
             # Serialize the graph to Turtle format
-            g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output_file.ttl", format="turtle")
+            output_path = os.path.expanduser("~/agas/output_file.ttl")
+            # Make sure directory exists
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+            g.serialize(destination=output_path, format="ttl")
 
         elif app.config["ONTOLOGY_FILE"].endswith('.owl'):
             g.parse(app.config["ONTOLOGY_FILE"], format="xml")
             # Serialize to OWL/XML
-            g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output_file.owl", format="xml")
+            output_path = os.path.expanduser("~/agas/output_file.owl")
+            output_path.mkdir(exist_ok=True)
+            g.serialize(destination=output_path, format="xml")
             
         flash(f"Updated individual {name}.", "success")
         return redirect(url_for("home"))
@@ -2473,7 +2549,7 @@ def create_app(info):
 
         # Step 1: Define safe working copy
         #original_path = app.config["ONTOLOGY_FILE"]
-        #working_path = "/home/diana-teixeira/Desktop/AGAS/DelInd_ontology.ttl"
+        #working_path = "~/Desktop/AGAS_FILES/DelInd_ontology.ttl"
 
         # Step 2: Copy original ontology to working file if it doesn't exist yet
         #if not os.path.exists(working_path):
@@ -2488,7 +2564,7 @@ def create_app(info):
         for triple in g.triples((None, None, uri)):
             g.remove(triple)
 
-        #working_path = "/home/diana-teixeira/Desktop/AGAS/testDel.ttl"
+        #working_path = "~/Desktop/AGAS_FILES/testDel.ttl"
         #g.serialize(destination=working_path, format="turtle")
         app.config["ONTOLOGY_FILE"] = save_new_version(g)
         #g.parse(app.config["ONTOLOGY_FILE"])
@@ -2496,17 +2572,26 @@ def create_app(info):
         if app.config["ONTOLOGY_FILE"].endswith('.rdf'):
             g.parse(app.config["ONTOLOGY_FILE"], format="xml")  # Assuming the input file is in RDF/XML format
             # Serialize the graph to RDF/XML
-            g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output.rdf", format="xml")
+            output_path = os.path.expanduser("~/agas/output.rdf")
+            # Make sure directory exists
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+            g.serialize(destination=output_path, format="xml")
 
         elif app.config["ONTOLOGY_FILE"].endswith('.ttl'):
             g.parse(app.config["ONTOLOGY_FILE"], format="turtle")
             # Serialize the graph to Turtle format
-            g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output_file.ttl", format="turtle")
+            output_path = os.path.expanduser("~/agas/output_file.ttl")
+            # Make sure directory exists
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+            g.serialize(destination=output_path, format="ttl")
 
         elif app.config["ONTOLOGY_FILE"].endswith('.owl'):
             g.parse(app.config["ONTOLOGY_FILE"], format="xml")
             # Serialize to OWL/XML
-            g.serialize(destination="/home/diana-teixeira/Desktop/AGAS/output_file.owl", format="xml")
+            output_path = os.path.expanduser("~/agas/output_file.owl")
+            # Make sure directory exists
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+            g.serialize(destination=output_path, format="xml")
             
         return redirect(url_for('home'))
 
@@ -2728,3 +2813,4 @@ def create_app(info):
         """, content=html)
     
     return app
+
