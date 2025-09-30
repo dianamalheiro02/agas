@@ -2618,7 +2618,12 @@ def create_app(info):
 
         # update the active ontology file
         app.config["ONTOLOGY_FILE"] = version_path
+        
+        #reset graph
+        g.remove((None, None, None))  # clears all triples
+        
         g.parse(app.config["ONTOLOGY_FILE"])
+        
         print(f"CHANGED TO ONTOFILE: {app.config["ONTOLOGY_FILE"]}")
         flash(f"Switched to version: {filename}", "success")
         #return redirect(url_for("view_version", filename=filename))
