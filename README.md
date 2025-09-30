@@ -15,6 +15,16 @@ Before starting, make sure you have the following installed:
   ```
   git --version 
   ```
+  
+- **Pip**:
+```
+sudo apt-get install python-pip
+```
+
+- **Graphviz**:
+```
+sudo apt install python3-pydot graphviz
+```
 
 Do you not have them?
 
@@ -33,6 +43,11 @@ sudo apt-get install git
 ```
 git clone https://github.com/dianamalheiro02/agas.git
 cd agas
+```
+
+Or install directly from github:
+```
+pip install git+https://github.com/dianamalheiro02/agas.git
 ```
 
 2. **Install** it:
@@ -55,19 +70,38 @@ Got stuck? Jump to the **Troubleshooting**.
 agas -s > G0_config.txt
 ```
 
-2. Next, you can now **run** AGAS with the file as is **or edit** the information first, with your preferred text editor (e.g., Vim, VSCode). For details on each field, refer to **DSL Structure**.
+2. Next, **edit the ONTOLOGY_FILE directory** inside the G0.txt file, at least:
+```
+vim G0.txt
 
-3. **Validate** it:
+- Or your favorite text editor. -
+```
+
+3. The new directory can be obtained with the commands:
+``` 
+cd tests/ontos/typeC/C1/ontos_final
+realpath greek_deities_ontology_complete.ttl
+```
+
+4. After editing, it should look something like this:
+```
+ONTOLOGY_FILE = ’/home/diana/agas/ontos/typeC/C1/ontos_final/greek_deities_
+ontology_complete.tt’
+```
+
+5. If you wish to edit more fields, refer to Appendix B.
+
+6. **Validate** it:
 ```
 agas -c G0_config.txt
 ```
 
-4. **Run** it:
+7. **Run** it:
 ```
 agas -r G0_config.txt
 ```
 
-5. **Open** your browser to: http://localhost:5000
+8. **Open** your browser to: http://localhost:5000
    
 Well done! You now have your very own ontology-powered website up and running
 
@@ -113,7 +147,7 @@ If **login fails**, double-check that the credentials match the defaults or your
 # 🖥️ 4. Using AGAS
 ## 4.1 Home Page (Expert)
 Where you can: 
-* **View and edit** the different components of the ontology;
+* **View and edit** the different components of the ontology. **Do not be alarmed if it takes a while to load or if it needs some refreshing!**
 * **Convert** the ontology between RDF, OWL and TTl;
 * Get the **graph** view of it;
 * Go to **Protégé** to further editing procedures;
@@ -179,6 +213,15 @@ Or try using a virtual environment to run this on.
 ### Old pip version:
 ```
 pip install --upgrade pip
+```
+
+### error: externally-managed-environment:
+Try and install ’pipx’ and see how your computer behaves:
+```
+sudo apt install pipx
+pipx install .
+pipx ensurepath
+- And then reopen the terminal -
 ```
 
 ## Problem 2: Running ’agas -r tests/config.txt’ doesn’t work
