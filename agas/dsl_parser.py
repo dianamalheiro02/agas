@@ -165,7 +165,7 @@ def load_config(file_path):
 
 def show_skeleton(file_path):
     if file_path == "NONE":
-        ontology_file = "/home/diana-teixeira/Desktop/AGAS/ontos/typeC/C1/ontos_final/greek_deities_ontology_complete.tt ==> CHANGE ME"
+        ontology_file = "CHANGE_ME"
         agas_name = "My Ontology"
         make_pretty = "['hasImage', 'hasStory']"
         username = "username"
