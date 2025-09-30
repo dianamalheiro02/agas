@@ -218,11 +218,11 @@ ONTOLOGY_TYPE = 'C1'
 
 ONTOLOGY_IMAGES = 'NONE' #Specify if ontology has images that are from your own pc ('NONE' if not), if it does, please give the path to the folder you have them in
 ONTOLOGY_EDIT = 'LOGIN' #Specify who can edit the ontology -> 'ALL' or 'LOGIN' are the options
-USER_TYPE = 'EXP' #Specify the type of user for a custom experience -> 'EXP'/'NONEXP'
+USER_TYPE = 'NONEXP' #Specify the type of user for a custom experience -> 'EXP'/'NONEXP'
 TEMPLATES = 'NONE' #Direct to templates you want to use
 LANGUAGE = 'EN' #Define the language you want -> 'PT'/'EN'
 RDF_VIEW = 'ALL' #LIST which classes you want the Graph to be about -> PLACE DOWN 'ALL' IF YOU WANT THEM ALL SHOWN
-VIEW_CLASSES = 'TREE' #Specify things you'd like to see in the pages -> PLACE DOWN 'ALL' IF YOU WANT THEM ALL SHOWN -> PLACE DOWN 'STARS' IF YOU WANT TO USE STAR SYSTEM -> PLACE DOWN 'TREE' IF YOU WANT JQUERY SYSTEM
+VIEW_CLASSES = 'STARS' #Specify things you'd like to see in the pages -> PLACE DOWN 'ALL' IF YOU WANT THEM ALL SHOWN -> PLACE DOWN 'STARS' IF YOU WANT TO USE STAR SYSTEM -> PLACE DOWN 'TREE' IF YOU WANT JQUERY SYSTEM
 SPECIFIC_PAGES = 'STARS' #LIST specific individuals you'd like to favorite -> PLACE DOWN 'STARS' IF YOU WANT TO USE STAR SYSTEM
 MAKE_PRETTY = {make_pretty} #LIST which properties you'd like to 'prettify' (remove the 'has') and enhance on the html -> 'NONE' IF YOU DONT WANT TO
 SEE_PROPERTIES = 'NONE' #LIST which properties you'd like to see a list of individuals for  -> 'NONE' IF YOU DONT WANT TO
