@@ -1370,13 +1370,14 @@ def create_app(info):
     ################################ Sync + Save onto ##########################################
     # To format the ontology segments for Monaco
     ## Fine, I think
-    def format_class_axioms():
-        if app.config["ONTOLOGY_FILE"].endswith('.ttl'):
-            g.parse(app.config["ONTOLOGY_FILE"], format="turtle")
-        elif app.config["ONTOLOGY_FILE"].endswith('.rdf'):
-            g.parse(app.config["ONTOLOGY_FILE"], format="xml")
-        elif app.config["ONTOLOGY_FILE"].endswith('.owl'):
-            g.parse(app.config["ONTOLOGY_FILE"], format="xml")
+    def format_class_axioms(filename=None):
+        ontology_path = filename or app.config["ONTOLOGY_FILE"]
+        if ontology_path.endswith('.ttl'):
+            g.parse(ontology_path, format="turtle")
+        elif ontology_path.endswith('.rdf'):
+            g.parse(ontology_path, format="xml")
+        elif ontology_path.endswith('.owl'):
+            g.parse(ontology_path, format="xml")
         
         lines = []
         
@@ -1423,15 +1424,15 @@ def create_app(info):
             lines.append("")
         return "\n".join(lines)
 
+    def format_Oproperties(filename=None):
+        ontology_path = filename or app.config["ONTOLOGY_FILE"]
+        if ontology_path.endswith('.ttl'):
+            g.parse(ontology_path, format="turtle")
+        elif ontology_path.endswith('.rdf'):
+            g.parse(ontology_path, format="xml")
+        elif ontology_path.endswith('.owl'):
+            g.parse(ontology_path, format="xml")
 
-    def format_Oproperties():
-        if app.config["ONTOLOGY_FILE"].endswith('.ttl'):
-            g.parse(app.config["ONTOLOGY_FILE"], format="turtle")
-        elif app.config["ONTOLOGY_FILE"].endswith('.rdf'):
-            g.parse(app.config["ONTOLOGY_FILE"], format="xml")
-        elif app.config["ONTOLOGY_FILE"].endswith('.owl'):
-            g.parse(app.config["ONTOLOGY_FILE"], format="xml")
-        
         lines = []
         for s in g.subjects(RDF.type, OWL.ObjectProperty):
             lines.append(f"###  {s}")
@@ -1445,13 +1446,15 @@ def create_app(info):
             lines.append("")
         return "\n".join(lines)
 
-    def format_Dproperties():
-        if app.config["ONTOLOGY_FILE"].endswith('.ttl'):
-            g.parse(app.config["ONTOLOGY_FILE"], format="turtle")
-        elif app.config["ONTOLOGY_FILE"].endswith('.rdf'):
-            g.parse(app.config["ONTOLOGY_FILE"], format="xml")
-        elif app.config["ONTOLOGY_FILE"].endswith('.owl'):
-            g.parse(app.config["ONTOLOGY_FILE"], format="xml")
+    def format_Dproperties(filename=None):
+        ontology_path = filename or app.config["ONTOLOGY_FILE"]
+        if ontology_path.endswith('.ttl'):
+            g.parse(ontology_path, format="turtle")
+        elif ontology_path.endswith('.rdf'):
+            g.parse(ontology_path, format="xml")
+        elif ontology_path.endswith('.owl'):
+            g.parse(ontology_path, format="xml")
+            
         lines = []
         for s in g.subjects(RDF.type, OWL.DatatypeProperty):
             lines.append(f"###  {s}")
@@ -1465,13 +1468,14 @@ def create_app(info):
             lines.append("")
         return "\n".join(lines)
 
-    def format_individuals():
-        if app.config["ONTOLOGY_FILE"].endswith('.ttl'):
-            g.parse(app.config["ONTOLOGY_FILE"], format="turtle")
-        elif app.config["ONTOLOGY_FILE"].endswith('.rdf'):
-            g.parse(app.config["ONTOLOGY_FILE"], format="xml")
-        elif app.config["ONTOLOGY_FILE"].endswith('.owl'):
-            g.parse(app.config["ONTOLOGY_FILE"], format="xml")
+    def format_individuals(filename=None):
+        ontology_path = filename or app.config["ONTOLOGY_FILE"]
+        if ontology_path.endswith('.ttl'):
+            g.parse(ontology_path, format="turtle")
+        elif ontology_path.endswith('.rdf'):
+            g.parse(ontology_path, format="xml")
+        elif ontology_path.endswith('.owl'):
+            g.parse(ontology_path, format="xml")
         
         lines = []
 
@@ -1530,26 +1534,58 @@ def create_app(info):
         return "\n".join(lines)
 
 
-    @app.route("/get_raw_ontology")
-    def get_raw_ontology():
-        with open(app.config["ONTOLOGY_FILE"], "r", encoding="utf-8") as f:
+    @app.route("/get_raw_ontology", defaults={"filename": None})
+    @app.route("/get_raw_ontology/<filename>")
+    def get_raw_ontology(filename):
+        """
+        Returns the raw TTL content of either:
+        - The currently active ontology (if no filename passed)
+        - A specific version file (if filename provided)
+        """
+        if filename:
+            # Case 1: explicit version requested
+            ontology_path = os.path.join(app.config["VERSIONS_DIR"], filename)
+        else:
+            # Case 2: default to active ontology
+            ontology_path = app.config["ONTOLOGY_FILE"]
+
+        if not os.path.exists(ontology_path):
+            return "Ontology file not found", 404
+
+        with open(ontology_path, "r", encoding="utf-8") as f:
             return f.read()
 
-    @app.route("/get_classes_raw")
-    def get_classes_raw():
-        return format_class_axioms()
+    @app.route("/get_classes_raw", defaults={"filename": None})
+    @app.route("/get_classes_raw/<filename>")
+    def get_classes_raw(filename):
+        return format_class_axioms(
+            os.path.join(app.config["VERSIONS_DIR"], filename)
+            if filename else None
+        )
 
-    @app.route("/get_data_properties_raw")
-    def get_Dproperties_raw():
-        return format_Dproperties()
+    @app.route("/get_data_properties_raw", defaults={"filename": None})
+    @app.route("/get_data_properties_raw/<filename>")
+    def get_Dproperties_raw(filename):
+        return format_Dproperties(
+            os.path.join(app.config["VERSIONS_DIR"], filename)
+            if filename else None
+        )
 
-    @app.route("/get_object_properties_raw")
-    def get_Oproperties_raw():
-        return format_Oproperties()
+    @app.route("/get_object_properties_raw", defaults={"filename": None})
+    @app.route("/get_object_properties_raw/<filename>")
+    def get_Oproperties_raw(filename):
+        return format_Oproperties(
+            os.path.join(app.config["VERSIONS_DIR"], filename)
+            if filename else None
+        )
 
-    @app.route("/get_individuals_raw")
-    def get_individuals_raw():
-        return format_individuals()
+    @app.route("/get_individuals_raw", defaults={"filename": None})
+    @app.route("/get_individuals_raw/<filename>")
+    def get_individuals_raw(filename):
+        return format_individuals(
+            os.path.join(app.config["VERSIONS_DIR"], filename)
+            if filename else None
+        )
 
     # Route to reload the edited ontology file and sync it with the browser
     @app.route('/sync_ontology')
