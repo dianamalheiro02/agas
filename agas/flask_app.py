@@ -2063,6 +2063,8 @@ def create_app(info):
 
             try:
                 properties = json.loads(properties_json)
+                #print(properties_json)
+                #print(properties)
             except json.JSONDecodeError:
                 properties = []
 
@@ -2075,7 +2077,27 @@ def create_app(info):
                 prop_label = prop.get("value", "").strip()
                 if prop_label:
                     prop_uri = NS[prop_label.replace(" ", "_")]
-                    g.add((class_uri, RDFS.subClassOf, prop_uri))  # or a custom property
+                    
+                    # ✅ Check if property already exists in ontology
+                    ranges = list(g.objects(prop_uri, RDFS.range))
+
+                    if ranges:
+                        # Use the existing range
+                        for r in ranges:
+                            restriction = BNode()
+                            g.add((restriction, RDF.type, OWL.Restriction))
+                            g.add((restriction, OWL.onProperty, prop_uri))
+                            g.add((restriction, OWL.someValuesFrom, r))
+                            g.add((class_uri, RDFS.subClassOf, restriction))
+                    else:
+                        # Fallback (if range not defined)
+                        restriction = BNode()
+                        g.add((restriction, RDF.type, OWL.Restriction))
+                        g.add((restriction, OWL.onProperty, prop_uri))
+                        g.add((restriction, OWL.someValuesFrom, OWL.Thing))
+                        g.add((class_uri, RDFS.subClassOf, restriction))
+                    
+                    #g.add((class_uri, RDFS.subClassOf, prop_uri))  # or a custom property
                     # Optionally, assert the property type:
                     #g.add((prop_uri, RDF.type, RDF.Property))
 
@@ -2199,13 +2221,12 @@ def create_app(info):
         #    app.config["ONTOLOGY_FILE"] = working_path
 
         # Step 3: Load the working file into rdflib graph
-        '''
-        g = Graph()
-        if working_path.endswith('.rdf') or working_path.endswith('.owl'):
-            g.parse(working_path, format="xml")
-        elif working_path.endswith('.ttl'):
-            g.parse(working_path, format="turtle")
-        '''
+        #g = Graph()
+        #if working_path.endswith('.rdf') or working_path.endswith('.owl'):
+        #    g.parse(working_path, format="xml")
+        #elif working_path.endswith('.ttl'):
+        #    g.parse(working_path, format="turtle")
+        
 
         # Step 4: Add new individual
         uri = NS[name]
@@ -2288,24 +2309,40 @@ def create_app(info):
             print(op) #-> GOOD
             raw_value = request.form.getlist(f"{op}[]") #-> ['[{"value":"Achelous"}]']
             
-            value = json.loads(raw_value[0])
-            print(value) #-> [{'value': 'Achelous_Story1'}, {'value': 'Achelous_Story2'}, {'value': 'Achelous_Story3'}]
+            #value = json.loads(raw_value[0])
+            #print(value) #-> [{'value': 'Achelous_Story1'}, {'value': 'Achelous_Story2'}, {'value': 'Achelous_Story3'}]
                 
-            if value:
-                indivs = []
-                for v in value: #-> [{"value":"Achelous"}] but as str
-                    print(v) # -> {'value': 'Chaos'}
+            #if value:
+            #    indivs = []
+            #    for v in value: #-> [{"value":"Achelous"}] but as str
+            #        print(v) # -> {'value': 'Chaos'}
                     #print(v.items()) -> dict_items([('value', 'Chaos')])
-                    print(v.get("value")) #-> Chaos
+            #        print(v.get("value")) #-> Chaos
                     
-                    indivs.append(v.get("value"))
+            #        indivs.append(v.get("value"))
                 
-                for other in indivs:
-                    print(other)
-                    other_uri = NS[other]
+            #    for other in indivs:
+            #        print(other)
+            #        other_uri = NS[other]
+            #        g.add((uri, NS[op], other_uri))
+            #        g.add((other_uri, RDF.type, OWL.NamedIndividual))
+            
+            if not raw_value or raw_value == ['']:  # empty or not submitted
+                continue
+
+            try:
+                # Parse JSON only if something was sent
+                value_list = json.loads(raw_value[0])
+            except (json.JSONDecodeError, IndexError):
+                continue  # ignore if invalid or empty
+
+            for v in value_list:
+                val = v.get("value")
+                if val:  # only add if actual value present
+                    other_uri = NS[val]
                     g.add((uri, NS[op], other_uri))
-                    g.add((other_uri, RDF.type, OWL.NamedIndividual))
-                    
+                    g.add((other_uri, RDF.type, OWL.NamedIndividual))   
+                         
                     print(f"{uri} -> {NS[op]} -> {other_uri}")
 
         #working_path = "~/Desktop/AGAS_FILES/testAddInd.ttl"
@@ -2338,7 +2375,9 @@ def create_app(info):
             # Make sure directory exists
             os.makedirs(os.path.dirname(output_path), exist_ok=True)
             g.serialize(destination=output_path, format="xml")
-                   
+        
+        app.config["ONTOLOGY_FILE"] = save_new_version(g)           
+        
         flash(f"Added individual {name} as {class_name} to working copy.", "success")
         return redirect(url_for('home'))
 
