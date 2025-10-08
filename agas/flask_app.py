@@ -2041,6 +2041,18 @@ def create_app(info):
         return jsonify(sorted(individuals))
 
     ################################ Add Class in Onto ########################################
+    def has_restriction(g, cls, prop, rng):
+        # Find a bnode R such that:
+        # cls rdfs:subClassOf R .
+        # R a owl:Restriction ; owl:onProperty prop ; owl:someValuesFrom rng .
+        for r in g.objects(cls, RDFS.subClassOf):
+            if (r, RDF.type, OWL.Restriction) in g and \
+            (r, OWL.onProperty, prop) in g and \
+            (r, OWL.someValuesFrom, rng) in g:
+                return True
+        return False
+
+    
     @app.route('/add_class', methods=['POST'])
     def add_class():
         #if not session.get("logged_in"):   #BEFORE MAKING IT LOCKED ON HTML
@@ -2073,6 +2085,9 @@ def create_app(info):
             except json.JSONDecodeError:
                 individuals = []
 
+            def is_xsd_datatype(u):
+                return isinstance(u, URIRef) and str(u).startswith(str(XSD))
+
             for prop in properties:
                 prop_label = prop.get("value", "").strip()
                 if prop_label:
@@ -2081,21 +2096,38 @@ def create_app(info):
                     # ✅ Check if property already exists in ontology
                     ranges = list(g.objects(prop_uri, RDFS.range))
 
+                    # 1) Declarar tipo da propriedade (Datatype vs Object), se possível
+                    prop_type = None
                     if ranges:
-                        # Use the existing range
-                        for r in ranges:
+                        if any(is_xsd_datatype(r) for r in ranges):
+                            prop_type = OWL.DatatypeProperty
+                        else:
+                            prop_type = OWL.ObjectProperty
+                    # Se não houver range definido, assume DatatypeProperty (ou deixa sem tipo, se preferires)
+                    if prop_type and (prop_uri, RDF.type, prop_type) not in g:
+                        g.add((prop_uri, RDF.type, prop_type))
+
+                    # 2) Ligar a propriedade à classe via domínio (é isto que a tua UI provavelmente procura)
+                    if (prop_uri, RDFS.domain, class_uri) not in g:
+                        g.add((prop_uri, RDFS.domain, class_uri))
+
+                    # 3) Continuar a criar a restrição (para semântica OWL)
+                    existing_ranges = ranges if ranges else [OWL.Thing]
+                    for r in existing_ranges:
+                        # evita duplicações:
+                        already = False
+                        for rest in g.objects(class_uri, RDFS.subClassOf):
+                            if (rest, RDF.type, OWL.Restriction) in g and \
+                            (rest, OWL.onProperty, prop_uri) in g and \
+                            (rest, OWL.someValuesFrom, r) in g:
+                                already = True
+                                break
+                        if not already:
                             restriction = BNode()
                             g.add((restriction, RDF.type, OWL.Restriction))
                             g.add((restriction, OWL.onProperty, prop_uri))
                             g.add((restriction, OWL.someValuesFrom, r))
                             g.add((class_uri, RDFS.subClassOf, restriction))
-                    else:
-                        # Fallback (if range not defined)
-                        restriction = BNode()
-                        g.add((restriction, RDF.type, OWL.Restriction))
-                        g.add((restriction, OWL.onProperty, prop_uri))
-                        g.add((restriction, OWL.someValuesFrom, OWL.Thing))
-                        g.add((class_uri, RDFS.subClassOf, restriction))
                     
                     #g.add((class_uri, RDFS.subClassOf, prop_uri))  # or a custom property
                     # Optionally, assert the property type:
