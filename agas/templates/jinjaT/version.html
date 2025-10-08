@@ -224,11 +224,11 @@ require(['vs/editor/editor.main'], function () {
 
     // 5. Setup button endpoints INSIDE the require callback
     const endpoints = {
-        B0: "/get_raw_ontology",
-        B1: "/get_classes_raw",
-        B2: "/get_data_properties_raw",
-        B3: "/get_object_properties_raw",
-        B4: "/get_individuals_raw"
+        B0: "/get_raw_ontology/{{ ontology_file }}",
+        B1: "/get_classes_raw/{{ ontology_file }}",
+        B2: "/get_data_properties_raw/{{ ontology_file }}",
+        B3: "/get_object_properties_raw/{{ ontology_file }}",
+        B4: "/get_individuals_raw/{{ ontology_file }}"
     };
 
     Object.keys(endpoints).forEach(id => {
