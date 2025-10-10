@@ -105,14 +105,20 @@ def create_app(info):
     #app = Flask(__name__) -> BEFORE USING app.config["TEMPLATES"] VAR
     #app = Flask(__name__, template_folder= TEMPLATES)
     
-    # Default template folder (inside your project)
-    DEFAULT_TEMPLATES = os.path.join(os.path.dirname(__file__), "templates")
+    # Default folders (relative to package)
+    BASE_DIR = os.path.dirname(__file__)
+    DEFAULT_TEMPLATES = os.path.join(BASE_DIR, "templates")
+    DEFAULT_STATIC = os.path.join(BASE_DIR, "static")
 
-    # Optional template folder from config
-    EXTRA_TEMPLATES = info['TEMPLATES']
+    # Optional extra templates from config
+    EXTRA_TEMPLATES = info.get('TEMPLATES', "NONE")
 
-    # Initialize Flask with the default folder
-    app = Flask(__name__, template_folder=DEFAULT_TEMPLATES)
+    # Initialize Flask with explicit static & template paths
+    app = Flask(
+        __name__,
+        template_folder=DEFAULT_TEMPLATES,
+        static_folder=DEFAULT_STATIC
+    )
 
     # If EXTRA_TEMPLATES is valid and not "NONE", add it
     if EXTRA_TEMPLATES != "NONE" and os.path.isdir(EXTRA_TEMPLATES):
