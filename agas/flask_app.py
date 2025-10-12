@@ -1739,8 +1739,9 @@ def create_app(info):
             
             # Auto prepend the PREFIX if it's not in the query already
             if "PREFIX" not in query.upper():
-                prefix_line = f"PREFIX : <{app.config["PREFIX"]}>\n"
+                prefix_line = f"PREFIX : <{app.config['PREFIX']}>\n"
                 query = prefix_line + query
+
                 
             #print(query)
 
