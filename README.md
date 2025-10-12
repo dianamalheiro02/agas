@@ -184,6 +184,9 @@ Where you can:
 7. Never delete the version of the ontology you're working with.
 8. Reload the page if the projection editors load with a different light setting than the one you set previously.
 9. If SPARQL queries return nothing, confirm that the ontology file is properly indicated and loaded.
+
+# Review of AGAS
+Questionnaire for user testing at:  https://forms.gle/yJGaA5AUBB1PTTqw9
   
 # 🛠️ 6. Troubleshooting
 
@@ -243,6 +246,14 @@ Ensure you are running the command from the project root, at the same level as t
 ### Flask not installed:
 ```
 pip install flask
+```
+
+### ModuleNotFoundError:
+Some dependencies may be missing from pyproject.toml, please install manually and try to run
+again with ’pip’ or ’pipx’!
+```
+pipx uninstall agas
+pipx install .
 ```
 
 # 7. DSL Structure
