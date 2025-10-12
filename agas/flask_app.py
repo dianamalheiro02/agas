@@ -990,7 +990,7 @@ def create_app(info):
         #print(individual_uri)
 
         query_str = f"""
-            PREFIX : <{app.config["PREFIX"]}>
+            PREFIX : <{app.config['PREFIX']}>
             SELECT ?subject ?predicate ?object WHERE {{
                 {{ :{name} ?predicate ?object }} UNION {{ ?subject ?predicate :{name} }}
             }}
@@ -1082,7 +1082,7 @@ def create_app(info):
 
             # Wrap the fragment with proper Turtle syntax (prefix + code)
             ttl = f"""
-    @prefix : <{app.config["PREFIX"]}> .
+    @prefix : <{app.config['PREFIX']}> .
     @prefix owl: <http://www.w3.org/2002/07/owl#> .
     @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
     @prefix xml: <http://www.w3.org/XML/1998/namespace> .
@@ -1741,7 +1741,6 @@ def create_app(info):
             if "PREFIX" not in query.upper():
                 prefix_line = f"PREFIX : <{app.config['PREFIX']}>\n"
                 query = prefix_line + query
-
                 
             #print(query)
 
@@ -1816,7 +1815,7 @@ def create_app(info):
 
         for value, query in paged_queries:
             #if "PREFIX" not in query[0]:
-            #    prefix_line = f"\nPREFIX : <{app.config["PREFIX"]}>"
+            #    prefix_line = f"\nPREFIX : <{app.config['PREFIX']}>"
             #    query_final = prefix_line + query[0]
                 
             final_queries.append((value, query[0]))
@@ -1879,7 +1878,7 @@ def create_app(info):
                     # Handle direct query editing
                     query = request.form['edited_query']
                     if "PREFIX" not in query:
-                        prefix_line = f"\nPREFIX : <{app.config["PREFIX"]}>"
+                        prefix_line = f"\nPREFIX : <{app.config['PREFIX']}>"
                         query = prefix_line + query
                     q_result = g.query(query)
 
@@ -1926,7 +1925,7 @@ def create_app(info):
                         #print("Executing query:", query)
                         try:
                             if "PREFIX" not in query:
-                                prefix_line = f"\nPREFIX : <{app.config["PREFIX"]}>"
+                                prefix_line = f"\nPREFIX : <{app.config['PREFIX']}>"
                                 query = prefix_line + query
                             q_result = g.query(query)
                             headers = [str(h) for h in q_result.vars]
@@ -1944,7 +1943,7 @@ def create_app(info):
                     query = app.config["BASE_QUERIES"][index][1][0]
                     #print(query)
                     if "PREFIX" not in query:
-                        prefix_line = f"\nPREFIX : <{app.config["PREFIX"]}>"
+                        prefix_line = f"\nPREFIX : <{app.config['PREFIX']}>"
                         query = prefix_line + query
                     q_result = g.query(query)
                     headers = [str(h) for h in q_result.vars]
@@ -1959,7 +1958,7 @@ def create_app(info):
                 query = app.config["BASE_QUERIES"][index][1][0]
                 #print(query)
                 if "PREFIX" not in query:
-                    prefix_line = f"\nPREFIX : <{app.config["PREFIX"]}>"
+                    prefix_line = f"\nPREFIX : <{app.config['PREFIX']}>"
                     query = prefix_line + query
                 q_result = g.query(query)
                 headers = [str(h) for h in q_result.vars]
@@ -1999,7 +1998,7 @@ def create_app(info):
         g = Graph()
         g.parse(app.config["ONTOLOGY_FILE"])
 
-        full_class_uri = URIRef(f"{app.config["PREFIX"]}{class_name}")
+        full_class_uri = URIRef(f"{app.config['PREFIX']}{class_name}")
 
         # 🧠 Get superclasses (transitive)
         superclasses = set()
@@ -2738,7 +2737,7 @@ def create_app(info):
         
         g.parse(app.config["ONTOLOGY_FILE"])
         
-        print(f"CHANGED TO ONTOFILE: {app.config["ONTOLOGY_FILE"]}")
+        print(f"CHANGED TO ONTOFILE: {app.config['ONTOLOGY_FILE']}")
         flash(f"Switched to version: {filename}", "success")
         #return redirect(url_for("view_version", filename=filename))
         return redirect(url_for("versions"))
@@ -2774,7 +2773,7 @@ def create_app(info):
         }
         
         print(f"VIEWING -> {filename}")
-        print(f"ONTOFILE -> {app.config["ONTOLOGY_FILE"]}")
+        print(f"ONTOFILE -> {app.config['ONTOLOGY_FILE']}")
         
         # load and display however you already render ontologies
         return render_template("jinjaT/version.html", ofp=app.config["ONTOLOGY_FILE"] ,ontology_file=filename, stats=stats, language = app.config["LANGUAGE"])
