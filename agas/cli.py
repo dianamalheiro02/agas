@@ -3,7 +3,7 @@
 import argparse
 import sys
 from .dsl_parser import load_config, show_skeleton, assess
-from .flask_app import create_app
+from .flask_app import create_app, get_info
 
 # For exec
 import subprocess
@@ -85,6 +85,9 @@ def manual():
         to navigate the generated website, supporting BREAD operations 
         (Browse, Read, Edit, Add, Delete).
         
+    GITHUB
+        https://github.com/dianamalheiro02/agas.git  
+        
     GETTING STARTED
         1. Create your skeleton:
             agas -s > G0_config.txt
@@ -98,7 +101,7 @@ def manual():
         4. Run it:
             agas -r G0_config.txt
             
-        5. Open your browser to: http://localhost:5000
+        5. Open your browser to the link agas displays in the terminal.
         
         Well done! You now have your very own ontology-powered website up and running.
         Otherwise, if you already have a config file in mind, simply run AGAS with it and
@@ -117,7 +120,8 @@ def main():
     parser.add_argument("input_file", nargs="?", help="Configuration DSL file")
     parser.add_argument("-s", "--skeleton", action="store_true", help="Show DSL config skeleton")
     parser.add_argument("-c", "--check", action="store_true", help="Check DSL config file")
-    parser.add_argument("-r", "--run", action="store_true", help="Run Flask app with config")
+    parser.add_argument("-r", "--run", action="store_true", help="Run Flask app with config file")
+    parser.add_argument("-e", "--execute", action="store_true", help="Execute Flask app without config file")
     parser.add_argument("--manual", action="store_true", help="Show detailed manual")
 
     args = parser.parse_args()
@@ -150,6 +154,20 @@ def main():
         info = load_config(args.input_file)
         app = create_app(info)
         app.run(debug=True)
+        sys.exit(0)
+        
+    if args.execute:
+        if args.input_file:
+            print("ERROR: No configuration file was needed, but you provided one... reading it now.")
+            info = load_config(args.input_file)
+        else:
+            print("Launching configuration page...")
+            info = get_info()
+
+        #print(info) #DEBUG WAS GOOD
+        
+        app = create_app(info)
+        app.run(debug=False)
         sys.exit(0)
 
     parser.print_help()
