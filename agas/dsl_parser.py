@@ -57,6 +57,13 @@ import argparse
 from rdflib import Graph, Namespace, RDF, RDFS, OWL
 import os
 
+#For parse and validation of vars
+from urllib.parse import urlparse
+
+#For utf encoding
+import magic
+
+
 __version__="0.0.1"
 
 ##########################################################################################
@@ -157,7 +164,31 @@ class ConfigTransformer(Transformer):
 
 
 def load_config(file_path):
-    with open(file_path) as f:
+    #Detect encoding
+    blob = open(file_path, 'rb').read()
+    m = magic.Magic(mime_encoding=True)
+    encoding = m.from_buffer(blob)  # "utf-8", "us-ascii", etc.
+    
+    correct_file = file_path
+    
+    # Not UTF-8, convert it
+    if encoding != "utf-8":
+        #Where to save the proper encoding
+        temp_file = os.path.expanduser("~/agas/dsl_utf8.txt")
+        # Make sure directory exists
+        os.makedirs(os.path.dirname(temp_file), exist_ok=True)
+        
+        with open(file_path, "rb") as fin, open(temp_file, "w", encoding="utf-8") as fout:
+            for line_bytes in fin:
+                # decode from original encoding
+                line = line_bytes.decode(encoding, errors="replace")
+                # write in utf-8
+                fout.write(line)
+        
+        correct_file = temp_file
+        
+    #Read correct file -> UTF-8 guaranteed
+    with open(correct_file, "r", encoding="utf-8") as f:
         config_data = f.read()
     tree = parser.parse(config_data)
     return ConfigTransformer().transform(tree)
@@ -277,7 +308,7 @@ AGAS_PAGES = 'PAGES' #If you want it in blog format or normal pages -> 'BLOG'/'P
 AGAS_BACKGROUNG = 'NONE' #If you want to put a personal background on the app, mostly common on blogs, but can be used in the normal pages too
 """)
         
-
+'''
 def assess(file):
     with open(file) as f:
         config_data = f.read()
@@ -318,4 +349,186 @@ def assess(file):
         print("It's valid, good job!")
     except Exception as e:
         print("No good")
+'''   
     
+def validate_config(info):
+    errors = []
+    warnings = []
+
+    # Helper: check URL
+    def is_url(x):
+        try:
+            result = urlparse(x)
+            return all([result.scheme, result.netloc])
+        except:
+            return False
+
+    # ---------------------------------------------------------------------
+    # 1. REQUIRED KEYS
+    # ---------------------------------------------------------------------
+    required = [
+        "ONTOLOGY_FILE", "PROTEGE_PATH", "ONTOLOGY_TYPE", "ONTOLOGY_IMAGES",
+        "ONTOLOGY_EDIT", "USER_TYPE", "TEMPLATES", "LANGUAGE", "RDF_VIEW",
+        "VIEW_CLASSES", "SPECIFIC_PAGES", "MAKE_PRETTY", "SEE_PROPERTIES",
+        "GIVE_PRIORITY", "NOT_SHOW", "BASE_QUERIES", "AGAS_NAME",
+        "L_DISPOSITION", "MODULES", "ABOUT", "ONTOLOGY_SOURCE",
+        "USERNAME", "USER_EMAIL", "USER_GITHUB", "USER_SOCIALS",
+        "AGAS_PAGES", "AGAS_BACKGROUNG"
+    ]
+
+    for key in required:
+        if key not in info:
+            errors.append(f"Missing required variable: {key}")
+
+    if errors:
+        return errors, warnings
+
+    # ---------------------------------------------------------------------
+    # 2. SEMANTIC & TYPE CHECKS
+    # ---------------------------------------------------------------------
+
+    # ONTOLOGY_FILE must exist as well as it's SOURCE
+    if info["ONTOLOGY_SOURCE"].startswith("http"):
+        if not is_url(info["ONTOLOGY_SOURCE"]):
+            errors.append("ONTOLOGY_SOURCE must be a valid URL.")
+    
+    if not os.path.exists(info["ONTOLOGY_FILE"]):
+            errors.append(f"Ontology file not found: {info['ONTOLOGY_FILE']}")
+
+    # PROTEGE_PATH must exist
+    if not os.path.exists(info["PROTEGE_PATH"]):
+        warnings.append(f"Protégé path seems invalid: {info['PROTEGE_PATH']}")
+
+    # ONTOLOGY_TYPE
+    allowed_types = ["A", "B", "C1", "C2"]
+    if info["ONTOLOGY_TYPE"] not in allowed_types:
+        errors.append(f"ONTOLOGY_TYPE must be one of {allowed_types}.")
+
+    # ONTOLOGY_IMAGES
+    if info["ONTOLOGY_IMAGES"] != "NONE":
+        if not os.path.isdir(info["ONTOLOGY_IMAGES"]):
+            errors.append(f"ONTOLOGY_IMAGES directory does not exist: {info['ONTOLOGY_IMAGES']}")
+
+    # ONTOLOGY_EDIT
+    if info["ONTOLOGY_EDIT"] not in ["ALL", "LOGIN"]:
+        errors.append("ONTOLOGY_EDIT must be 'ALL' or 'LOGIN'.")
+
+    # USER_TYPE
+    if info["USER_TYPE"] not in ["EXP", "NONEXP"]:
+        errors.append("USER_TYPE must be 'EXP' or 'NONEXP'.")
+
+    # LANGUAGE
+    if info["LANGUAGE"] not in ["EN", "PT"]:
+        errors.append("LANGUAGE must be EN or PT.")
+
+    # RDF_VIEW
+    if not (info["RDF_VIEW"] == "ALL" or isinstance(info["RDF_VIEW"], list)):
+        errors.append("RDF_VIEW must be 'ALL' or a list.")
+
+    # VIEW_CLASSES
+    allowed_view = ["ALL", "TREE", "STARS"]
+    if not (info["VIEW_CLASSES"] in allowed_view or isinstance(info["VIEW_CLASSES"], list)):
+        errors.append("VIEW_CLASSES must be 'ALL', 'TREE', 'STARS' or a list.")
+
+    # SPECIFIC_PAGES
+    if not (info["SPECIFIC_PAGES"] == "STARS" or isinstance(info["SPECIFIC_PAGES"], list)):
+        errors.append("SPECIFIC_PAGES must be 'STARS' or a list.")
+
+    # MAKE_PRETTY, SEE_PROPERTIES, GIVE_PRIORITY, NOT_SHOW
+    list_like = ["MAKE_PRETTY", "SEE_PROPERTIES", "GIVE_PRIORITY", "NOT_SHOW"]
+    for key in list_like:
+        val = info[key]
+        if not (val == "NONE" or isinstance(val, list)):
+            errors.append(f"{key} must be 'NONE' or a list.")
+
+    # BASE_QUERIES
+    BASE_QUERIES = info['BASE_QUERIES']
+    for value, query in BASE_QUERIES:
+        warnings.append(f"Found QUERY: {value} -> {query[0]}")
+    
+    # L_DISPOSITION
+    if info["L_DISPOSITION"] not in ["up", "side"]:
+        errors.append("L_DISPOSITION must be 'up' or 'side'.")
+
+    # MODULES
+    if not (info["MODULES"] == "NONE" or isinstance(info["MODULES"], list)):
+        errors.append("MODULES must be 'NONE' or a list.")
+
+    # ABOUT
+    if info["ABOUT"] != "NONE" and not os.path.exists(info["ABOUT"]):
+        warnings.append(f"ABOUT file not found: {info['ABOUT']}")
+
+    # USER_EMAIL simple regex
+    if info["ABOUT"] != "NONE" and re.match(r"[^@]+@[^@]+\.[^@]+", info["USER_EMAIL"]):
+        warnings.append("USER_EMAIL appears invalid.")
+
+    # AGAS_PAGES
+    if info["AGAS_PAGES"] not in ["BLOG", "PAGES"]:
+        errors.append("AGAS_PAGES must be 'BLOG' or 'PAGES'.")
+
+    # AGAS_BACKGROUNG
+    if info["AGAS_BACKGROUNG"] != "NONE":
+        if not os.path.exists(info["AGAS_BACKGROUNG"]):
+            warnings.append("AGAS_BACKGROUNG path not found.")
+
+
+    return errors, warnings
+
+
+
+
+
+
+
+
+
+
+
+def assess(file):
+    #Detect encoding
+    blob = open(file, 'rb').read()
+    m = magic.Magic(mime_encoding=True)
+    encoding = m.from_buffer(blob)  # "utf-8", "us-ascii", etc.
+    
+    correct_file = file
+    
+    # Not UTF-8, convert it
+    if encoding != "utf-8":
+        #Where to save the proper encoding
+        temp_file = os.path.expanduser("~/agas/dsl_utf8.txt")
+        # Make sure directory exists
+        os.makedirs(os.path.dirname(temp_file), exist_ok=True)
+        
+        with open(file, "rb") as fin, open(temp_file, "w", encoding="utf-8") as fout:
+            for line_bytes in fin:
+                # decode from original encoding
+                line = line_bytes.decode(encoding, errors="replace")
+                # write in utf-8
+                fout.write(line)
+        
+        correct_file = temp_file
+        
+    #Read correct file -> UTF-8 guaranteed
+    with open(correct_file, "r", encoding="utf-8") as f:
+        config_data = f.read()
+
+    #with open(file) as f:
+    #    config_data = f.read()
+
+    tree = parser.parse(config_data)
+    info = ConfigTransformer().transform(tree)
+
+    errors, warnings = validate_config(info)
+
+    if errors:
+        print("❌ Configuration is invalid.\n")
+        for err in errors:
+            print(f"  - {err}")
+    else:
+        print("✅ Configuration is valid!")
+        if warnings:
+            print("\n⚠️ Warnings:")
+            for w in warnings:
+                print(f"  - {w}")
+
+
