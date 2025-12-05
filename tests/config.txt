@@ -13,7 +13,7 @@ PROTEGE_PATH = '/home/diana-teixeira/Desktop/Thesis/Protege-5.6.4-linux/Protege-
 ONTOLOGY_TYPE = 'C1'
 
 #Specify if ontology has images that are from your own pc ('NONE' if not), if it does, please give the path to the folder you have them in
-ONTOLOGY_IMAGES = '/home/diana-teixeira/Desktop/Thesis_Writing/images'
+ONTOLOGY_IMAGES = '/home/diana-teixeira/Desktop/Thesis_Writing/Figures/images'
 
 #Specify who can edit the ontology -> 'ALL' or 'LOGIN' are the options
 ONTOLOGY_EDIT = 'LOGIN'
@@ -25,7 +25,7 @@ USER_TYPE = 'EXP'
 TEMPLATES = 'NONE'
 
 #Define what language you want to use: 'PT'/'EN'
-LANGUAGE = 'PT'
+LANGUAGE = 'EN'
 
 #What you want to see in the RDF, which classes -> PLACE DOWN 'ALL' IF YOU WANT THEM ALL SHOWN
 RDF_VIEW = ['Nature', 'Humans', 'Story'] 
