@@ -83,14 +83,170 @@ import markdown
 from dotenv import load_dotenv
 #import os
 
+#For get_info
+#import json
+#from flask import Flask, request, render_template
+import threading
+import time
+import requests
 
+
+##########################################################################################
+#                          CONFIGURATION IN BROWSER                                      #
+##########################################################################################
+def get_info():
+    # Default folders (relative to package)
+    BASE_DIR = os.path.dirname(__file__)
+    DEFAULT_TEMPLATES = os.path.join(BASE_DIR, "templates")
+    DEFAULT_STATIC = os.path.join(BASE_DIR, "static")
+
+    # Initialize Flask with explicit static & template paths
+    appE = Flask(
+        "AGAS_Config_Collector",
+        template_folder=DEFAULT_TEMPLATES,
+        static_folder=DEFAULT_STATIC
+    )
+    
+    UPLOAD_DIR = os.path.join(appE.static_folder, "uploaded")
+    os.makedirs(UPLOAD_DIR, exist_ok=True)
+    
+    output_path = os.path.expanduser("~/agas/static/uploaded/dsl_web_config.txt")
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+    ################################ Shutdown server ###########################################
+    @appE.route("/shutdown", methods=["POST"])
+    def shutdown():
+        func = request.environ.get("werkzeug.server.shutdown")
+        if func:
+            func()
+        return "Config server shutting down..."
+
+    ################################ Config page to get DSL info ###########################################
+    info = {}
+    @appE.route("/", methods=["GET", "POST"])
+    def config():
+        nonlocal info
+        ONTOLOGY_FILE = 'NONE'
+        ONTOLOGY_IMAGES = 'NONE'
+        ABOUT = 'NONE'
+
+        if request.method == "POST":
+            ontology_file = request.files.get("ontology_file")
+            
+            print(ontology_file)
+
+            if ontology_file:
+                filename = secure_filename(ontology_file.filename)
+                save_path = os.path.join(UPLOAD_DIR, "ontologies", filename)
+                os.makedirs(os.path.dirname(save_path), exist_ok=True)
+                ontology_file.save(save_path)
+
+                print(save_path)
+                
+                ONTOLOGY_FILE = save_path
+            
+            image_files = request.files.getlist("ontology_images")
+
+            images_dir = os.path.join(UPLOAD_DIR, "images")
+            if os.makedirs(images_dir, exist_ok=True):
+                saved_image_paths = []
+
+                for file in image_files:
+                    filename = secure_filename(file.filename)
+                    save_path = os.path.join(images_dir, filename)
+                    file.save(save_path)
+                    saved_image_paths.append(save_path)
+
+                ONTOLOGY_IMAGES = images_dir
+            
+            else: 
+                ONTOLOGY_IMAGES = 'NONE'
+                
+            about_file = request.files.get("about")
+            if about_file:
+                filename = secure_filename(about_file.filename)
+                save_path = os.path.join(UPLOAD_DIR, filename)
+                os.makedirs(os.path.dirname(save_path), exist_ok=True)
+                about_file.save(save_path)
+
+                ABOUT = save_path
+                
+            else:
+                ABOUT = 'NONE'
+                
+            ################################ DSL info ###########################################    
+            info = {
+                "ONTOLOGY_FILE": ONTOLOGY_FILE,#request.form.get("ontology_file"),
+                "PROTEGE_PATH": 'Protege-5.6.4-linux/Protege-5.6.4/protege',
+                "ONTOLOGY_TYPE": request.form.get("ontology_type"),
+                "ONTOLOGY_IMAGES": ONTOLOGY_IMAGES,#request.form.get("ontology_images"),
+                "ONTOLOGY_EDIT": 'ALL' if request.form.get("ontology_edit") else 'LOGIN',
+                "USER_TYPE": request.form.get("user_type"),
+                "LANGUAGE": request.form.get("language"),
+                "RDF_VIEW": 'ALL',
+                "VIEW_CLASSES": 'STARS',
+                "SPECIFIC_PAGES": 'STARS',
+                "BASE_QUERIES": 'NONE',
+                "MAKE_PRETTY": 'NONE',
+                "SEE_PROPERTIES": 'NONE',
+                "GIVE_PRIORITY": 'NONE',
+                "AGAS_NAME": request.form.get("agas_name"),
+                "L_DISPOSITION": request.form.get("l_disposition"),
+                "NOT_SHOW": 'NONE',
+                "MODULES": 'NONE',
+                "ABOUT": ABOUT, #request.form.get("about"),
+                "ONTOLOGY_SOURCE": 'https://agas:500/home', #request.form.get("ontology_source"),
+                "USERNAME": request.form.get("username"),
+                "USER_EMAIL": 'example@hotmail.com',
+                "USER_GITHUB": 'github/example',
+                "USER_SOCIALS": 'NONE',
+                "AGAS_PAGES": 'PAGES', #request.form.get("agas_pages"),
+                "AGAS_BACKGROUNG": 'NONE',
+            }
+            #print(info) #DEBUG WAS GOOD
+            # Save to temporary file so main() can read it
+            with open(output_path, "w") as f:
+                for key, value in info.items():
+                    text = f"{key} = '{value}' \n"
+                    #print(text) #DEBUG WAS GOOD
+                    f.write(text)
+
+            #Shut down the server
+            try:
+                requests.post("http://127.0.0.1:5001/shutdown")
+            except Exception:
+                pass
+            
+            return "OK, check terminal for new address", 200
+
+        return render_template("config.html")
+
+
+    ################################ Run Flask in a Thread ###########################################
+    def run_server():
+        appE.run(debug=False, use_reloader=False, port=5001)
+
+    thread = threading.Thread(target=run_server, daemon=True)
+    thread.start()
+
+    # WAIT until the user submits the form
+    print("Waiting for configuration info...")
+
+    while not info:    # waits until POST fills it
+        time.sleep(0.1)
+
+    print("Config received.")
+    return info
+
+
+
+##########################################################################################
+#                              NORMAL FLASK APP                                          #
+##########################################################################################
 def create_app(info):
     #templates = info.get("app.config["TEMPLATES"]", "templates")
     ##app = Flask(__name__, template_folder=templates)
     #app.secret_key = "goddess-has-power-123"
-
-    # TODO: add your routes here+
-    
     
     ##########################################################################################
     #                             FLASK APP - INFO                                           #
